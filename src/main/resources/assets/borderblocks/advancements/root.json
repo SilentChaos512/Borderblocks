@@ -1,0 +1,28 @@
+{
+    "display": {
+        "icon": {
+            "item": "borderblocks:crafting_material"
+        },
+        "title": {
+            "translate": "advancements.borderblocks:root.title"
+        },
+        "description": {
+            "translate": "advancements.borderblocks:root.description"
+        },
+        "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+        "show_toast": false,
+        "announce_to_chat": false
+    },
+    "criteria": {
+        "crafting_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "minecraft:crafting_table"
+                    }
+                ]
+            }
+        }
+    }
+}

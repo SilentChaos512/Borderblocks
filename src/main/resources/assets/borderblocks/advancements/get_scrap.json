@@ -1,0 +1,27 @@
+{
+    "display": {
+        "icon": {
+            "item": "borderblocks:crafting_material"
+        },
+        "title": {
+            "translate": "advancements.borderblocks:get_scrap.title"
+        },
+        "description": {
+            "translate": "advancements.borderblocks:get_scrap.description"
+        }
+    },
+    "parent": "borderblocks:root",
+    "criteria": {
+        "crafting_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "borderblocks:crafting_material",
+                        "data": 0
+                    }
+                ]
+            }
+        }
+    }
+}

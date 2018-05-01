@@ -1,0 +1,27 @@
+{
+    "display": {
+        "icon": {
+            "item": "borderblocks:progression_relic",
+            "data": 4
+        },
+        "frame": "goal",
+        "title": {
+            "translate": "advancements.borderblocks:progression_eridium.title"
+        },
+        "description": {
+            "translate": "advancements.borderblocks:progression_eridium.description"
+        }
+    },
+    "parent": "borderblocks:progression_diamond",
+    "criteria": {
+        "use_item": {
+            "trigger": "borderblocks:use_item",
+            "conditions": {
+                "item": {
+                    "item": "borderblocks:progression_relic",
+                    "data": 4
+                }
+            }
+        }
+    }
+}

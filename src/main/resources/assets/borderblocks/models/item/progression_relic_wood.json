@@ -1,0 +1,8 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "borderblocks:items/progression_relic_wood",
+    "layer1": "borderblocks:items/progression_relic_outline"
+  }
+}
+

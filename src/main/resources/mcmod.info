@@ -1,0 +1,12 @@
+[
+{
+  "modid": "borderblocks",
+  "name": "Borderblocks",
+  "description": "TODO",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "TODO",
+  "authors": [ "SilentChaos512" ],
+  "credits": ""
+}
+]

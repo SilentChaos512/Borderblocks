@@ -1,0 +1,7 @@
+{
+    "level_up": {
+        "category": "player",
+        "subtitle": "borderblocks.subtitle.level_up",
+        "sounds": [ "borderblocks:level_up" ]
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "borderblocks:progression_relic",
+            "data": 1
+        },
+        "title": {
+            "translate": "advancements.borderblocks:progression_stone.title"
+        },
+        "description": {
+            "translate": "advancements.borderblocks:progression_stone.description"
+        }
+    },
+    "parent": "borderblocks:choose_class",
+    "criteria": {
+        "use_item": {
+            "trigger": "borderblocks:use_item",
+            "conditions": {
+                "item": {
+                    "item": "borderblocks:progression_relic",
+                    "data": 1
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "borderblocks:scav_multi_tool"
+        },
+        "title": {
+            "translate": "advancements.borderblocks:get_action_skill.title"
+        },
+        "description": {
+            "translate": "advancements.borderblocks:get_action_skill.description"
+        }
+    },
+    "parent": "borderblocks:choose_class",
+    "criteria": {
+        "skill_point_added": {
+            "trigger": "borderblocks:skill_point_added",
+            "conditions": {
+                "skill_name": "any",
+                "points": 1
+            }
+        }
+    }
+}

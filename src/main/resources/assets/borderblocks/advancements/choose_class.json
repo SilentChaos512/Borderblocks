@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "borderblocks:progression_relic"
+        },
+        "title": {
+            "translate": "advancements.borderblocks:choose_class.title"
+        },
+        "description": {
+            "translate": "advancements.borderblocks:choose_class.description"
+        }
+    },
+    "parent": "borderblocks:root",
+    "criteria": {
+        "class_chosen": {
+            "trigger": "borderblocks:class_chosen",
+            "conditions": {
+                "class_name": "any"
+            }
+        }
+    }
+}

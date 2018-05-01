@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "borderblocks:scav_multi_tool",
+            "data": 1
+        },
+        "title": {
+            "translate": "advancements.borderblocks:use_action_skill.title"
+        },
+        "description": {
+            "translate": "advancements.borderblocks:use_action_skill.description"
+        }
+    },
+    "parent": "borderblocks:get_action_skill",
+    "criteria": {
+        "use_action_skill": {
+            "trigger": "borderblocks:use_action_skill",
+            "conditions": {
+                "class_name": "any"
+            }
+        }
+    }
+}

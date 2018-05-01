@@ -1,0 +1,27 @@
+{
+    "display": {
+        "icon": {
+            "item": "borderblocks:eridium_ore"
+        },
+        "title": {
+            "translate": "advancements.borderblocks:mine_eridium.title"
+        },
+        "description": {
+            "translate": "advancements.borderblocks:mine_eridium.description"
+        }
+    },
+    "parent": "borderblocks:root",
+    "criteria": {
+        "crafting_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "borderblocks:eridium_ore",
+                        "data": 0
+                    }
+                ]
+            }
+        }
+    }
+}

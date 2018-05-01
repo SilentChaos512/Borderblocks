@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "inventory": { "model": "borderblocks:phase_barrier" },
+        "normal": { "model": "borderblocks:phase_barrier" }
+    }
+}

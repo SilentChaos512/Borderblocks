@@ -12,6 +12,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.util.LocalizationHelper;
+import net.silentchaos512.lib.util.StackHelper;
 
 public class BreakSpeedSkill extends Skill {
 
@@ -43,6 +44,9 @@ public class BreakSpeedSkill extends Skill {
     Block block = state.getBlock();
     int blockMeta = state.getBlock().getMetaFromState(state);
     ItemStack blockStack = new ItemStack(block, 1, blockMeta);
+
+    if (StackHelper.isEmpty(blockStack))
+      return false;
 
     boolean isLog = false;
     boolean isOre = false;

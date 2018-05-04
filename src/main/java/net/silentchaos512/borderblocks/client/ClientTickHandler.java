@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 
 public class ClientTickHandler {
 
@@ -31,7 +32,7 @@ public class ClientTickHandler {
     if (event.phase == Phase.END) {
       Minecraft mc = Minecraft.getMinecraft();
       if (mc.world == null) {
-        //SHPlayerDataHandler.cleanup(); // TODO
+        PlayerDataHandler.cleanup();
       } else if (mc.player != null) {
         while (!scheduledActions.isEmpty()) {
           scheduledActions.poll().run();

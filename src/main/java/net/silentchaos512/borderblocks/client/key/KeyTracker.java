@@ -1,22 +1,15 @@
 package net.silentchaos512.borderblocks.client.key;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
@@ -48,7 +41,7 @@ public class KeyTracker extends KeyTrackerSL {
       keyOpenConfig = createBinding("[DEBUG] Open Config", KeyConflictContext.IN_GAME, KeyModifier.NONE, Keyboard.KEY_O);
     }
     keyOpenSkillTree = createBinding("Open Skill Tree", KeyConflictContext.IN_GAME, KeyModifier.NONE, Keyboard.KEY_K);
-    keyActionSkill  = createBinding("Use Action Skill", KeyConflictContext.IN_GAME, KeyModifier.NONE, Keyboard.KEY_R);
+    keyActionSkill = createBinding("Use Action Skill", KeyConflictContext.IN_GAME, KeyModifier.NONE, Keyboard.KEY_R);
   }
 
   @Override
@@ -56,15 +49,20 @@ public class KeyTracker extends KeyTrackerSL {
 
     Minecraft mc = Minecraft.getMinecraft();
     PlayerData data = PlayerDataHandler.get(mc.player);
+    // Open Config key (dev only)
     if (safeCheckPressed(keyOpenConfig)) {
       mc.displayGuiScreen(new GuiFactoryBB().createConfigGui(null));
-    } else if (keyOpenSkillTree.isPressed()) {
+    }
+    // Open Skill Tree key
+    else if (keyOpenSkillTree.isPressed()) {
       // If player has not chosen a class, display choose class GUI instead of skill tree.
       if (data.getCharacterClass() == CharacterClass.CLASS_UNDEFINED)
         mc.displayGuiScreen(new GuiChooseClass());
       else
         mc.displayGuiScreen(new GuiSkillTree());
-    } else if (keyActionSkill.isPressed()) {
+    }
+    // Action Skill key
+    else if (keyActionSkill.isPressed()) {
       double distance = data.getCharacterClass().getActionSkill().getSkillReach(data);
       // FIXME rayTrace will never detect entities
       RayTraceResult rayTrace = mc.player.rayTrace(distance, ClientTickHandler.partialTicks);

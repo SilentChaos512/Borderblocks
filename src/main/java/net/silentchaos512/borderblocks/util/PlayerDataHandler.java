@@ -596,6 +596,7 @@ public class PlayerDataHandler {
 
       ++level;
       cooldown = 0f;
+      actionSkillDuration = 0;
 
       EntityPlayer player = playerWR.get();
       if (player != null)

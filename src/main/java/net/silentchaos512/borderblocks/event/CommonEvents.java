@@ -38,10 +38,6 @@ public class CommonEvents {
       data.getLastTimePlayed().setTime(today.getTime());
 
       // WTF? (add listener for advancement with custom criterion?)
-      // ModTriggers.CLASS_CHOSEN.addListener(player.getAdvancements(), new
-      // ICriterionTrigger.Listener<ClassChosenTrigger.Instance>(new ClassChosenTrigger.Instance("any"),
-      // player.mcServer.getAdvancementManager().getAdvancement(new ResourceLocation(Borderblocks.MOD_ID,
-      // "choose_class")), "class_chosen"));
       addListenerHack(player, ModTriggers.CLASS_CHOSEN, new ClassChosenTrigger.Instance("any"), "choose_class", "class_chosen");
       addListenerHack(player, ModTriggers.USE_ITEM, new UseItemTrigger.Instance(ItemPredicate.ANY), "progression_stone", "use_item");
       addListenerHack(player, ModTriggers.SKILL_POINT_ADDED, new SkillPointAddedTrigger.Instance("any", 1), "get_action_skill", "skill_point_added");

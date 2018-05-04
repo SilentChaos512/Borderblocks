@@ -62,13 +62,12 @@ public class SkillEvents {
   }
 
   @SubscribeEvent
-  public void onPlayerDamage(LivingHurtEvent event) {
+  public void onPlayerTakeDamage(LivingHurtEvent event) {
 
     if (!(event.getEntity() instanceof EntityPlayer))
       return;
 
     PlayerData data = PlayerDataHandler.get((EntityPlayer) event.getEntity());
-    float oldAmount = event.getAmount(); // DEBUG VALUE, REMOVE ME
 
     for (DamageReductionSkill skill : DamageReductionSkill.LIST_ALL) {
       int pointsInSkill = data.getPointsInSkill(skill);

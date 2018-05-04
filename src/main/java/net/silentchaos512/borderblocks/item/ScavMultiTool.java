@@ -1,6 +1,7 @@
 package net.silentchaos512.borderblocks.item;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import com.google.common.collect.Multimap;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,13 +21,16 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.lib.skill.SkillList;
@@ -35,11 +40,14 @@ import net.silentchaos512.lib.registry.IRegistryObject;
 import net.silentchaos512.lib.registry.RecipeMaker;
 import net.silentchaos512.lib.util.StackHelper;
 
-public class ScavMultiTool extends ItemTool implements IRegistryObject {
+public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
 
   public static final String NAME = "scav_multi_tool";
   public static final ToolMaterial FAKE_MATERIAL = EnumHelper.addToolMaterial(Borderblocks.RESOURCE_PREFIX + NAME + "_fake", 1, 100, 10f, 5f, 0);
-  public static final float[] BREAK_SPEEDS = new float[] { 4f, 6f, 8f, 12f, 16f };
+
+  // Stats
+  public static final float[] BREAK_SPEEDS = { 4f, 8f, 16f, 32f, 64f };
+  public static final float[] ATTACK_DAMAGE = { 3f, 6f, 11f, 14f, 19f };
 
   static final String NBT_ID = "id";
   static final String NBT_MAX_TIMEOUT = "max_timeout";
@@ -49,7 +57,8 @@ public class ScavMultiTool extends ItemTool implements IRegistryObject {
 
   public ScavMultiTool() {
 
-    super(FAKE_MATERIAL, ImmutableSet.of());
+    super(FAKE_MATERIAL);
+    this.attackSpeed = -2.0f;
     this.maxStackSize = 1;
     this.setMaxDamage(0);
     this.hasSubtypes = true;
@@ -118,10 +127,6 @@ public class ScavMultiTool extends ItemTool implements IRegistryObject {
 
   @Override
   public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
-    // if (!worldIn.isRemote && (double)state.getBlockHardness(worldIn, pos) != 0.0D)
-    // {
-    // stack.damageItem(1, entityLiving);
-    // }
 
     return true;
   }
@@ -158,13 +163,17 @@ public class ScavMultiTool extends ItemTool implements IRegistryObject {
   }
 
   @Override
-  public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
+  public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
 
     Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
 
     if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-      multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", (double) this.attackDamage, 0));
-      multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", (double) this.attackSpeed, 0));
+      int tier = MathHelper.clamp(stack.getItemDamage(), 0, ProgressionTier.values().length - 1);
+      float toolAttackDamage = ATTACK_DAMAGE[tier];
+
+      multimap.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
+      multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
+          new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", toolAttackDamage, 0));
     }
 
     return multimap;
@@ -218,6 +227,15 @@ public class ScavMultiTool extends ItemTool implements IRegistryObject {
       tags.setInteger(NBT_MAX_TIMEOUT, 1200);
       list.add(stack);
     }
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+
+    int tier = MathHelper.clamp(stack.getItemDamage(), 0, ProgressionTier.values().length - 1);
+    tooltip.add(String.format("Harvest speed: %d", (int) BREAK_SPEEDS[tier]));
+    tooltip.add(String.format("Harvest level: %d", tier));
   }
 
   @Override

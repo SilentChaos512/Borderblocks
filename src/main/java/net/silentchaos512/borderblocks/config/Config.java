@@ -45,6 +45,14 @@ public class Config extends ConfigBase {
   static final int PLAYER_MAX_LEVEL_DEFAULT = 50;
   static final String PLAYER_MAX_LEVEL_COMMENT = "The maximum level a player can achieve.";
 
+  public static float PLAYER_HEALTH_PER_LEVEL;
+  static final float PLAYER_HEALTH_PER_LEVEL_DEFAULT = 0.8f;
+  static final String PLAYER_HEALTH_PER_LEVEL_COMMENT = "The amount of extra health (half hearts) a player gains per level.";
+
+  public static float PLAYER_DAMAGE_PER_LEVEL;
+  static final float PLAYER_DAMAGE_PER_LEVEL_DEFAULT = 0.3f;
+  static final String PLAYER_DAMAGE_PER_LEVEL_COMMENT = "The amount of extra attack damage a player gains per level.";
+
   /*
    * Test
    */
@@ -97,6 +105,8 @@ public class Config extends ConfigBase {
 //      PLAYER_FIRST_SKILL_POINT_LEVEL = loadInt("First Skill Point Level", CAT_PLAYER, PLAYER_FIRST_SKILL_POINT_LEVEL_DEFAULT, 1, 100, PLAYER_FIRST_SKILL_POINT_LEVEL_COMMENT);
       PLAYER_MAX_LEVEL = PLAYER_MAX_LEVEL_DEFAULT;
       PLAYER_FIRST_SKILL_POINT_LEVEL = PLAYER_FIRST_SKILL_POINT_LEVEL_DEFAULT;
+      PLAYER_HEALTH_PER_LEVEL = loadFloat("Health Per Level", CAT_PLAYER, PLAYER_HEALTH_PER_LEVEL_DEFAULT, PLAYER_HEALTH_PER_LEVEL_COMMENT);
+      PLAYER_DAMAGE_PER_LEVEL = loadFloat("Damage Per Level", CAT_PLAYER, PLAYER_DAMAGE_PER_LEVEL_DEFAULT, PLAYER_DAMAGE_PER_LEVEL_COMMENT);
 
       /*
        * Test category

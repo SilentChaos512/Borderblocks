@@ -20,6 +20,7 @@ import net.silentchaos512.borderblocks.advancements.UseItemTrigger;
 import net.silentchaos512.borderblocks.lib.Greetings;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
+import net.silentchaos512.borderblocks.util.StatManager;
 
 public class CommonEvents {
 
@@ -44,6 +45,8 @@ public class CommonEvents {
       addListenerHack(player, ModTriggers.USE_ACTION_SKILL, new UseActionSkillTrigger.Instance("any"), "use_action_skill", "use_action_skill");
 
       Greetings.greetPlayer(player);
+
+      StatManager.handleLogin(player);
     }
   }
 

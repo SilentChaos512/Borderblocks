@@ -31,6 +31,10 @@ public class Skill {
   protected ResourceLocation texture;
   protected int textureIndex = 0;
 
+  /** Added in 0.1.1, mostly for desc2. */
+  @Getter(value = AccessLevel.PUBLIC)
+  protected float modifierAmount = 1f;
+
   public Skill(String name, int maxPoints) throws IllegalArgumentException {
 
     this.name = name;
@@ -107,6 +111,12 @@ public class Skill {
     return (T) this;
   }
 
+  public <T extends Skill> T setModifierValue(float amount) {
+
+    this.modifierAmount = amount;
+    return (T) this;
+  }
+
   protected String getDesc2(int investedPoints) {
 
     String key = "skill." + name + ".desc2";
@@ -115,6 +125,10 @@ public class Skill {
 
   protected Object[] getDesc2Params(int investedPoints) {
 
-    return new Object[] { investedPoints };
+    float val = investedPoints * modifierAmount;
+    if (val == (int) val)
+      return new Object[] { (int) val };
+    else
+      return new Object[] { val };
   }
 }

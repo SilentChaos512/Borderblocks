@@ -104,7 +104,7 @@ public class SkillList {
   public static final Skill MULTI_TOOL_SILKTOUCH = new Skill(Borderblocks.RESOURCE_PREFIX + "multi_tool_silktouch",
       5).setTextureIndex(0x12);
   public static final Skill MULTI_TOOL_REPAIR = new Skill(Borderblocks.RESOURCE_PREFIX + "multi_tool_repair",
-      1).setTextureIndex(0x10);
+      1).setTextureIndex(0x10).setModifierValue(SkillConst.MULTI_TOOL_REPAIR_AMOUNT);
 
   // Dummy skills
   public static final Skill PLACEHOLDER = new Skill(Borderblocks.RESOURCE_PREFIX + "placeholder", 5).setTextureIndex(0xFF);

@@ -24,6 +24,9 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -32,12 +35,16 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.silentchaos512.borderblocks.Borderblocks;
+import net.silentchaos512.borderblocks.init.ModItems;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
+import net.silentchaos512.borderblocks.lib.skill.SkillConst;
 import net.silentchaos512.borderblocks.lib.skill.SkillList;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.registry.IRegistryObject;
 import net.silentchaos512.lib.registry.RecipeMaker;
+import net.silentchaos512.lib.util.ChatHelper;
+import net.silentchaos512.lib.util.PlayerHelper;
 import net.silentchaos512.lib.util.StackHelper;
 
 public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
@@ -117,6 +124,39 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
     } else {
       timeoutMap.put(id, timeout);
     }
+  }
+
+  @Override
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+
+    PlayerData data = PlayerDataHandler.get(playerIn);
+    int repairLevel = data.getPointsInSkill(SkillList.MULTI_TOOL_REPAIR);
+
+    if (repairLevel > 0) {
+      ItemStack tool = playerIn.getHeldItem(handIn);
+
+      // Find scrap
+      ItemStack scrap = PlayerHelper.getFirstValidStack(playerIn, true, true, false,
+          s -> s.isItemEqual(ModItems.craftingItem.scrap));
+      if (StackHelper.isEmpty(scrap)) {
+        String line = Borderblocks.localization.getLocalizedString("skill", "multi_tool_repair.noScrap");
+        ChatHelper.sendStatusMessage(playerIn, line, true);
+        return new ActionResult<ItemStack>(EnumActionResult.FAIL, tool);
+      }
+
+      // Find something to repair
+      ItemStack toRepair = PlayerHelper.getFirstValidStack(playerIn, true, false, false,
+          s -> s.getItem().isRepairable() && s.isItemDamaged());
+      if (StackHelper.isValid(toRepair)) {
+        if (!worldIn.isRemote) {
+          toRepair.setItemDamage(toRepair.getItemDamage() - SkillConst.MULTI_TOOL_REPAIR_AMOUNT);
+          scrap.shrink(1);
+        }
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, tool);
+      }
+    }
+
+    return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 
   @Override

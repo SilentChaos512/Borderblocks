@@ -45,6 +45,7 @@ public class XPManager {
 
   public static final int MOB_KILL_XP_BASE = 80;
   public static final float MOB_KILL_XP_PER_HEALTH = 2.0f;
+  public static final float MOB_KILL_XP_PER_ARMOR_SQ = 0.5f;
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onLivingKilled(LivingDeathEvent event) {
@@ -58,9 +59,11 @@ public class XPManager {
     if (killed.world.isRemote)
       return;
 
-    // TODO: Need a better method for kill XP. Currently just basing off of max health.
     float maxHealth = killed.getMaxHealth();
-    int amount = Math.round(maxHealth * MOB_KILL_XP_PER_HEALTH);
+    float armor = killed.getTotalArmorValue();
+    float healthFactor = maxHealth * MOB_KILL_XP_PER_HEALTH;
+    float armorFactor = armor * armor * MOB_KILL_XP_PER_ARMOR_SQ;
+    int amount = Math.round(healthFactor + armorFactor);
 
     if (maxHealth > 5)
       amount += MOB_KILL_XP_BASE;

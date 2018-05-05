@@ -96,6 +96,8 @@ public class SkillList {
 
   public static final Skill BARRIER_SUFFOCATE = new Skill(Borderblocks.RESOURCE_PREFIX + "barrier_suffocate",
       5).setTextureIndex(0x0);
+  public static final Skill BARRIER_TELEPORT = new Skill(Borderblocks.RESOURCE_PREFIX + "barrier_teleport",
+      1).setTextureIndex(0x0);
   public static final Skill IGNITION = new Skill(Borderblocks.RESOURCE_PREFIX + "ignition",
       1).setTextureIndex(0x0);
   // FIXME: fortune and silk touch will conflict!

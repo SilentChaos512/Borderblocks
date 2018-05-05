@@ -6,6 +6,7 @@ Added: Scavenger's repair skill implemented
 Added: Command to set player level
 Changed: Buffed the scavenger's multi-tool quite a bit
 Changed: Armored mobs now give more XP (half their armor value squared)
+Changed: Rearranged siren skill trees
 
 0.1.0
 Initial release

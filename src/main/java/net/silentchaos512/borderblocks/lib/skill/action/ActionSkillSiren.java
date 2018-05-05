@@ -2,6 +2,7 @@ package net.silentchaos512.borderblocks.lib.skill.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
@@ -9,9 +10,8 @@ import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -61,7 +61,12 @@ public class ActionSkillSiren extends ActionSkill {
     if (center != null) {
       PlayerData data = PlayerDataHandler.get(player);
       float duration = getSkillDuration(data);
-      return placeBarrier(data, player.world, center, getBarrierRadius(data), duration);
+      int radius = getBarrierRadius(data);
+      boolean success = placeBarrier(data, player.world, center, radius, duration);
+      if (success && !altKeyDown && data.getPointsInSkill(SkillList.BARRIER_TELEPORT) > 0) {
+        tryTeleportIntoBarrier(player, center, radius);
+      }
+      return success;
     }
     return false;
   }
@@ -115,6 +120,80 @@ public class ActionSkillSiren extends ActionSkill {
     return false;
   }
 
+  private boolean tryTeleportIntoBarrier(EntityPlayer player, BlockPos center, int radius) {
+
+    Random rand = Borderblocks.random;
+    int r = radius - 2;
+    double x = center.getX();
+    double y = center.getY() + (radius - 1);
+    double z = center.getZ();
+
+    for (int i = 0; i < 50; ++i)
+      if (tryTeleportPlayerTo(player, center, radius, x + rand.nextInt(2 * r) - r, y, z + rand.nextInt(2 * r) - r))
+        return true;
+    return false;
+  }
+
+  private boolean tryTeleportPlayerTo(EntityPlayer player, BlockPos center, int radius, double x, double y, double z) {
+
+    double d0 = player.posX;
+    double d1 = player.posY;
+    double d2 = player.posZ;
+    player.posX = x;
+    player.posY = y;
+    player.posZ = z;
+    boolean flag = false;
+    BlockPos blockpos = new BlockPos(player);
+    World world = player.world;
+    Random random = player.getRNG();
+
+    if (world.isBlockLoaded(blockpos)) {
+      boolean flag1 = false;
+
+      while (!flag1 && blockpos.getY() > Math.max(0, center.getY() - (radius - 1))) {
+        BlockPos blockpos1 = blockpos.down();
+        IBlockState iblockstate = world.getBlockState(blockpos1);
+
+        if (iblockstate.getMaterial().blocksMovement()) {
+          flag1 = true;
+        } else {
+          --player.posY;
+          blockpos = blockpos1;
+        }
+      }
+
+      BlockPos target = player.getPosition().down();
+      Borderblocks.log.debug(flag1, world.getBlockState(target), world.isBlockFullCube(target));
+      if (flag1 && world.isBlockFullCube(target) && !(world.getBlockState(target).getBlock() instanceof PhaseBarrierBlock)) {
+        player.setPositionAndUpdate(player.posX + 0.5, player.posY, player.posZ + 0.5);
+
+        if (world.getCollisionBoxes(player, player.getEntityBoundingBox()).isEmpty() && !world.containsAnyLiquid(player.getEntityBoundingBox())) {
+          flag = true;
+        }
+      }
+    }
+
+    if (!flag) {
+      player.setPositionAndUpdate(d0, d1, d2);
+      return false;
+    } else {
+      int i = 128;
+
+      for (int j = 0; j < 128; ++j) {
+        double d6 = (double) j / 127.0D;
+        float f = (random.nextFloat() - 0.5F) * 0.2F;
+        float f1 = (random.nextFloat() - 0.5F) * 0.2F;
+        float f2 = (random.nextFloat() - 0.5F) * 0.2F;
+        double d3 = d0 + (player.posX - d0) * d6 + (random.nextDouble() - 0.5D) * (double) player.width * 2.0D;
+        double d4 = d1 + (player.posY - d1) * d6 + random.nextDouble() * (double) player.height;
+        double d5 = d2 + (player.posZ - d2) * d6 + (random.nextDouble() - 0.5D) * (double) player.width * 2.0D;
+        world.spawnParticle(EnumParticleTypes.PORTAL, d3, d4, d5, (double) f, (double) f1, (double) f2);
+      }
+
+      return true;
+    }
+  }
+
   protected boolean isPointInSphere(BlockPos pos, BlockPos center, int radius) {
 
     int x = pos.getX() - center.getX();
@@ -124,16 +203,6 @@ public class ActionSkillSiren extends ActionSkill {
     int r2 = radius * radius;
     return k >= r2 - radius && k <= r2 + radius;
   }
-
-//  protected @Nullable RayTraceResult rayTrace(EntityPlayer player) {
-//
-//    PlayerData data = PlayerDataHandler.get(player);
-//    double distance = getSkillReach(data);
-//    Vec3d vec = player.getPositionEyes(0);
-//    Vec3d vec1 = player.getLook(0);
-//    Vec3d vec2 = vec.addVector(vec1.x * distance, vec1.y * distance, vec1.z * distance);
-//    return player.world.rayTraceBlocks(vec, vec2, false, false, true);
-//  }
 
   @Override
   public float getCooldownTime() {

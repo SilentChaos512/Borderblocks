@@ -67,21 +67,21 @@ public class CharacterClass {
 
       actionSkill = SkillList.ACTION_SCAVENGER;
     } else if (className.equals(NAME_SIREN)) {
-      branchLeft.addSkill(SkillList.DURATION_BOOST_SIREN, 0);
-      branchLeft.addSkill(SkillList.HEALTH_BOOST_SIREN, 0);
-      branchLeft.addSkill(SkillList.REGEN_SIREN, 1);
-      branchLeft.addSkill(SkillList.ARROW_DEFLECTION, 1);
-      branchLeft.addSkill(SkillList.PLACEHOLDER, 2);
-      branchLeft.addSkill(SkillList.IGNITION, 2);
-      branchLeft.addSkill(SkillList.PLACEHOLDER, 2);
-
       branchMiddle.addSkill(SkillList.COOLDOWN_SIREN, 0);
-      branchMiddle.addSkill(SkillList.BARRIER_SUFFOCATE, 0);
+      branchMiddle.addSkill(SkillList.FIRE_DAMAGE_DOWN, 0);
       branchMiddle.addSkill(SkillList.ATTACK_SPEED_BOOST_K, 1);
-      branchMiddle.addSkill(SkillList.FIRE_DAMAGE_DOWN, 1);
+      branchMiddle.addSkill(SkillList.BARRIER_SUFFOCATE, 1);
       branchMiddle.addSkill(SkillList.PLACEHOLDER, 2);
+      branchMiddle.addSkill(SkillList.IGNITION, 2);
       branchMiddle.addSkill(SkillList.PLACEHOLDER, 2);
-      branchMiddle.addSkill(SkillList.PLACEHOLDER, 2);
+
+      branchRight.addSkill(SkillList.DURATION_BOOST_SIREN, 0);
+      branchRight.addSkill(SkillList.HEALTH_BOOST_SIREN, 0);
+      branchRight.addSkill(SkillList.REGEN_SIREN, 1);
+      branchRight.addSkill(SkillList.ARROW_DEFLECTION, 1);
+      branchRight.addSkill(SkillList.PLACEHOLDER, 2);
+      branchRight.addSkill(SkillList.BARRIER_TELEPORT, 2);
+      branchRight.addSkill(SkillList.PLACEHOLDER, 2);
 
       actionSkill = SkillList.ACTION_SIREN;
     }

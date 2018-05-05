@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.silentchaos512.borderblocks.command.CommandLevel;
 import net.silentchaos512.borderblocks.init.ModItems;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.network.MessageDataSync;
@@ -86,6 +87,6 @@ public class Borderblocks {
   @EventHandler
   public void onServerLoad(FMLServerStartingEvent event) {
 
-    // event.registerServerCommand(new CommandScalingHealth());
+    event.registerServerCommand(new CommandLevel());
   }
 }

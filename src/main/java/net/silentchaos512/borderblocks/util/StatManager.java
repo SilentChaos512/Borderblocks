@@ -32,13 +32,13 @@ public class StatManager {
     attr.applyModifier(newMod);
   }
 
-  public static void handleLogin(EntityPlayer player) {
+  public static void setPlayerStats(EntityPlayer player) {
 
     PlayerData data = PlayerDataHandler.get(player);
     int multi = data.getLevel() - 1;
 
     // Health
-    if (multi > 0 && Config.PLAYER_HEALTH_PER_LEVEL > 0f) {
+    if (Config.PLAYER_HEALTH_PER_LEVEL > 0f) {
       IAttributeInstance attr = player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
       if (attr != null) {
         float amount = Config.PLAYER_HEALTH_PER_LEVEL * multi;
@@ -47,7 +47,7 @@ public class StatManager {
     }
 
     // Attack Damage
-    if (multi > 0 && Config.PLAYER_DAMAGE_PER_LEVEL > 0f) {
+    if (Config.PLAYER_DAMAGE_PER_LEVEL > 0f) {
       IAttributeInstance attr = player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
       if (attr != null) {
         float amount = Config.PLAYER_DAMAGE_PER_LEVEL * multi;

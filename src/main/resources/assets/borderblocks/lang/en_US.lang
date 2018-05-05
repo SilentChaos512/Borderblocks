@@ -132,6 +132,13 @@ skill.borderblocks:speed_boost.name=Speed Boost (name TBD)
 skill.borderblocks:speed_boost.desc1=Increases movement speed.
 skill.borderblocks:speed_boost.desc2=Movement speed +%d%%
 
+# Commands
+
+command.borderblocks:playerLevel=Player's level is %d
+command.borderblocks:playerLevelSet=Player's level set to %d
+command.borderblocks:playerNotFound=Player not found
+command.borderblocks:invalidLevel=Level must be between %d and %d
+
 # GUI
 
 gui.borderblocks:cancel=Cancel

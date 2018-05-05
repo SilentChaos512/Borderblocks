@@ -499,6 +499,18 @@ public class PlayerDataHandler {
       return level >= Config.PLAYER_MAX_LEVEL;
     }
 
+    /**
+     * <strong> Do not use! </strong> Intended for use by CommandLevel only. Directly sets the players level, setting XP
+     * to the appropriate values as well.
+     */
+    public void setLevelDirectly(int lvl) {
+
+      this.xp = getXpForLevel(lvl);
+      this.level = lvl;
+      this.cooldown = 0f;
+      StatManager.setPlayerStats(playerWR.get());
+    }
+
     public int getAvailableSkillPoints() {
 
       int usedPoints = 0;
@@ -599,8 +611,10 @@ public class PlayerDataHandler {
       actionSkillDuration = 0;
 
       EntityPlayer player = playerWR.get();
-      if (player != null)
+      if (player != null) {
         player.heal(player.getMaxHealth() - player.getHealth());
+        StatManager.setPlayerStats(player);
+      }
     }
 
     public void respecSkills() {

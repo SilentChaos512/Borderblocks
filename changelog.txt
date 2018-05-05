@@ -3,6 +3,7 @@ Borderblocks Changelog
 0.1.1
 Added: Players gain extra health and attack damage for gaining levels (amounts are in the config)
 Added: Scavenger's repair skill implemented
+Added: Command to set player level
 Changed: Buffed the scavenger's multi-tool quite a bit
 Changed: Armored mobs now give more XP (half their armor value squared)
 

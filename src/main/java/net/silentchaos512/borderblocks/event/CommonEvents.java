@@ -46,7 +46,7 @@ public class CommonEvents {
 
       Greetings.greetPlayer(player);
 
-      StatManager.handleLogin(player);
+      StatManager.setPlayerStats(player);
     }
   }
 

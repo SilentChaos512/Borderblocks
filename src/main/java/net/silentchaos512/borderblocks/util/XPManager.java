@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
+import net.silentchaos512.lib.util.StackHelper;
 
 public class XPManager {
 
@@ -108,9 +109,12 @@ public class XPManager {
       blockMeta = 0;
     }
 
+    ItemStack blockStack = new ItemStack(block, 1, blockMeta);
+    if (StackHelper.isEmpty(blockStack))
+      return;
+
     PlayerData data = PlayerDataHandler.get(event.getPlayer());
 
-    ItemStack blockStack = new ItemStack(block, 1, blockMeta);
     for (int oreId : OreDictionary.getOreIDs(blockStack)) {
       String oreName = OreDictionary.getOreName(oreId);
       if (oreName.startsWith("ore")) {

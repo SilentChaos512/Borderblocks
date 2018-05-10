@@ -160,6 +160,7 @@ public class PlayerDataHandler {
     public static final String NBT_COOLDOWN = "cooldown";
     public static final String NBT_LAST_LOGIN = "last_login";
     public static final String NBT_LEVEL = "level";
+    public static final String NBT_LEVEL_SET_BY_COMMAND = "level_set_by_command";
     public static final String NBT_PROGRESSION_TIER = "progression_tier";
     public static final String NBT_SKILL_DURATION = "skill_duration";
     public static final String NBT_SKILLS = "skills";
@@ -185,6 +186,8 @@ public class PlayerDataHandler {
     final Map<Skill, Integer> skills = new HashMap<>();
     @Getter(value = AccessLevel.PUBLIC)
     final Map<Skill, Float> activeKillSkills = new HashMap<>();
+    /** Set true if the player's level has been set by a command. Tracked purely for statistical purposes. */
+    boolean levelSetByCommand = false;
 
     // Mining XP (accumulates and awards when player stops mining to prevent spam)
     static final int MINING_XP_DELAY = 50;
@@ -339,6 +342,9 @@ public class PlayerDataHandler {
       }
       tags.setTag(NBT_ACTIVE_KILL_SKILLS, tagList);
 
+      // Random stuff
+      tags.setBoolean(NBT_LEVEL_SET_BY_COMMAND, levelSetByCommand);
+
       // Last time played (TODO: are we using this?)
       int year = lastTimePlayed.get(Calendar.YEAR);
       int month = lastTimePlayed.get(Calendar.MONTH) + 1;
@@ -404,6 +410,9 @@ public class PlayerDataHandler {
           activeKillSkills.put(skill, time);
         }
       }
+
+      // Random stuff
+      levelSetByCommand = tags.getBoolean(NBT_LEVEL_SET_BY_COMMAND);
 
       // Last time played (TODO: are we using this?)
       String lastDatePlayed = tags.getString(NBT_LAST_LOGIN);
@@ -502,11 +511,15 @@ public class PlayerDataHandler {
     /**
      * <strong> Do not use! </strong> Intended for use by CommandLevel only. Directly sets the players level, setting XP
      * to the appropriate values as well.
+     * 
+     * @param isCommand
+     *          TODO
      */
-    public void setLevelDirectly(int lvl) {
+    public void setLevelDirectly(int lvl, boolean isCommand) {
 
       this.xp = getXpForLevel(lvl);
       this.level = lvl;
+      this.levelSetByCommand |= isCommand;
       this.cooldown = 0f;
       StatManager.setPlayerStats(playerWR.get());
     }

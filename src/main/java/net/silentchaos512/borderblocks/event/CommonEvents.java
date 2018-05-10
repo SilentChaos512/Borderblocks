@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.advancements.ClassChosenTrigger;
 import net.silentchaos512.borderblocks.advancements.ModTriggers;
@@ -27,15 +28,14 @@ public class CommonEvents {
   @SubscribeEvent
   public void onPlayerJoinedServer(PlayerLoggedInEvent event) {
 
-    // Sync player data and set health.
+    // Sync player data.
     if (event.player instanceof EntityPlayerMP) {
       EntityPlayerMP player = (EntityPlayerMP) event.player;
       PlayerData data = PlayerDataHandler.get(player);
 
-      // Resets, based on config? (TODO: copied from Scaling Health, doing anything with this?)
+      // Update last time joined (not really used for much, it was copied from Scaling Health)
       Calendar today = Calendar.getInstance();
       Calendar lastTimePlayed = data.getLastTimePlayed();
-
       data.getLastTimePlayed().setTime(today.getTime());
 
       // WTF? (add listener for advancement with custom criterion?)
@@ -44,7 +44,8 @@ public class CommonEvents {
       addListenerHack(player, ModTriggers.SKILL_POINT_ADDED, new SkillPointAddedTrigger.Instance("any", 1), "get_action_skill", "skill_point_added");
       addListenerHack(player, ModTriggers.USE_ACTION_SKILL, new UseActionSkillTrigger.Instance("any"), "use_action_skill", "use_action_skill");
 
-      Greetings.greetPlayer(player);
+      if (today.compareTo(lastTimePlayed) >= 1000 * 60 * 60 * 24) // Display once per day.
+        Greetings.greetPlayer(player);
 
       StatManager.setPlayerStats(player);
     }
@@ -58,6 +59,20 @@ public class CommonEvents {
       PlayerData data = PlayerDataHandler.get(player);
 
       // TODO: do we need to remove the hacky advancement listeners?
+    }
+  }
+
+  @SubscribeEvent
+  public void onPlayerRespawn(PlayerRespawnEvent event) {
+
+    if (event.player instanceof EntityPlayerMP) {
+      EntityPlayerMP player = (EntityPlayerMP) event.player;
+      PlayerData data = PlayerDataHandler.get(player);
+
+      if (!event.isEndConquered()) {
+        // The player died and respawned.
+        StatManager.setPlayerStats(player);
+      }
     }
   }
 

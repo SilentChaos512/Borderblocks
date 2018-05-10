@@ -61,7 +61,7 @@ public class CommandLevel extends CommandBaseSL {
         tell(sender, "invalidLevel", true, 1, Config.PLAYER_MAX_LEVEL);
         return;
       }
-      data.setLevelDirectly(levelToSet);
+      data.setLevelDirectly(levelToSet, true);
       tell(sender, "playerLevelSet", true, levelToSet);
     } catch (NumberFormatException ex) {
       tell(sender, ex.getMessage(), true);

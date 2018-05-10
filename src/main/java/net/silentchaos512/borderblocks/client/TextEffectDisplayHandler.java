@@ -62,7 +62,7 @@ public class TextEffectDisplayHandler {
     Minecraft mc = Minecraft.getMinecraft();
 
     for (TextEffect effect : effectList)
-      effect.render(mc.fontRenderer);
+      effect.render(mc.fontRenderer, event.getPartialTicks());
   }
 
   @SubscribeEvent
@@ -124,20 +124,27 @@ public class TextEffectDisplayHandler {
 
       --life;
       scale += scaleDelta;
-      if (life <= moveStartTime) {
+      if (shouldMove()) {
         posX += speedX;
         posY += speedY;
       }
     }
 
-    public void render(FontRenderer fontRender) {
+    private boolean shouldMove() {
+
+      return life <= moveStartTime;
+    }
+
+    public void render(FontRenderer fontRender, float partialTicks) {
 
       GlStateManager.pushMatrix();
 
       int width = fontRender.getStringWidth(text);
       int height = fontRender.FONT_HEIGHT;
-      float x = (posX - width * scale / 2f) / scale;
-      float y = (posY - height * scale / 2f) / scale;
+      float partialX = shouldMove() ? speedX * partialTicks : 0f;
+      float partialY = shouldMove() ? speedY * partialTicks : 0f;
+      float x = (posX + partialX - width * scale / 2f) / scale;
+      float y = (posY + partialY - height * scale / 2f) / scale;
 
       int colorThisFrame = color;
       if (life <= fadeTime) {

@@ -7,6 +7,8 @@ Added: Command to set player level
 Changed: Buffed the scavenger's multi-tool quite a bit
 Changed: Armored mobs now give more XP (half their armor value squared)
 Changed: Rearranged siren skill trees
+Fixed: Scavenger multi-tool not being effective on some blocks
+Fixed: XP text should move more smoothly
 
 0.1.0
 Initial release

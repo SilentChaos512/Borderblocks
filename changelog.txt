@@ -2,6 +2,8 @@ Borderblocks Changelog
 
 0.1.2
 Changed: Alpha greeting displayed in chat should display only once per real world day.
+Changed: First skill point level to 5.
+Fixed: Crash when mining certain blocks.
 
 0.1.1
 Added: Players gain extra health and attack damage for gaining levels (amounts are in the config)

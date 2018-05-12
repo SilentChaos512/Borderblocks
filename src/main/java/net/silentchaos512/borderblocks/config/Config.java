@@ -38,7 +38,7 @@ public class Config extends ConfigBase {
    */
 
   public static int PLAYER_FIRST_SKILL_POINT_LEVEL;
-  static final int PLAYER_FIRST_SKILL_POINT_LEVEL_DEFAULT = 3;
+  static final int PLAYER_FIRST_SKILL_POINT_LEVEL_DEFAULT = 5;
   static final String PLAYER_FIRST_SKILL_POINT_LEVEL_COMMENT = "The level players gain their first skill point.";
 
   public static int PLAYER_MAX_LEVEL;

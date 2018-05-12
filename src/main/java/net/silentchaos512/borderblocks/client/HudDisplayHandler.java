@@ -23,6 +23,8 @@ public class HudDisplayHandler extends GuiScreen {
 
   public static final ResourceLocation HUD_TEXTURE = new ResourceLocation(Borderblocks.MOD_ID, "textures/gui/hud.png");
 
+  private static final int VANILLA_XP_DISPLAY_TIME = TimeHelper.ticksFromSeconds(10);
+
   int lastVanillaLevel = -1;
   int timerDisplayVanillaXp = 0;
 
@@ -131,7 +133,7 @@ public class HudDisplayHandler extends GuiScreen {
     // Display vanilla XP level occasionally...
     int newVanillaLevel = mc.player.experienceLevel;
     if (lastVanillaLevel > -1 && newVanillaLevel > 0 && lastVanillaLevel != newVanillaLevel && newVanillaLevel % 5 == 0) {
-      timerDisplayVanillaXp = 100;
+      timerDisplayVanillaXp = VANILLA_XP_DISPLAY_TIME;
     }
     lastVanillaLevel = newVanillaLevel;
     if (timerDisplayVanillaXp > 0)

@@ -70,6 +70,9 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
     this.setMaxDamage(0);
     this.hasSubtypes = true;
     this.setUnlocalizedName(Borderblocks.RESOURCE_PREFIX + NAME);
+    this.setHarvestLevel("pickaxe", 0);
+    this.setHarvestLevel("shovel", 0);
+    this.setHarvestLevel("axe", 0);
   }
 
   public ItemStack create(EntityPlayer player, ProgressionTier tier, int timeout) {

@@ -6,8 +6,13 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
@@ -18,10 +23,12 @@ import net.silentchaos512.borderblocks.advancements.ModTriggers;
 import net.silentchaos512.borderblocks.advancements.SkillPointAddedTrigger;
 import net.silentchaos512.borderblocks.advancements.UseActionSkillTrigger;
 import net.silentchaos512.borderblocks.advancements.UseItemTrigger;
+import net.silentchaos512.borderblocks.init.ModItems;
 import net.silentchaos512.borderblocks.lib.Greetings;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.borderblocks.util.StatManager;
+import net.silentchaos512.lib.util.StackHelper;
 
 public class CommonEvents {
 
@@ -73,6 +80,20 @@ public class CommonEvents {
         // The player died and respawned.
         StatManager.setPlayerStats(player);
       }
+    }
+  }
+
+  @SubscribeEvent
+  public void onLivingDrops(LivingDropsEvent event) {
+
+    Entity entity = event.getEntity();
+    if (!(entity instanceof IMob))
+      return;
+
+    if (Borderblocks.random.nextFloat() < 0.1f) { // TODO: Config
+      ItemStack stack = StackHelper.safeCopy(ModItems.craftingItem.relicFragment);
+      EntityItem entityItem = new EntityItem(entity.world, entity.posX, entity.posY + entity.height / 2f, entity.posZ, stack);
+      event.getDrops().add(entityItem);
     }
   }
 

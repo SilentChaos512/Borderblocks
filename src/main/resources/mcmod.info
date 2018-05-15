@@ -2,10 +2,10 @@
 {
   "modid": "borderblocks",
   "name": "Borderblocks",
-  "description": "TODO",
+  "description": "Borderlands in Minecraft",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "TODO",
+  "url": "https://minecraft.curseforge.com/projects/borderblocks",
   "authors": [ "SilentChaos512" ],
   "credits": ""
 }

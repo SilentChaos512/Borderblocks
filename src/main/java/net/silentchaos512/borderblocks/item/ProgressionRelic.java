@@ -107,19 +107,19 @@ public class ProgressionRelic extends ItemSL {
     ItemStack relicEridium = new ItemStack(this, 1, ProgressionTier.ERIDIUM.ordinal());
 
     recipes.addShapedOre("progression_relic_wood", relicWood,
-        "mmm", "mim", "mmm",
-        'm', "logWood", 'i', ModItems.craftingItem.scrapPile);
+        "mmm", "mcm", "mmm",
+        'm', "logWood", 'c', ModItems.craftingItem.relicCore);
     recipes.addShapedOre("progression_relic_stone", relicStone,
-        "mim", "mcm", "mim",
-        'm', "stone", 'i', ModItems.craftingItem.scrapPile, 'c', relicWood);
+        "mmm", "mcm", "mmm",
+        'm', "stone", 'c', relicWood);
     recipes.addShapedOre("progression_relic_iron", relicIron,
-        "sis", "mcm", "sis",
-        's', "ingotIron", 'm', "blockIron", 'i', ModItems.craftingItem.scrapPile, 'c', relicStone);
+        "mmm", "mcm", "mmm",
+        'm', "ingotIron", 'c', relicStone);
     recipes.addShapedOre("progression_relic_diamond", relicDiamond,
-        "sis", "mcm", "sis",
-        's', "gemDiamond", 'm', "blockDiamond", 'i', ModItems.craftingItem.scrapPile, 'c', relicIron);
+        "mmm", "mcm", "mmm",
+        'm', "gemDiamond", 'c', relicIron);
     recipes.addShapedOre("progression_relic_eridium", relicEridium,
-        "sis", "mcm", "sis",
-        's', "ingotEridium", 'm', "blockEridium", 'i', ModItems.craftingItem.scrapPile, 'c', relicDiamond);
+        "mmm", "mcm", "mmm",
+        'm', "ingotEridium", 'c', relicDiamond);
   }
 }

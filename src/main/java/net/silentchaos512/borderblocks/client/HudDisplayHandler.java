@@ -34,13 +34,16 @@ public class HudDisplayHandler extends GuiScreen {
     if (mc == null)
       mc = Minecraft.getMinecraft();
 
-    if (event.getType() == ElementType.EXPERIENCE) {
+    boolean typeXp = event.getType() == ElementType.EXPERIENCE;
+    boolean typeJump = event.getType() == ElementType.JUMPBAR;
+    if (typeXp || typeJump) {
       renderCooldown(event);
-      renderXp(event);
+      if (typeXp)
+        renderXp(event);
 
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       mc.renderEngine.bindTexture(ICONS);
-      if (event.isCanceled()) {
+      if (typeXp && event.isCanceled()) {
         MinecraftForge.EVENT_BUS.post(new RenderGameOverlayEvent.Post(event, ElementType.EXPERIENCE));
       }
     }

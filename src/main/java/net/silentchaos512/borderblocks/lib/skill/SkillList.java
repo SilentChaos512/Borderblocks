@@ -15,6 +15,7 @@ import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.lib.skill.action.ActionSkill;
 import net.silentchaos512.borderblocks.lib.skill.action.ActionSkillScavenger;
 import net.silentchaos512.borderblocks.lib.skill.action.ActionSkillSiren;
+import net.silentchaos512.borderblocks.lib.skill.action.ActionSkillTamer;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 
 public class SkillList {
@@ -46,17 +47,19 @@ public class SkillList {
       .setTextureIndex(0xF0);
   public static final ActionSkillSiren ACTION_SIREN = new ActionSkillSiren(Borderblocks.RESOURCE_PREFIX + "action_siren")
       .setTextureIndex(0xF1);
+  public static final ActionSkillTamer ACTION_TAMER = new ActionSkillTamer(Borderblocks.RESOURCE_PREFIX + "action_tamer")
+      .setTextureIndex(0xF2);
 
   // Other skills sorted by type, then by name.
   public static final BlockDropsSkill FORAGER = new BlockDropsSkill(Borderblocks.RESOURCE_PREFIX + "forager",
       1, true, 0.05f).setTextureIndex(0x8);
 
   public static final BreakSpeedSkill BREAK_SPEED_GENERIC = new BreakSpeedSkill(Borderblocks.RESOURCE_PREFIX + "break_speed_generic",
-      5, 0.15f).setTextureIndex(0x7);
+      5, 0.20f).setTextureIndex(0x7);
   public static final BreakSpeedSkill BREAK_SPEED_LOGS = new BreakSpeedSkill(Borderblocks.RESOURCE_PREFIX + "break_speed_logs",
-      5, 0.1f).setTextureIndex(0x4);
+      5, 0.15f).setTextureIndex(0x4);
   public static final BreakSpeedSkill BREAK_SPEED_ORES = new BreakSpeedSkill(Borderblocks.RESOURCE_PREFIX + "break_speed_ores",
-      5, 0.1f).setTextureIndex(0x2);
+      5, 0.15f).setTextureIndex(0x2);
 
   public static final CooldownBonusSkill COOLDOWN_SCAV = new CooldownBonusSkill(Borderblocks.RESOURCE_PREFIX + "cooldown_scavenger",
       5, 0.07f).setTextureIndex(0x1);
@@ -107,6 +110,14 @@ public class SkillList {
       5).setTextureIndex(0x12);
   public static final Skill MULTI_TOOL_REPAIR = new Skill(Borderblocks.RESOURCE_PREFIX + "multi_tool_repair",
       1).setTextureIndex(0x10).setModifierValue(SkillConst.MULTI_TOOL_REPAIR_AMOUNT);
+  public static final Skill PET_HEALTH_UP = new Skill(Borderblocks.RESOURCE_PREFIX + "pet_health_boost",
+      5).setTextureIndex(0x0).setModifierValue(0.1f, true);
+  public static final Skill PHANTOM_MOUNT_HEALTH_UP = new Skill(Borderblocks.RESOURCE_PREFIX + "phantom_mount_health_boost",
+      5).setTextureIndex(0x0).setModifierValue(0.1f, true);
+  public static final Skill PHANTOM_MOUNT_JUMP_UP = new Skill(Borderblocks.RESOURCE_PREFIX + "phantom_mount_jump_boost",
+      5).setTextureIndex(0x0).setModifierValue(0.2f, true);
+  public static final Skill PHANTOM_MOUNT_SPEED_UP = new Skill(Borderblocks.RESOURCE_PREFIX + "phantom_mount_speed_boost",
+      5).setTextureIndex(0x0).setModifierValue(0.1f, true);
 
   // Dummy skills
   public static final Skill PLACEHOLDER = new Skill(Borderblocks.RESOURCE_PREFIX + "placeholder", 5).setTextureIndex(0xFF);

@@ -17,12 +17,14 @@ public class CharacterClass {
   private static final String NAME_UNDEFINED = Borderblocks.RESOURCE_PREFIX + "_undefined_";
   private static final String NAME_SCAVENGER = Borderblocks.RESOURCE_PREFIX + "scavenger";
   private static final String NAME_SIREN = Borderblocks.RESOURCE_PREFIX + "siren";
+  private static final String NAME_TAMER = Borderblocks.RESOURCE_PREFIX + "tamer";
 
   public static final List<CharacterClass> ALL_CLASSES = new ArrayList<>();
 
   public static final CharacterClass CLASS_UNDEFINED = new CharacterClass(NAME_UNDEFINED);
   public static final CharacterClass CLASS_SCAVENGER = new CharacterClass(NAME_SCAVENGER);
   public static final CharacterClass CLASS_SIREN = new CharacterClass(NAME_SIREN);
+  //public static final CharacterClass CLASS_TAMER = new CharacterClass(NAME_TAMER);
 
   @Getter(value = AccessLevel.PUBLIC)
   String className;
@@ -84,6 +86,13 @@ public class CharacterClass {
       branchRight.addSkill(SkillList.PLACEHOLDER, 2);
 
       actionSkill = SkillList.ACTION_SIREN;
+    } else if (className.equals(NAME_TAMER)) {
+      branchLeft.addSkill(SkillList.PHANTOM_MOUNT_SPEED_UP, 0);
+      branchLeft.addSkill(SkillList.PHANTOM_MOUNT_JUMP_UP, 1);
+      branchLeft.addSkill(SkillList.PHANTOM_MOUNT_HEALTH_UP, 2);
+      branchMiddle.addSkill(SkillList.PET_HEALTH_UP, 0);
+
+      actionSkill = SkillList.ACTION_TAMER;
     }
 
     ALL_CLASSES.add(this);

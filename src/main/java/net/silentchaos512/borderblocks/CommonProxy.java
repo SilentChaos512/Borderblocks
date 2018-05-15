@@ -13,8 +13,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.silentchaos512.borderblocks.advancements.ModTriggers;
 import net.silentchaos512.borderblocks.config.Config;
 import net.silentchaos512.borderblocks.event.CommonEvents;
+import net.silentchaos512.borderblocks.event.PetEvents;
 import net.silentchaos512.borderblocks.event.SkillEvents;
 import net.silentchaos512.borderblocks.init.ModBlocks;
+import net.silentchaos512.borderblocks.init.ModEntities;
 import net.silentchaos512.borderblocks.init.ModItems;
 import net.silentchaos512.borderblocks.init.ModSounds;
 import net.silentchaos512.borderblocks.lib.character.CharacterClass;
@@ -41,6 +43,8 @@ public class CommonProxy {
     registry.addRegistrationHandler(new ModSounds(), SoundEvent.class);
     // ModEntities.init(registry);
 
+    ModEntities.init(registry);
+
     CharacterClass.init();
 
     // Advancements
@@ -55,6 +59,7 @@ public class CommonProxy {
     MinecraftForge.EVENT_BUS.register(new PlayerDataHandler.EventHandler());
     MinecraftForge.EVENT_BUS.register(XPManager.INSTANCE);
     MinecraftForge.EVENT_BUS.register(new CommonEvents());
+    MinecraftForge.EVENT_BUS.register(new PetEvents());
     MinecraftForge.EVENT_BUS.register(new SkillEvents());
   }
 

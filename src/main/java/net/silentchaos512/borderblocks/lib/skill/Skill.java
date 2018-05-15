@@ -34,6 +34,8 @@ public class Skill {
   /** Added in 0.1.1, mostly for desc2. */
   @Getter(value = AccessLevel.PUBLIC)
   protected float modifierAmount = 1f;
+  /** Added in 0.1.3, again used for desc2. */
+  protected boolean displayModifierAsPercentage = false;
 
   public Skill(String name, int maxPoints) throws IllegalArgumentException {
 
@@ -117,6 +119,13 @@ public class Skill {
     return (T) this;
   }
 
+  public <T extends Skill> T setModifierValue(float amount, boolean displayAsPercentage) {
+
+    this.modifierAmount = amount;
+    this.displayModifierAsPercentage = displayAsPercentage;
+    return (T) this;
+  }
+
   protected String getDesc2(int investedPoints) {
 
     String key = "skill." + name + ".desc2";
@@ -124,6 +133,11 @@ public class Skill {
   }
 
   protected Object[] getDesc2Params(int investedPoints) {
+
+    if (displayModifierAsPercentage) {
+      int val = (int) (100 * investedPoints * modifierAmount);
+      return new Object[] { val };
+    }
 
     float val = investedPoints * modifierAmount;
     if (val == (int) val)

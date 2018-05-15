@@ -49,6 +49,7 @@ item.borderblocks:scrap_pile.name=Scrap Pile
 # Classes
 class.borderblocks:scavenger.name=Scavenger
 class.borderblocks:siren.name=Siren
+class.borderblocks:tamer.name=Tamer
 class.borderblocks:_undefined_.name=Class Not Selected
 
 # Skills

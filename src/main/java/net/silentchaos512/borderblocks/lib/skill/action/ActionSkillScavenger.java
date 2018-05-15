@@ -52,6 +52,7 @@ public class ActionSkillScavenger extends ActionSkill {
     return 120f;
   }
 
+  @Override
   public float getSkillDuration(PlayerData playerData) {
 
     int points = playerData.getPointsInSkill(SkillList.DURATION_BOOST_SCAV);

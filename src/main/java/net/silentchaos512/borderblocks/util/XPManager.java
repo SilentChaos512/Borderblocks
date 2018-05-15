@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
+import net.minecraft.advancements.Advancement;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -141,22 +144,7 @@ public class XPManager {
     int amount = advancementXp.containsKey(id) ? advancementXp.get(id) : -1;
     if (amount < 0 && !id.startsWith("minecraft:recipes/")) {
       // There is no value in the map. Base XP off the frame.
-      net.minecraft.advancements.DisplayInfo displayInfo = event.getAdvancement().getDisplay();
-      if (displayInfo != null && displayInfo.shouldAnnounceToChat()) {
-        switch (displayInfo.getFrame()) {
-          case CHALLENGE:
-            amount = 5000;
-            break;
-          case GOAL:
-            amount = 1000;
-            break;
-          case TASK:
-            amount = 250;
-            break;
-          default:
-            break;
-        }
-      }
+      amount = getGenericAdvancementXp(event.getAdvancement(), player);
     }
 
     if (amount > 0) {
@@ -164,6 +152,46 @@ public class XPManager {
       Borderblocks.log.info(String.format(string, player.getName(), amount, id));
       awardXp(player, amount, false, XPSource.ADVANCEMENT);
     }
+  }
+
+  private static final int XP_BASE_TASK = 250;
+  private static final int XP_BASE_GOAL = 1000;
+  private static final int XP_BASE_CHALLENGE = 5000;
+  private static final float XP_MULTI_PER_PARENT = 0.1f;
+
+  public int getGenericAdvancementXp(@Nonnull Advancement advancement, @Nonnull EntityPlayer player) {
+
+    int amount = -1;
+    net.minecraft.advancements.DisplayInfo displayInfo = advancement.getDisplay();
+
+    if (displayInfo != null && displayInfo.shouldAnnounceToChat()) {
+      switch (displayInfo.getFrame()) {
+        case CHALLENGE:
+          amount = XP_BASE_CHALLENGE;
+          break;
+        case GOAL:
+          amount = XP_BASE_GOAL;
+          break;
+        case TASK:
+          amount = XP_BASE_TASK;
+          break;
+        default:
+          Borderblocks.log.warning("Unknown advancement frame type: " + displayInfo.getFrame().name());
+          return -1;
+      }
+    }
+
+    // Increase XP further down the tree. Limit to max of 20... just in case.
+    int parentCount = 0;
+    Advancement adv = advancement;
+    while (adv.getParent() != null && parentCount < 20) {
+      adv = adv.getParent();
+      ++parentCount;
+    }
+
+    amount *= 1 + XP_MULTI_PER_PARENT * parentCount;
+
+    return amount;
   }
 
   public static void awardXp(EntityPlayer player, int amount, boolean shareWithTeam) {

@@ -1,9 +1,16 @@
 Borderblocks Changelog
 
+0.1.3
+Changed: XP for advancements with no defined value is now increased according to how far down the tree it is
+
 0.1.2
-Changed: Alpha greeting displayed in chat should display only once per real world day.
-Changed: First skill point level to 5.
-Fixed: Crash when mining certain blocks.
+Added: Relic core and fragment items, used for progression relic crafting. Fragments are dropped by hostile mobs when killed.
+Changed: Most progression relic recipes
+Changed: Alpha greeting displayed in chat should display only once per real world day
+Changed: First skill point level to 5
+Fixed: Crash when mining certain blocks (#1)
+Fixed: Multi-tool 3rd person model
+Fixed: Multi-tool not working on wood anymore
 
 0.1.1
 Added: Players gain extra health and attack damage for gaining levels (amounts are in the config)

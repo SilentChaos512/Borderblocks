@@ -85,7 +85,7 @@ public class XPManager {
 
   private int getOreBonusXp(IBlockState state, PlayerData data) {
 
-    int base = 25;
+    int base = 0;
 
     // Get block, item dropped, and meta values
     Block block = state.getBlock();
@@ -104,9 +104,19 @@ public class XPManager {
     // Search through ore dictionary keys
     List<String> oreNames = StackHelper.getOreNames(blockStack);
     oreNames.addAll(StackHelper.getOreNames(dropStack));
-    for (String oreName : oreNames)
-      if (oreBonusXp.containsKey(oreName))
+    boolean isOre = false;
+    for (String oreName : oreNames) {
+      if (oreBonusXp.containsKey(oreName)) {
         base = oreBonusXp.get(oreName);
+        isOre = true;
+      } else if (oreName.startsWith("ore")) {
+        isOre = true;
+      }
+    }
+
+    // Seems to be an ore, but doesn't have a specific value listed;
+    if (isOre && base <= 0)
+      base = 25;
 
     // Bonus based on player level
     return Math.round(base * (1f + ORE_BONUS_PER_LEVEL * data.getLevel()));

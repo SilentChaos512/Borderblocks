@@ -9,8 +9,8 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "0.1.2"
-def silentlib_version = "2.3.1"
+version = "0.1.3"
+def silentlib_version = "2.3.2"
 def buildNum = 0;
 group = "net.silentchaos512.borderblocks"
 archivesBaseName = "Borderblocks-1.12.2"

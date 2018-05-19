@@ -90,7 +90,9 @@ public class CharacterClass {
       branchLeft.addSkill(SkillList.PHANTOM_MOUNT_SPEED_UP, 0);
       branchLeft.addSkill(SkillList.PHANTOM_MOUNT_JUMP_UP, 1);
       branchLeft.addSkill(SkillList.PHANTOM_MOUNT_HEALTH_UP, 2);
+
       branchMiddle.addSkill(SkillList.PET_HEALTH_UP, 0);
+      branchMiddle.addSkill(SkillList.ARMOR_BOOST_TAMER, 0);
 
       actionSkill = SkillList.ACTION_TAMER;
     }

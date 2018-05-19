@@ -79,6 +79,7 @@ public class CommonEvents {
       if (!event.isEndConquered()) {
         // The player died and respawned.
         StatManager.setPlayerStats(player);
+        player.setHealth(player.getMaxHealth());
       }
     }
   }

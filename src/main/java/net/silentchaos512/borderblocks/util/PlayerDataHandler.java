@@ -228,7 +228,7 @@ public class PlayerDataHandler {
       float deltaTime = 1f / 20f;
 
       // Action skill cooldown
-      if (cooldown > 0f) {
+      if (cooldown > 0f || actionSkillDuration > 0) {
         if (actionSkillDuration > 0) {
           --actionSkillDuration;
         } else {

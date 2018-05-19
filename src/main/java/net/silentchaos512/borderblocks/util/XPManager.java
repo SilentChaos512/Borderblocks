@@ -16,6 +16,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.math.MathHelper;
@@ -82,12 +83,32 @@ public class XPManager {
   public static final float BLOCK_XP_PER_HARDNESS = 2.0f;
   public static final float ORE_BONUS_PER_LEVEL = 0.05f;
 
-  private int getOreBonusXp(String oreName, PlayerData data) {
+  private int getOreBonusXp(IBlockState state, PlayerData data) {
 
     int base = 25;
-    if (oreBonusXp.containsKey(oreName)) {
-      base = oreBonusXp.get(oreName);
+
+    // Get block, item dropped, and meta values
+    Block block = state.getBlock();
+    int blockMeta = block.getMetaFromState(state);
+    if (block == Blocks.LIT_REDSTONE_ORE) {
+      block = Blocks.REDSTONE_ORE;
+      blockMeta = 0;
     }
+    Item droppedItem = block.getItemDropped(state, Borderblocks.random, 0);
+    int droppedMeta = block.damageDropped(state);
+
+    // Get stack of ore block and dropped item
+    ItemStack blockStack = new ItemStack(block, 1, blockMeta);
+    ItemStack dropStack = new ItemStack(droppedItem, 1, droppedMeta);
+
+    // Search through ore dictionary keys
+    List<String> oreNames = StackHelper.getOreNames(blockStack);
+    oreNames.addAll(StackHelper.getOreNames(dropStack));
+    for (String oreName : oreNames)
+      if (oreBonusXp.containsKey(oreName))
+        base = oreBonusXp.get(oreName);
+
+    // Bonus based on player level
     return Math.round(base * (1f + ORE_BONUS_PER_LEVEL * data.getLevel()));
   }
 
@@ -98,34 +119,18 @@ public class XPManager {
       return;
 
     IBlockState state = event.getState();
+
+    // Get block hardness, clamp to min-max
     float hardness = state.getBlockHardness(event.getWorld(), event.getPos());
-    if (hardness < MIN_BLOCK_HARDNESS) {
+    if (hardness < MIN_BLOCK_HARDNESS)
       return;
-    }
     hardness = MathHelper.clamp(hardness, MIN_BLOCK_HARDNESS, MAX_BLOCK_HARDNESS);
 
-    int oreBonus = 0;
-    Block block = state.getBlock();
-    int blockMeta = state.getBlock().getMetaFromState(state);
-    if (block == Blocks.LIT_REDSTONE_ORE) {
-      block = Blocks.REDSTONE_ORE;
-      blockMeta = 0;
-    }
-
-    ItemStack blockStack = new ItemStack(block, 1, blockMeta);
-    if (StackHelper.isEmpty(blockStack))
-      return;
-
+    // Ore bonus
     PlayerData data = PlayerDataHandler.get(event.getPlayer());
+    int oreBonus = getOreBonusXp(state, data);
 
-    for (int oreId : OreDictionary.getOreIDs(blockStack)) {
-      String oreName = OreDictionary.getOreName(oreId);
-      if (oreName.startsWith("ore")) {
-        oreBonus = getOreBonusXp(oreName, data);
-        break;
-      }
-    }
-
+    // Wood is too hard (insert jokes here)
     if (state.getMaterial() == Material.WOOD)
       hardness /= 2f;
 

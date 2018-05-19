@@ -55,11 +55,11 @@ public class SkillList {
       1, true, 0.05f).setTextureIndex(0x8);
 
   public static final BreakSpeedSkill BREAK_SPEED_GENERIC = new BreakSpeedSkill(Borderblocks.RESOURCE_PREFIX + "break_speed_generic",
-      5, 0.20f).setTextureIndex(0x7);
+      5, 0.2f, false).setTextureIndex(0x7);
   public static final BreakSpeedSkill BREAK_SPEED_LOGS = new BreakSpeedSkill(Borderblocks.RESOURCE_PREFIX + "break_speed_logs",
-      5, 0.15f).setTextureIndex(0x4);
+      5, 1.5f, true).setTextureIndex(0x4);
   public static final BreakSpeedSkill BREAK_SPEED_ORES = new BreakSpeedSkill(Borderblocks.RESOURCE_PREFIX + "break_speed_ores",
-      5, 0.15f).setTextureIndex(0x2);
+      5, 1.5f, true).setTextureIndex(0x2);
 
   public static final CooldownBonusSkill COOLDOWN_SCAV = new CooldownBonusSkill(Borderblocks.RESOURCE_PREFIX + "cooldown_scavenger",
       5, 0.07f).setTextureIndex(0x1);
@@ -83,6 +83,8 @@ public class SkillList {
 
   public static final ModifierSkill ARMOR_BOOST = new ModifierSkill(Borderblocks.RESOURCE_PREFIX + "armor_boost",
       5, SharedMonsterAttributes.ARMOR, 1.2, 0).setTextureIndex(0xD);
+  public static final ModifierSkill ARMOR_BOOST_TAMER = new ModifierSkill(Borderblocks.RESOURCE_PREFIX + "armor_boost_tamer",
+      5, SharedMonsterAttributes.ARMOR, 0.02, 1).setTextureIndex(0xD);
   public static final ModifierSkill ATTACK_SPEED_BOOST_K = new ModifierSkill(Borderblocks.RESOURCE_PREFIX + "attack_speed_boost",
       5, SharedMonsterAttributes.ATTACK_SPEED, 0.6f, 0).setKillSkill(10f).setTextureIndex(0x0);
   public static final ModifierSkill HEALTH_BOOST_SCAV = new ModifierSkill(Borderblocks.RESOURCE_PREFIX + "health_boost_scavenger",

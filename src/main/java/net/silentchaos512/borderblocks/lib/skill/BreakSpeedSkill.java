@@ -19,11 +19,13 @@ public class BreakSpeedSkill extends Skill {
   public static final List<BreakSpeedSkill> LIST_ALL = new ArrayList<>();
 
   protected float amountPerPoint;
+  protected boolean addInsteadOfMul;
 
-  public BreakSpeedSkill(String name, int maxPoints, float amountPerPoint) {
+  public BreakSpeedSkill(String name, int maxPoints, float amountPerPoint, boolean addInsteadOfMul) {
 
     super(name, maxPoints);
     this.amountPerPoint = amountPerPoint;
+    this.addInsteadOfMul = addInsteadOfMul;
 
     LIST_ALL.add(this);
   }
@@ -61,7 +63,10 @@ public class BreakSpeedSkill extends Skill {
         || (this == SkillList.BREAK_SPEED_LOGS && isLog)
         || (this == SkillList.BREAK_SPEED_ORES && isOre)) {
       float increase = amountPerPoint * investedPoints;
-      event.setNewSpeed(event.getNewSpeed() * (1f + increase));
+      if (addInsteadOfMul)
+        event.setNewSpeed(event.getNewSpeed() + increase);
+      else
+        event.setNewSpeed(event.getNewSpeed() * (1f + increase));
       return true;
     }
 
@@ -77,6 +82,9 @@ public class BreakSpeedSkill extends Skill {
   @Override
   protected Object[] getDesc2Params(int investedPoints) {
 
-    return new Object[] { (int) (100 * amountPerPoint * investedPoints) };
+    if (addInsteadOfMul)
+      return new Object[] { String.format("%.1f", amountPerPoint * investedPoints) };
+    else
+      return new Object[] { (int) (100 * amountPerPoint * investedPoints) + "%" };
   }
 }

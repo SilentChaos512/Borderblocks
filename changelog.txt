@@ -2,6 +2,8 @@ Borderblocks Changelog
 
 0.1.3
 Changed: XP for advancements with no defined value is now increased according to how far down the tree it is
+Changed: Rework ore XP for compatibility with more mods
+Fixed: Player not respawning with full health
 
 0.1.2
 Added: Relic core and fragment items, used for progression relic crafting. Fragments are dropped by hostile mobs when killed.

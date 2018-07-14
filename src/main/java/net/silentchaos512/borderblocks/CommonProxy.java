@@ -1,3 +1,21 @@
+/*
+ * Borderblocks
+ * Copyright (C) 2018 SilentChaos512
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation version 3
+ * of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package net.silentchaos512.borderblocks;
 
 import net.minecraft.block.Block;
@@ -27,79 +45,74 @@ import net.silentchaos512.borderblocks.network.MessagePlaySound;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.XPManager;
 import net.silentchaos512.borderblocks.world.WorldGeneratorBB;
+import net.silentchaos512.lib.proxy.IProxy;
 import net.silentchaos512.lib.registry.SRegistry;
 
-public class CommonProxy {
+public class CommonProxy implements IProxy {
 
-  public void preInit(SRegistry registry, FMLPreInitializationEvent event) {
+    @Override
+    public void preInit(SRegistry registry, FMLPreInitializationEvent event) {
+        registry.preInit(event);
 
-    registry.preInit();
+        Config.instance.init(event.getSuggestedConfigurationFile());
 
-    Config.instance.init(event.getSuggestedConfigurationFile());
+        // registry.addRegistrationHandler(new ModPotions(), Potion.class);
+        registry.addRegistrationHandler(new ModBlocks(), Block.class);
+        registry.addRegistrationHandler(new ModItems(), Item.class);
+        registry.addRegistrationHandler(new ModSounds(), SoundEvent.class);
+        // ModEntities.init(registry);
 
-    // registry.addRegistrationHandler(new ModPotions(), Potion.class);
-    registry.addRegistrationHandler(new ModBlocks(), Block.class);
-    registry.addRegistrationHandler(new ModItems(), Item.class);
-    registry.addRegistrationHandler(new ModSounds(), SoundEvent.class);
-    // ModEntities.init(registry);
+        ModEntities.init(registry);
 
-    ModEntities.init(registry);
+        CharacterClass.init();
 
-    CharacterClass.init();
+        // Advancements
+        ModTriggers.init(registry);
 
-    // Advancements
-    ModTriggers.init(registry);
+        // World generators
+        GameRegistry.registerWorldGenerator(new WorldGeneratorBB(), 0);
 
-    // World generators
-    GameRegistry.registerWorldGenerator(new WorldGeneratorBB(), 0);
+        // NetworkHandler.init();
 
-    // NetworkHandler.init();
-
-    // Event handlers registered here
-    MinecraftForge.EVENT_BUS.register(new PlayerDataHandler.EventHandler());
-    MinecraftForge.EVENT_BUS.register(XPManager.INSTANCE);
-    MinecraftForge.EVENT_BUS.register(new CommonEvents());
-    MinecraftForge.EVENT_BUS.register(new PetEvents());
-    MinecraftForge.EVENT_BUS.register(new SkillEvents());
-  }
-
-  public void init(SRegistry registry, FMLInitializationEvent event) {
-
-    registry.init();
-
-    for (Skill skill : SkillList.ALL_SKILLS) {
-      if (skill instanceof BlockDropsSkill) {
-        ((BlockDropsSkill) skill).initDrops();
-      }
+        // Event handlers registered here
+        MinecraftForge.EVENT_BUS.register(new PlayerDataHandler.EventHandler());
+        MinecraftForge.EVENT_BUS.register(XPManager.INSTANCE);
+        MinecraftForge.EVENT_BUS.register(new CommonEvents());
+        MinecraftForge.EVENT_BUS.register(new PetEvents());
+        MinecraftForge.EVENT_BUS.register(new SkillEvents());
     }
 
-    Config.instance.save();
-  }
+    @Override
+    public void init(SRegistry registry, FMLInitializationEvent event) {
+        registry.init(event);
 
-  public void postInit(SRegistry registry, FMLPostInitializationEvent event) {
+        for (Skill skill : SkillList.ALL_SKILLS) {
+            if (skill instanceof BlockDropsSkill) {
+                ((BlockDropsSkill) skill).initDrops();
+            }
+        }
 
-    registry.postInit();
-  }
-
-  // public void spawnParticles(EnumModParticles type, Color color, World world, double x, double y,
-  // double z, double motionX, double motionY, double motionZ) {
-  //
-  // }
-
-  public void playSoundOnClient(EntityPlayer player, SoundEvent sound, float volume, float pitch) {
-
-    if (player instanceof EntityPlayerMP) {
-      Borderblocks.network.wrapper.sendTo(new MessagePlaySound(sound, volume, pitch), (EntityPlayerMP) player);
+        Config.instance.save();
     }
-  }
 
-  public EntityPlayer getClientPlayer() {
+    @Override
+    public void postInit(SRegistry registry, FMLPostInitializationEvent event) {
+        registry.postInit(event);
+    }
 
-    return null;
-  }
+    public void playSoundOnClient(EntityPlayer player, SoundEvent sound, float volume, float pitch) {
+        if (player instanceof EntityPlayerMP) {
+            Borderblocks.network.wrapper.sendTo(new MessagePlaySound(sound, volume, pitch), (EntityPlayerMP) player);
+        }
+    }
 
-  public int getParticleSettings() {
+    @Override
+    public EntityPlayer getClientPlayer() {
+        return null;
+    }
 
-    return 0;
-  }
+    @Override
+    public int getParticleSettings() {
+        return 0;
+    }
 }

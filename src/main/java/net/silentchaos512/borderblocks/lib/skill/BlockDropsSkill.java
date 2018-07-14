@@ -1,8 +1,22 @@
-package net.silentchaos512.borderblocks.lib.skill;
+/*
+ * Borderblocks
+ * Copyright (C) 2018 SilentChaos512
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation version 3
+ * of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+package net.silentchaos512.borderblocks.lib.skill;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -16,53 +30,53 @@ import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.util.StackHelper;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class BlockDropsSkill extends Skill {
 
-  final Map<IBlockState, ItemStack> bonusDrops = new HashMap<>();
-  final boolean matchBlockOnly;
-  final float dropChance;
+    private final Map<IBlockState, ItemStack> bonusDrops = new HashMap<>();
+    private final boolean matchBlockOnly;
+    private final float dropChance;
 
-  public BlockDropsSkill(String name, int maxPoints, boolean matchBlockOnly, float dropChance) throws IllegalArgumentException {
-
-    super(name, maxPoints);
-    this.matchBlockOnly = matchBlockOnly;
-    this.dropChance = dropChance;
-  }
-
-  public boolean processDrops(HarvestDropsEvent event, int investedPoints, PlayerData data) {
-
-    EntityPlayer player = event.getHarvester();
-    IBlockState state = event.getState();
-    Block block = state.getBlock();
-    float chance = (float) (dropChance + 0.01 * player.getEntityAttribute(SharedMonsterAttributes.LUCK).getAttributeValue());
-    boolean ret = false;
-
-    for (Entry<IBlockState, ItemStack> entry : bonusDrops.entrySet()) {
-      if (matches(state, entry.getKey()) && Borderblocks.random.nextFloat() < chance) {
-        event.getDrops().add(StackHelper.safeCopy(entry.getValue()));
-        ret = true;
-      }
+    public BlockDropsSkill(String name, int maxPoints, boolean matchBlockOnly, float dropChance) throws IllegalArgumentException {
+        super(name, maxPoints);
+        this.matchBlockOnly = matchBlockOnly;
+        this.dropChance = dropChance;
     }
 
-    return ret;
-  }
+    public boolean processDrops(HarvestDropsEvent event, int investedPoints, PlayerData data) {
+        EntityPlayer player = event.getHarvester();
+        IBlockState state = event.getState();
+        Block block = state.getBlock();
+        float chance = (float) (dropChance + 0.01 * player.getEntityAttribute(SharedMonsterAttributes.LUCK).getAttributeValue());
+        boolean ret = false;
 
-  protected boolean matches(IBlockState state1, IBlockState state2) {
+        for (Entry<IBlockState, ItemStack> entry : bonusDrops.entrySet()) {
+            if (matches(state, entry.getKey()) && Borderblocks.random.nextFloat() < chance) {
+                event.getDrops().add(StackHelper.safeCopy(entry.getValue()));
+                ret = true;
+            }
+        }
 
-    if (matchBlockOnly)
-      return state1.getBlock() == state2.getBlock();
-    else
-      return state1.equals(state2); // TODO: Is this right?
-  }
-
-  public void initDrops() {
-
-    if (this == SkillList.FORAGER) {
-      bonusDrops.put(Blocks.LEAVES.getDefaultState(), new ItemStack(Items.STICK));
-      bonusDrops.put(Blocks.LEAVES2.getDefaultState(), new ItemStack(Items.STICK));
-      bonusDrops.put(Blocks.DIRT.getDefaultState(), new ItemStack(Items.POTATO));
-      bonusDrops.put(Blocks.GRASS.getDefaultState(), new ItemStack(Items.POTATO));
-      bonusDrops.put(Blocks.STONE.getDefaultState(), new ItemStack(Items.FLINT));
+        return ret;
     }
-  }
+
+    protected boolean matches(IBlockState state1, IBlockState state2) {
+        if (matchBlockOnly)
+            return state1.getBlock() == state2.getBlock();
+        else
+            return state1 == state2;
+    }
+
+    public void initDrops() {
+        if (this == SkillList.FORAGER) {
+            bonusDrops.put(Blocks.LEAVES.getDefaultState(), new ItemStack(Items.STICK));
+            bonusDrops.put(Blocks.LEAVES2.getDefaultState(), new ItemStack(Items.STICK));
+            bonusDrops.put(Blocks.DIRT.getDefaultState(), new ItemStack(Items.POTATO));
+            bonusDrops.put(Blocks.GRASS.getDefaultState(), new ItemStack(Items.POTATO));
+            bonusDrops.put(Blocks.STONE.getDefaultState(), new ItemStack(Items.FLINT));
+        }
+    }
 }

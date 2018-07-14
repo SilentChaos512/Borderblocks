@@ -1,0 +1,44 @@
+{
+  "result": {
+    "item": "borderblocks:eridium_block"
+  },
+  "ingredients": [
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 2
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

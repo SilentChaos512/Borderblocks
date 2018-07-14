@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "borderblocks:progression_relic",
+    "data": 4
+  },
+  "pattern": [
+    "mmm",
+    "mcm",
+    "mmm"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "c": {
+      "item": "borderblocks:progression_relic",
+      "data": 3
+    },
+    "m": {
+      "ore": "ingotEridium",
+      "type": "forge:ore_dict"
+    }
+  }
+}

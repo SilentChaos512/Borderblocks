@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "borderblocks:progression_relic",
+    "data": 3
+  },
+  "pattern": [
+    "mmm",
+    "mcm",
+    "mmm"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "c": {
+      "item": "borderblocks:progression_relic",
+      "data": 2
+    },
+    "m": {
+      "ore": "gemDiamond",
+      "type": "forge:ore_dict"
+    }
+  }
+}

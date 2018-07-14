@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "borderblocks:crafting_material",
+    "data": 4
+  },
+  "pattern": [
+    "fff",
+    "f f",
+    "fff"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "f": {
+      "item": "borderblocks:crafting_material",
+      "data": 3
+    }
+  }
+}

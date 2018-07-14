@@ -1,0 +1,45 @@
+{
+  "result": {
+    "item": "borderblocks:crafting_material",
+    "data": 1
+  },
+  "ingredients": [
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    },
+    {
+      "item": "borderblocks:crafting_material",
+      "data": 0
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

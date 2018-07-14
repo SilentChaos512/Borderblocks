@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "borderblocks:progression_relic",
+    "data": 0
+  },
+  "pattern": [
+    "mmm",
+    "mcm",
+    "mmm"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "c": {
+      "item": "borderblocks:crafting_material",
+      "data": 4
+    },
+    "m": {
+      "ore": "logWood",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -25,8 +25,12 @@ import net.silentchaos512.lib.registry.IRegistrationHandler;
 import net.silentchaos512.lib.registry.SRegistry;
 
 public class ModSounds implements IRegistrationHandler<SoundEvent> {
+    public static final ModSounds INSTANCE = new ModSounds();
 
     public static final SoundEvent LEVEL_UP = create("level_up");
+
+    private ModSounds() {
+    }
 
     @Override
     public void registerAll(SRegistry reg) {

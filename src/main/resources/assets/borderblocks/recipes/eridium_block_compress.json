@@ -4,40 +4,31 @@
   },
   "ingredients": [
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 2
+      "item": "borderblocks:eridium_ingot"
     }
   ],
   "type": "minecraft:crafting_shapeless"

@@ -1,8 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "borderblocks:progression_relic",
-            "data": 2
+            "item": "borderblocks:progression_relic_iron"
         },
         "title": {
             "translate": "advancements.borderblocks:progression_iron.title"
@@ -17,8 +16,7 @@
             "trigger": "borderblocks:use_item",
             "conditions": {
                 "item": {
-                    "item": "borderblocks:progression_relic",
-                    "data": 2
+                    "item": "borderblocks:progression_relic_iron"
                 }
             }
         }

@@ -1,44 +1,34 @@
 {
   "result": {
-    "item": "borderblocks:crafting_material",
-    "data": 1
+    "item": "borderblocks:scrap_pile"
   },
   "ingredients": [
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     },
     {
-      "item": "borderblocks:crafting_material",
-      "data": 0
+      "item": "borderblocks:scrap"
     }
   ],
   "type": "minecraft:crafting_shapeless"

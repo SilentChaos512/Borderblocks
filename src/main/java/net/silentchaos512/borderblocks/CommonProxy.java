@@ -57,10 +57,9 @@ public class CommonProxy implements IProxy {
         Config.instance.init(event.getSuggestedConfigurationFile());
 
         // registry.addRegistrationHandler(new ModPotions(), Potion.class);
-        registry.addRegistrationHandler(new ModBlocks(), Block.class);
-        registry.addRegistrationHandler(new ModItems(), Item.class);
-        registry.addRegistrationHandler(new ModSounds(), SoundEvent.class);
-        // ModEntities.init(registry);
+        registry.addRegistrationHandler(ModBlocks.INSTANCE, Block.class);
+        registry.addRegistrationHandler(ModItems.INSTANCE, Item.class);
+        registry.addRegistrationHandler(ModSounds.INSTANCE, SoundEvent.class);
 
         ModEntities.init(registry);
 
@@ -71,8 +70,6 @@ public class CommonProxy implements IProxy {
 
         // World generators
         GameRegistry.registerWorldGenerator(new WorldGeneratorBB(), 0);
-
-        // NetworkHandler.init();
 
         // Event handlers registered here
         MinecraftForge.EVENT_BUS.register(new PlayerDataHandler.EventHandler());

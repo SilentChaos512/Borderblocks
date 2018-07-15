@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "borderblocks:crafting_material"
+            "item": "borderblocks:scrap"
         },
         "title": {
             "translate": "advancements.borderblocks:get_scrap.title"
@@ -17,8 +17,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "borderblocks:crafting_material",
-                        "data": 0
+                        "item": "borderblocks:scrap"
                     }
                 ]
             }

@@ -1,13 +1,11 @@
 {
   "result": {
-    "item": "borderblocks:crafting_material",
-    "data": 0,
+    "item": "borderblocks:scrap",
     "count": 9
   },
   "ingredients": [
     {
-      "item": "borderblocks:crafting_material",
-      "data": 1
+      "item": "borderblocks:scrap_pile"
     }
   ],
   "type": "minecraft:crafting_shapeless"

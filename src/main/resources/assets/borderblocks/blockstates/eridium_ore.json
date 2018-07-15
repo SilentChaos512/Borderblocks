@@ -1,5 +1,6 @@
 {
     "variants": {
+        "inventory": { "model": "borderblocks:eridium_ore" },
         "normal": { "model": "borderblocks:eridium_ore" }
     }
 }

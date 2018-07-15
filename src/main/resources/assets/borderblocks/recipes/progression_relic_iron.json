@@ -1,7 +1,6 @@
 {
   "result": {
-    "item": "borderblocks:progression_relic",
-    "data": 2
+    "item": "borderblocks:progression_relic_iron"
   },
   "pattern": [
     "mmm",
@@ -11,8 +10,7 @@
   "type": "forge:ore_shaped",
   "key": {
     "c": {
-      "item": "borderblocks:progression_relic",
-      "data": 1
+      "item": "borderblocks:progression_relic_stone"
     },
     "m": {
       "ore": "ingotIron",

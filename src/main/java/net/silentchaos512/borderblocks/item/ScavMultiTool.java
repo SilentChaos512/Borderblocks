@@ -21,7 +21,6 @@ package net.silentchaos512.borderblocks.item;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -39,61 +38,58 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.silentchaos512.borderblocks.Borderblocks;
-import net.silentchaos512.borderblocks.init.ModItems;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.lib.skill.SkillConst;
 import net.silentchaos512.borderblocks.lib.skill.SkillList;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
-import net.silentchaos512.lib.registry.IRegistryObject;
-import net.silentchaos512.lib.registry.RecipeMaker;
 import net.silentchaos512.lib.util.ChatHelper;
 import net.silentchaos512.lib.util.PlayerHelper;
 import net.silentchaos512.lib.util.StackHelper;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
-    public static final String NAME = "scav_multi_tool";
-    public static final ToolMaterial FAKE_MATERIAL = EnumHelper.addToolMaterial(Borderblocks.RESOURCE_PREFIX + NAME + "_fake", 1, 100, 10f, 5f, 0);
+public class ScavMultiTool extends ItemPickaxe {
+    private static final ToolMaterial FAKE_MATERIAL = EnumHelper.addToolMaterial(Borderblocks.RESOURCE_PREFIX + "scav_multi_tool_fake", 1, 100, 10f, 5f, 0);
 
     // Stats
-    public static final float[] BREAK_SPEEDS = {4f, 8f, 16f, 32f, 64f};
-    public static final float[] ATTACK_DAMAGE = {3f, 6f, 11f, 14f, 19f};
+    private static final float[] BREAK_SPEEDS = {4f, 8f, 16f, 32f, 64f};
+    private static final float[] ATTACK_DAMAGE = {3f, 6f, 11f, 14f, 19f};
 
-    static final String NBT_ID = "id";
-    static final String NBT_MAX_TIMEOUT = "max_timeout";
+    private static final String NBT_ID = "id";
+    private static final String NBT_MAX_TIMEOUT = "max_timeout";
 
     /**
      * Stores the amount of time remaining for each active multi-tool.
      */
-    final Map<Long, Integer> timeoutMap = new HashMap<>();
+    private static final Map<Long, Integer> TIMEOUT_MAP = new HashMap<>();
+    private static final Map<ProgressionTier, ScavMultiTool> ITEMS = new HashMap<>();
+    private static final String NBT_ROOT = "ScavMultiTool";
 
-    public ScavMultiTool() {
+    private final ProgressionTier tier;
+
+    public ScavMultiTool(ProgressionTier tier) {
         super(FAKE_MATERIAL);
+        this.tier = tier;
         this.attackSpeed = -2.0f;
         this.maxStackSize = 1;
         this.setMaxDamage(0);
-        this.hasSubtypes = true;
-        this.setUnlocalizedName(Borderblocks.RESOURCE_PREFIX + NAME);
         this.setHarvestLevel("pickaxe", 0);
         this.setHarvestLevel("shovel", 0);
         this.setHarvestLevel("axe", 0);
+        ITEMS.put(tier, this);
     }
 
-    public ItemStack create(EntityPlayer player, ProgressionTier tier, int timeout) {
-        ItemStack result = new ItemStack(this, 1, tier.ordinal());
-        NBTTagCompound tags = StackHelper.getTagCompound(result, true);
+    public static ItemStack create(EntityPlayer player, ProgressionTier tier, int timeout) {
+        ScavMultiTool item = Objects.requireNonNull(ITEMS.get(tier));
+        ItemStack result = new ItemStack(item, 1);
+        NBTTagCompound tags = result.getOrCreateSubCompound(NBT_ROOT);
 
         PlayerData data = PlayerDataHandler.get(player);
         int fortuneLevel = data.getPointsInSkill(SkillList.MULTI_TOOL_FORTUNE);
@@ -110,7 +106,7 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
         tags.setLong(NBT_ID, id);
         tags.setInteger(NBT_MAX_TIMEOUT, timeout);
 
-        timeoutMap.put(id, timeout);
+        TIMEOUT_MAP.put(id, timeout);
         return result;
     }
 
@@ -120,26 +116,26 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
             return;
         EntityPlayer player = (EntityPlayer) entityIn;
 
-        NBTTagCompound tags = StackHelper.getTagCompound(stack, true);
+        NBTTagCompound tags = stack.getOrCreateSubCompound("ScavMultiTool");
         long id = tags.getLong(NBT_ID);
 
-        if (!timeoutMap.containsKey(id)) {
+        if (!TIMEOUT_MAP.containsKey(id)) {
             // timeoutMap does not contain a value for this multi-tool? Maybe the player restarted
             // their game/server. All we can do is reset the time to the max, I guess?
-            timeoutMap.put(id, tags.getInteger(NBT_MAX_TIMEOUT));
+            TIMEOUT_MAP.put(id, tags.getInteger(NBT_MAX_TIMEOUT));
         }
 
-        int timeout = timeoutMap.get(id);
+        int timeout = TIMEOUT_MAP.get(id);
         --timeout;
 
         if (timeout <= 0) {
             // Time ran out, remove the multi-tool
             player.renderBrokenItemStack(stack);
-            StackHelper.setCount(stack, 0);
+            stack.setCount(0);
             player.inventory.removeStackFromSlot(itemSlot);
-            timeoutMap.remove(id);
+            TIMEOUT_MAP.remove(id);
         } else {
-            timeoutMap.put(id, timeout);
+            TIMEOUT_MAP.put(id, timeout);
         }
     }
 
@@ -153,11 +149,11 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
 
             // Find scrap
             ItemStack scrap = PlayerHelper.getFirstValidStack(playerIn, true, true, false,
-                    s -> s.isItemEqual(ModItems.craftingItem.scrap));
+                    s -> s.getItem() == CraftingItems.SCRAP.getItem());
             if (StackHelper.isEmpty(scrap)) {
                 String line = Borderblocks.localization.getLocalizedString("skill", "multi_tool_repair.noScrap");
                 ChatHelper.sendStatusMessage(playerIn, line, true);
-                return new ActionResult<ItemStack>(EnumActionResult.FAIL, tool);
+                return new ActionResult<>(EnumActionResult.FAIL, tool);
             }
 
             // Find something to repair
@@ -168,7 +164,7 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
                     toRepair.setItemDamage(toRepair.getItemDamage() - SkillConst.MULTI_TOOL_REPAIR_AMOUNT);
                     scrap.shrink(1);
                 }
-                return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, tool);
+                return new ActionResult<>(EnumActionResult.SUCCESS, tool);
             }
         }
 
@@ -202,12 +198,12 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        NBTTagCompound tags = StackHelper.getTagCompound(stack, true);
+        NBTTagCompound tags = stack.getOrCreateSubCompound("ScavMultiTool");
         long id = tags.getLong(NBT_ID);
-        if (!timeoutMap.containsKey(id))
+        if (!TIMEOUT_MAP.containsKey(id))
             return 0.0;
 
-        int current = timeoutMap.get(id);
+        int current = TIMEOUT_MAP.get(id);
         int max = tags.getInteger(NBT_MAX_TIMEOUT);
         return 1.0 - (double) current / (double) max;
     }
@@ -217,8 +213,7 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
         Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
 
         if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-            int tier = MathHelper.clamp(stack.getItemDamage(), 0, ProgressionTier.values().length - 1);
-            float toolAttackDamage = ATTACK_DAMAGE[tier];
+            float toolAttackDamage = ATTACK_DAMAGE[this.tier.ordinal()];
 
             multimap.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
@@ -235,12 +230,12 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState) {
         int level = super.getHarvestLevel(stack, toolClass, player, blockState);
-        return level >= 0 ? getTier(stack).ordinal() : level;
+        return level >= 0 ? this.tier.ordinal() : level;
     }
 
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
-        int toolLevel = getTier(stack).ordinal();
+        int toolLevel = this.tier.ordinal();
         return state.getBlock().getHarvestLevel(state) <= toolLevel;
     }
 
@@ -248,12 +243,8 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
     public float getDestroySpeed(ItemStack stack, IBlockState state) {
         float destroySpeed = super.getDestroySpeed(stack, state);
         if (destroySpeed > 1f)
-            return BREAK_SPEEDS[getTier(stack).ordinal()];
+            return BREAK_SPEEDS[this.tier.ordinal()];
         return destroySpeed;
-    }
-
-    public ProgressionTier getTier(ItemStack stack) {
-        return ProgressionTier.byOrdinal(stack.getItemDamage());
     }
 
     @Override
@@ -261,46 +252,17 @@ public class ScavMultiTool extends ItemPickaxe implements IRegistryObject {
         if (!isInCreativeTab(tab))
             return;
 
-        for (ProgressionTier tier : ProgressionTier.values()) {
-            ItemStack stack = new ItemStack(this, 1, tier.ordinal());
-            NBTTagCompound tags = StackHelper.getTagCompound(stack, true);
-            tags.setLong(NBT_ID, tier.ordinal());
-            tags.setInteger(NBT_MAX_TIMEOUT, 1200);
-            list.add(stack);
-        }
+        ItemStack stack = new ItemStack(this);
+        NBTTagCompound tags = stack.getOrCreateSubCompound(NBT_ROOT);
+        tags.setLong(NBT_ID, this.tier.ordinal());
+        tags.setInteger(NBT_MAX_TIMEOUT, 1200);
+        list.add(stack);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        int tier = MathHelper.clamp(stack.getItemDamage(), 0, ProgressionTier.values().length - 1);
-        tooltip.add(String.format("Harvest speed: %d", (int) BREAK_SPEEDS[tier]));
-        tooltip.add(String.format("Harvest level: %d", tier));
-    }
-
-    @Override
-    public void addRecipes(RecipeMaker recipes) {
-    }
-
-    @Override
-    public void addOreDict() {
-    }
-
-    @Override
-    public String getModId() {
-        return Borderblocks.MOD_ID;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public void getModels(Map<Integer, ModelResourceLocation> models) {
-        for (ProgressionTier tier : ProgressionTier.values()) {
-            String name = Borderblocks.RESOURCE_PREFIX + "multi_tool_" + tier.name().toLowerCase();
-            models.put(tier.ordinal(), new ModelResourceLocation(name, "inventory"));
-        }
+        tooltip.add(String.format("Harvest speed: %d", (int) BREAK_SPEEDS[this.tier.ordinal()]));
+        tooltip.add(String.format("Harvest level: %d", this.tier.ordinal()));
     }
 }

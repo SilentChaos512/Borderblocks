@@ -26,7 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.client.gui.button.SkillButton;
-import net.silentchaos512.borderblocks.init.ModItems;
+import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.lib.character.CharacterClass;
 import net.silentchaos512.borderblocks.lib.character.SkillTreeBranch;
 import net.silentchaos512.borderblocks.lib.character.SkillTreeBranch.SkillTier;
@@ -119,8 +119,8 @@ public class GuiSkillTree extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         PlayerData data = PlayerDataHandler.get(mc.player);
-        int tier = data == null ? 0 : data.getProgressionTier().ordinal();
-        ItemStack stack = new ItemStack(ModItems.progressionRelic, 1, tier);
+        ProgressionTier tier = data != null ? data.getProgressionTier() : ProgressionTier.WOOD;
+        ItemStack stack = tier.getRelicStack();
         this.itemRender.renderItemAndEffectIntoGUI(stack, 120 + 2 * SKILL_BUTTON_SPACING, 39);
 
         int skillPointsLeft = data.getAvailableSkillPoints();

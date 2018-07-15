@@ -35,12 +35,11 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.advancements.*;
-import net.silentchaos512.borderblocks.init.ModItems;
+import net.silentchaos512.borderblocks.item.CraftingItems;
 import net.silentchaos512.borderblocks.lib.Greetings;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.borderblocks.util.StatManager;
-import net.silentchaos512.lib.util.StackHelper;
 
 import java.util.Calendar;
 
@@ -102,7 +101,7 @@ public class CommonEvents {
             return;
 
         if (Borderblocks.random.nextFloat() < 0.1f) { // TODO: Config
-            ItemStack stack = StackHelper.safeCopy(ModItems.craftingItem.relicFragment);
+            ItemStack stack = CraftingItems.RELIC_FRAGMENT.getStack();
             EntityItem entityItem = new EntityItem(entity.world, entity.posX, entity.posY + entity.height / 2f, entity.posZ, stack);
             event.getDrops().add(entityItem);
         }

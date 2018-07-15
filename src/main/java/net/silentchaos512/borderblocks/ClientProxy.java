@@ -25,10 +25,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.silentchaos512.borderblocks.client.ClientTickHandler;
-import net.silentchaos512.borderblocks.client.ColorHandlers;
 import net.silentchaos512.borderblocks.client.DebugDisplayHandler;
-import net.silentchaos512.borderblocks.client.TextEffectDisplayHandler;
 import net.silentchaos512.borderblocks.client.HudDisplayHandler;
+import net.silentchaos512.borderblocks.client.TextEffectDisplayHandler;
 import net.silentchaos512.borderblocks.client.key.KeyTracker;
 import net.silentchaos512.lib.registry.SRegistry;
 
@@ -54,8 +53,6 @@ public class ClientProxy extends CommonProxy {
     public void init(SRegistry registry, FMLInitializationEvent event) {
         super.init(registry, event);
         registry.clientInit(event);
-
-        ColorHandlers.init();
     }
 
     public void postInit(SRegistry registry, FMLPostInitializationEvent event) {

@@ -1,7 +1,6 @@
 {
   "result": {
-    "item": "borderblocks:crafting_material",
-    "data": 4
+    "item": "borderblocks:relic_core"
   },
   "pattern": [
     "fff",
@@ -11,8 +10,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "f": {
-      "item": "borderblocks:crafting_material",
-      "data": 3
+      "item": "borderblocks:relic_fragment"
     }
   }
 }

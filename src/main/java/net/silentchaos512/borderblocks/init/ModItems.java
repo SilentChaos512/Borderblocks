@@ -19,22 +19,37 @@
 package net.silentchaos512.borderblocks.init;
 
 import net.minecraft.item.Item;
-import net.silentchaos512.borderblocks.item.CraftingItem;
-import net.silentchaos512.borderblocks.item.ProgressionRelic;
+import net.minecraftforge.oredict.OreDictionary;
+import net.silentchaos512.borderblocks.item.CraftingItems;
 import net.silentchaos512.borderblocks.item.ScavMultiTool;
+import net.silentchaos512.borderblocks.lib.ProgressionTier;
+import net.silentchaos512.lib.item.IEnumItems;
 import net.silentchaos512.lib.registry.IRegistrationHandler;
 import net.silentchaos512.lib.registry.SRegistry;
 
-public class ModItems implements IRegistrationHandler<Item> {
+import java.util.Locale;
 
-    public static ProgressionRelic progressionRelic = new ProgressionRelic();
-    public static CraftingItem craftingItem = new CraftingItem();
-    public static ScavMultiTool scavMultiTool = new ScavMultiTool();
+public class ModItems implements IRegistrationHandler<Item> {
+    public static final ModItems INSTANCE = new ModItems();
+
+    private ModItems() {
+    }
 
     @Override
     public void registerAll(SRegistry reg) {
-        reg.registerItem(progressionRelic);
-        reg.registerItem(craftingItem);
-        reg.registerItem(scavMultiTool);
+        // Progression relics
+        for (ProgressionTier tier : ProgressionTier.values())
+            reg.registerItem(tier.getRelic(), "progression_relic_" + tier.getName());
+        // Crafting materials
+        IEnumItems.registerItems(CraftingItems.values(), reg);
+        // Scav Multi Tools
+        for (ProgressionTier tier : ProgressionTier.values())
+            reg.registerItem(new ScavMultiTool(tier), "scav_multi_tool_" + tier.name().toLowerCase(Locale.ROOT));
+
+        addOreDict();
+    }
+
+    public void addOreDict() {
+        OreDictionary.registerOre("ingotEridium", CraftingItems.ERIDIUM_INGOT.getStack());
     }
 }

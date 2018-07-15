@@ -1,7 +1,6 @@
 package net.silentchaos512.borderblocks;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -12,7 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.silentchaos512.borderblocks.command.CommandLevel;
-import net.silentchaos512.borderblocks.init.ModItems;
+import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.network.*;
 import net.silentchaos512.lib.SilentLib;
 import net.silentchaos512.lib.network.NetworkHandlerSL;
@@ -28,7 +27,7 @@ public class Borderblocks {
     public static final String MOD_ID = "borderblocks";
     public static final String MOD_NAME = "Borderblocks";
     public static final String VERSION = "0.1.4";
-    public static final String VERSION_SILENTLIB = "2.3.7";
+    public static final String VERSION_SILENTLIB = "2.3.8";
     public static final int BUILD_NUM = 0;
     public static final String DEPENDENCIES = "required-after:forge@[14.23.3.2655,);required-after:silentlib@[" + VERSION_SILENTLIB + ",);";
     public static final String RESOURCE_PREFIX = MOD_ID + ":";
@@ -40,7 +39,7 @@ public class Borderblocks {
     public static SRegistry registry = new SRegistry(MOD_ID, log);
     public static NetworkHandlerSL network;
 
-    public static CreativeTabs creativeTab = registry.makeCreativeTab(MOD_ID, () -> new ItemStack(ModItems.progressionRelic));
+    public static CreativeTabs creativeTab = registry.makeCreativeTab(MOD_ID, ProgressionTier.ERIDIUM::getRelicStack);
 
     @Instance(MOD_ID)
     public static Borderblocks instance;

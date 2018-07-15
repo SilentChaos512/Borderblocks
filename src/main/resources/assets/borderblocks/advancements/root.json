@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "borderblocks:crafting_material"
+            "item": "borderblocks:relic_fragment"
         },
         "title": {
             "translate": "advancements.borderblocks:root.title"

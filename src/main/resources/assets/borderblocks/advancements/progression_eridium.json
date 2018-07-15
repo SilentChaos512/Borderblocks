@@ -1,8 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "borderblocks:progression_relic",
-            "data": 4
+            "item": "borderblocks:progression_relic_eridium"
         },
         "frame": "goal",
         "title": {
@@ -18,7 +17,7 @@
             "trigger": "borderblocks:use_item",
             "conditions": {
                 "item": {
-                    "item": "borderblocks:progression_relic",
+                    "item": "borderblocks:progression_relic_eridium",
                     "data": 4
                 }
             }

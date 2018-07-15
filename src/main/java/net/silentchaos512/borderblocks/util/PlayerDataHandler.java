@@ -54,7 +54,7 @@ import java.util.Map.Entry;
 
 public class PlayerDataHandler {
     private static final String NBT_ROOT = Borderblocks.MOD_ID + "_data";
-    private static Map<Integer, PlayerData> playerData = new HashMap();
+    private static Map<Integer, PlayerData> playerData = new HashMap<>();
 
     @Nullable
     public static PlayerData get(EntityPlayer player) {
@@ -369,7 +369,7 @@ public class PlayerDataHandler {
                     skills.put(skill, level);
                 } else {
                     String line = "Player %s has unknown skill \"%s\". Ignoring.";
-                    Borderblocks.log.warning(String.format(line, playerWR.get().getName(), id));
+                    Borderblocks.log.warn(line, playerWR.get().getName(), id);
                 }
             }
 
@@ -399,7 +399,7 @@ public class PlayerDataHandler {
                     int date = Integer.parseInt(dateParts[2]);
                     lastTimePlayed.set(year, month, date);
                 } catch (NumberFormatException ex) {
-                    Borderblocks.log.warning("Could not parse player's last login time.");
+                    Borderblocks.log.warn("Could not parse player's last login time.");
                     ex.printStackTrace();
                 }
             }
@@ -605,7 +605,6 @@ public class PlayerDataHandler {
             if (flag) {
                 cooldown = skill.getCooldownTime();
                 actionSkillDuration = TimeHelper.ticksFromSeconds(skill.getSkillDuration(this));
-                Borderblocks.log.debug(actionSkillDuration);
                 if (playerWR.get() instanceof EntityPlayerMP)
                     ModTriggers.USE_ACTION_SKILL.trigger((EntityPlayerMP) playerWR.get());
             }

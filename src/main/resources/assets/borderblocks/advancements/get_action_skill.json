@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "borderblocks:scav_multi_tool"
+            "item": "borderblocks:scav_multi_tool_wood"
         },
         "title": {
             "translate": "advancements.borderblocks:get_action_skill.title"

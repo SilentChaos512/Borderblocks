@@ -28,11 +28,15 @@ import net.silentchaos512.lib.registry.IRegistrationHandler;
 import net.silentchaos512.lib.registry.SRegistry;
 
 public class ModBlocks implements IRegistrationHandler<Block> {
+    public static final ModBlocks INSTANCE = new ModBlocks();
 
     public static EridiumOre eridiumOre = new EridiumOre();
     public static EridiumBlock eridiumBlock = new EridiumBlock();
     public static PhaseBarrierBlock phaseBarrier = new PhaseBarrierBlock();
     public static PhaseBarrierCore phaseBarrierCore = new PhaseBarrierCore();
+
+    private ModBlocks() {
+    }
 
     @Override
     public void registerAll(SRegistry reg) {

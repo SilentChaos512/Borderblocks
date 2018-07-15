@@ -5,7 +5,7 @@ advancements.borderblocks:root.title=Borderblocks
 advancements.borderblocks:root.description=Welcome to the Borderblocks
 advancements.borderblocks:choose_class.title=Choose a Class
 advancements.borderblocks:choose_class.description=Press the "Open Skill Tree" key (default K) to choose a class.
-advancements.borderblocks:get_action_skill.title=Beginnings of Something Special
+advancements.borderblocks:get_action_skill.title=Beginnings of Something Awesome
 advancements.borderblocks:get_action_skill.description=Open your skill tree (default K) after getting a skill point and unlock your action skill.
 advancements.borderblocks:get_scrap.title=It's Not Trash!
 advancements.borderblocks:get_scrap.description=Obtain some scrap. Everything has a use if you're creative enough!
@@ -24,27 +24,31 @@ advancements.borderblocks:use_action_skill.description=Press the action skill ke
 
 # Blocks
 
-tile.borderblocks:eridium_block.name=Eridium Block
-tile.borderblocks:eridium_ore.name=Eridium Ore
-tile.borderblocks:phase_barrier.name=Phase Barrier
-tile.borderblocks:phase_barrier_core.name=Phase Barrier
+tile.borderblocks.eridium_block.name=Eridium Block
+tile.borderblocks.eridium_ore.name=Eridium Ore
+tile.borderblocks.phase_barrier.name=Phase Barrier
+tile.borderblocks.phase_barrier_core.name=Phase Barrier
 
 #Items
 
-item.borderblocks:eridium_ingot.name=Eridium Ingot
-item.borderblocks:progression_relic_wood.name=Progression Relic: Wood
-item.borderblocks:progression_relic_stone.name=Progression Relic: Stone
-item.borderblocks:progression_relic_iron.name=Progression Relic: Iron
-item.borderblocks:progression_relic_diamond.name=Progression Relic: Diamond
-item.borderblocks:progression_relic_eridium.name=Progression Relic: Eridium
-item.borderblocks:progression_relic.cannotUse=You have already passed this tier
-item.borderblocks:progression_relic.used=Your progression tier is now %s
-item.borderblocks:relic_core.name=Relic Core
-item.borderblocks:relic_fragment.name=Relic Fragment
-item.borderblocks:scav_multi_tool.name=Scav Multi-Tool
-item.borderblocks:scrap.name=Scrap
-item.borderblocks:scrap.desc=An assortment of scrap materials.
-item.borderblocks:scrap_pile.name=Scrap Pile
+item.borderblocks.eridium_ingot.name=Eridium Ingot
+item.borderblocks.progression_relic_wood.name=Progression Relic: Wood
+item.borderblocks.progression_relic_stone.name=Progression Relic: Stone
+item.borderblocks.progression_relic_iron.name=Progression Relic: Iron
+item.borderblocks.progression_relic_diamond.name=Progression Relic: Diamond
+item.borderblocks.progression_relic_eridium.name=Progression Relic: Eridium
+item.borderblocks.progression_relic.cannotUse=You have already passed this tier
+item.borderblocks.progression_relic.used=Your progression tier is now %s
+item.borderblocks.relic_core.name=Relic Core
+item.borderblocks.relic_fragment.name=Relic Fragment
+item.borderblocks.scav_multi_tool_wood.name=Scav Multi-Tool
+item.borderblocks.scav_multi_tool_stone.name=Scav Multi-Tool
+item.borderblocks.scav_multi_tool_iron.name=Scav Multi-Tool
+item.borderblocks.scav_multi_tool_diamond.name=Scav Multi-Tool
+item.borderblocks.scav_multi_tool_eridium.name=Scav Multi-Tool
+item.borderblocks.scrap.name=Scrap
+item.borderblocks.scrap.desc=An assortment of scrap materials.
+item.borderblocks.scrap_pile.name=Scrap Pile
 
 # Classes
 class.borderblocks:scavenger.name=Scavenger

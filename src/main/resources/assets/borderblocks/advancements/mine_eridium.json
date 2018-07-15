@@ -17,8 +17,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "borderblocks:eridium_ore",
-                        "data": 0
+                        "item": "borderblocks:eridium_ore"
                     }
                 ]
             }

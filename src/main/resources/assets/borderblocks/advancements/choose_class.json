@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "borderblocks:progression_relic"
+            "item": "borderblocks:progression_relic_wood"
         },
         "title": {
             "translate": "advancements.borderblocks:choose_class.title"

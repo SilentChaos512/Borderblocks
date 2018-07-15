@@ -1,5 +1,9 @@
 Borderblocks Changelog
 
+0.1.4
+Removed metadata as a test case for 1.13 porting. Blocks should be the same, but items will disappear :(
+Switched to JSON recipes, let me know if anything is missing
+
 0.1.3
 Changed: XP for advancements with no defined value is now increased according to how far down the tree it is
 Changed: Rework ore XP for compatibility with more mods

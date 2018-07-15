@@ -18,10 +18,14 @@
 
 package net.silentchaos512.borderblocks.lib;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.silentchaos512.borderblocks.Borderblocks;
+import net.silentchaos512.borderblocks.item.ProgressionRelic;
 
+import javax.annotation.Nonnull;
 import java.util.Locale;
 
 public enum ProgressionTier implements IStringSerializable {
@@ -31,16 +35,11 @@ public enum ProgressionTier implements IStringSerializable {
     DIAMOND(TextFormatting.AQUA),
     ERIDIUM(TextFormatting.DARK_PURPLE);
 
-    final TextFormatting textColor;
+    private final TextFormatting textColor;
+    private ProgressionRelic relic;
 
     ProgressionTier(TextFormatting textColor) {
         this.textColor = textColor;
-    }
-
-    public static ProgressionTier byOrdinal(int value) {
-        if (value < 0 || value >= values().length)
-            return WOOD;
-        return values()[value];
     }
 
     public String getFormattedName() {
@@ -48,8 +47,23 @@ public enum ProgressionTier implements IStringSerializable {
         return textColor + Borderblocks.localization.getMiscText(key);
     }
 
+    public static ProgressionTier byOrdinal(int i) {
+        return values()[MathHelper.clamp(i, 0, values().length - 1)];
+    }
+
     @Override
     public String getName() {
         return name().toLowerCase(Locale.ROOT);
+    }
+
+    @Nonnull
+    public ProgressionRelic getRelic() {
+        if (relic == null) relic = new ProgressionRelic(this);
+        return relic;
+    }
+
+    @Nonnull
+    public ItemStack getRelicStack() {
+        return new ItemStack(getRelic());
     }
 }

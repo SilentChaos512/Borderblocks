@@ -26,7 +26,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.silentchaos512.borderblocks.Borderblocks;
-import net.silentchaos512.borderblocks.init.ModItems;
+import net.silentchaos512.borderblocks.item.ScavMultiTool;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.lib.skill.SkillList;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
@@ -51,7 +51,7 @@ public class ActionSkillScavenger extends ActionSkill {
 
         PlayerData data = PlayerDataHandler.get(player);
         int duration = TimeHelper.ticksFromSeconds(getSkillDuration(data));
-        ItemStack stack = ModItems.scavMultiTool.create(player, tier, duration);
+        ItemStack stack = ScavMultiTool.create(player, tier, duration);
         PlayerHelper.giveItem(player, stack);
 
         return true;

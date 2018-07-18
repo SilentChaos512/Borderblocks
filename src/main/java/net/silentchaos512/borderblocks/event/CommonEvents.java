@@ -120,7 +120,7 @@ public class CommonEvents {
      */
     private <T extends AbstractCriterionInstance> void addListenerHack(EntityPlayerMP player, ICriterionTrigger<T> trigger, T instance, String name, String criterionName) {
         ResourceLocation resource = new ResourceLocation(Borderblocks.RESOURCE_PREFIX + name);
-        Advancement advancement = player.mcServer.getAdvancementManager().getAdvancement(resource);
+        Advancement advancement = player.server.getAdvancementManager().getAdvancement(resource);
         trigger.addListener(player.getAdvancements(), new ICriterionTrigger.Listener<T>(instance, advancement, criterionName));
     }
 }

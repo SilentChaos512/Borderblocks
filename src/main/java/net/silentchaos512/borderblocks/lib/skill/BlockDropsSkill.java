@@ -28,7 +28,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
-import net.silentchaos512.lib.util.StackHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +54,7 @@ public class BlockDropsSkill extends Skill {
 
         for (Entry<IBlockState, ItemStack> entry : bonusDrops.entrySet()) {
             if (matches(state, entry.getKey()) && Borderblocks.random.nextFloat() < chance) {
-                event.getDrops().add(StackHelper.safeCopy(entry.getValue()));
+                event.getDrops().add(entry.getValue().copy());
                 ret = true;
             }
         }
@@ -63,7 +62,7 @@ public class BlockDropsSkill extends Skill {
         return ret;
     }
 
-    protected boolean matches(IBlockState state1, IBlockState state2) {
+    private boolean matches(IBlockState state1, IBlockState state2) {
         if (matchBlockOnly)
             return state1.getBlock() == state2.getBlock();
         else

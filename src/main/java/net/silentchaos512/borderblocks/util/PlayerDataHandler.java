@@ -552,7 +552,7 @@ public class PlayerDataHandler {
         }
 
         public int getPointsInSkill(Skill skill) {
-            return skills.containsKey(skill) ? skills.get(skill) : 0;
+            return skills.getOrDefault(skill, 0);
         }
 
         public void setPointsInSkill(Skill skill, int amount) {

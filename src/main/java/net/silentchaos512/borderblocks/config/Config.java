@@ -139,7 +139,7 @@ public class Config extends ConfigBase {
             ERIDIUM_ORE_GEN = new ConfigOptionOreGen("Eridium Ore", 0, 0.5f, 12, 6, 12);
             ERIDIUM_ORE_GEN.loadValue(config, CAT_WORLD).validate();
         } catch (Exception ex) {
-            Borderblocks.log.severe("Could not load configuration file!");
+            Borderblocks.log.error("Could not load configuration file!");
             ex.printStackTrace();
         }
     }

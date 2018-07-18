@@ -63,7 +63,7 @@ public class WorldGeneratorBB extends WorldGeneratorSL {
         if (config == Config.ERIDIUM_ORE_GEN)
             return ModBlocks.eridiumOre.getDefaultState();
         else
-            Borderblocks.log.severe("WorldGeneratorBB - Unknown ore config: " + config.name);
+            Borderblocks.log.error("WorldGeneratorBB - Unknown ore config: {}", config.name);
         return null;
     }
 }

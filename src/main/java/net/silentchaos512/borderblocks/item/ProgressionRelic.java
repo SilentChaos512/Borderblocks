@@ -38,7 +38,6 @@ import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.item.IColoredItem;
 import net.silentchaos512.lib.util.ChatHelper;
 import net.silentchaos512.lib.util.LocalizationHelper;
-import net.silentchaos512.lib.util.StackHelper;
 
 import java.awt.*;
 import java.util.List;
@@ -81,7 +80,7 @@ public class ProgressionRelic extends Item implements IColoredItem {
 
         // Upgrade!
         data.setProgressionTier(this.tier);
-        StackHelper.shrink(stack, 1);
+        stack.shrink(1);
         String tierText = loc.getMiscText("progressionTier." + this.tier.name().toLowerCase());
         String line = loc.getSubText(this, "used", tierText);
         ChatHelper.sendMessage(player, line);

@@ -161,15 +161,14 @@ public class XPManager {
         String id = event.getAdvancement().getId().toString();
         Borderblocks.log.debug("handle advancement " + id);
 
-        int amount = advancementXp.containsKey(id) ? advancementXp.get(id) : -1;
+        int amount = advancementXp.getOrDefault(id, -1);
         if (amount < 0 && !id.startsWith("minecraft:recipes/")) {
             // There is no value in the map. Base XP off the frame.
             amount = getGenericAdvancementXp(event.getAdvancement(), player);
         }
 
         if (amount > 0) {
-            String string = "%s earned %d XP for advancement %s";
-            Borderblocks.log.info(String.format(string, player.getName(), amount, id));
+            Borderblocks.log.info("{} earned {} XP for advancement \"{}\"", player.getName(), amount, id);
             awardXp(player, amount, false, XPSource.ADVANCEMENT);
         }
     }
@@ -195,7 +194,7 @@ public class XPManager {
                     amount = XP_BASE_TASK;
                     break;
                 default:
-                    Borderblocks.log.warning("Unknown advancement frame type: " + displayInfo.getFrame().name());
+                    Borderblocks.log.warn("Unknown advancement frame type: {}", displayInfo.getFrame().name());
                     return -1;
             }
         }

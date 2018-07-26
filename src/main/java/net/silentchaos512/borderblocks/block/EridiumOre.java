@@ -23,10 +23,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.silentchaos512.borderblocks.item.CraftingItems;
+import net.silentchaos512.lib.registry.IAddRecipes;
+import net.silentchaos512.lib.registry.RecipeMaker;
 
 import java.util.Random;
 
-public class EridiumOre extends BlockOre {
+public class EridiumOre extends BlockOre implements IAddRecipes {
 
     public EridiumOre() {
         setHardness(5.0f);
@@ -47,5 +50,10 @@ public class EridiumOre extends BlockOre {
     @Override
     public int quantityDropped(Random random) {
         return 1;
+    }
+
+    @Override
+    public void addRecipes(RecipeMaker recipes) {
+        recipes.addSmelting(this, CraftingItems.ERIDIUM_INGOT.getStack(), 0.8f);
     }
 }

@@ -26,7 +26,7 @@ public class Borderblocks {
 
     public static final String MOD_ID = "borderblocks";
     public static final String MOD_NAME = "Borderblocks";
-    public static final String VERSION = "0.1.4";
+    public static final String VERSION = "0.1.5";
     public static final String VERSION_SILENTLIB = "2.3.8";
     public static final int BUILD_NUM = 0;
     public static final String DEPENDENCIES = "required-after:forge@[14.23.3.2655,);required-after:silentlib@[" + VERSION_SILENTLIB + ",);";

@@ -30,6 +30,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
@@ -92,6 +93,7 @@ public class XPManager {
     private static final float ORE_BONUS_PER_LEVEL = 0.05f;
 
     private int getOreBonusXp(IBlockState state, PlayerData data) {
+        if (data == null) return 0;
         int base = 0;
 
         // Get block, item dropped, and meta values
@@ -131,7 +133,7 @@ public class XPManager {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onBlockBreak(BreakEvent event) {
-        if (event.getPlayer() == null || event.getPlayer().capabilities.isCreativeMode)
+        if (event.getPlayer() == null || event.getPlayer() instanceof FakePlayer || event.getPlayer().capabilities.isCreativeMode)
             return;
 
         IBlockState state = event.getState();

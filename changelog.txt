@@ -1,5 +1,9 @@
 Borderblocks Changelog
 
+0.1.5
+Fixed: Crash with dank/null mod
+Fixed: Error when fake players break blocks (OpenComputers)
+
 0.1.4
 Removed metadata as a test case for 1.13 porting. Blocks should be the same, but items will disappear :(
 Switched to JSON recipes, let me know if anything is missing

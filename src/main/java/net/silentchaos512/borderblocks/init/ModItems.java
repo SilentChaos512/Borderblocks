@@ -27,8 +27,6 @@ import net.silentchaos512.lib.item.IEnumItems;
 import net.silentchaos512.lib.registry.IRegistrationHandler;
 import net.silentchaos512.lib.registry.SRegistry;
 
-import java.util.Locale;
-
 public class ModItems implements IRegistrationHandler<Item> {
     public static final ModItems INSTANCE = new ModItems();
 
@@ -37,14 +35,11 @@ public class ModItems implements IRegistrationHandler<Item> {
 
     @Override
     public void registerAll(SRegistry reg) {
-        // Progression relics
-        for (ProgressionTier tier : ProgressionTier.values())
-            reg.registerItem(tier.getRelic(), "progression_relic_" + tier.getName());
-        // Crafting materials
-        IEnumItems.registerItems(CraftingItems.values(), reg);
-        // Scav Multi Tools
-        for (ProgressionTier tier : ProgressionTier.values())
-            reg.registerItem(new ScavMultiTool(tier), "scav_multi_tool_" + tier.name().toLowerCase(Locale.ROOT));
+        IEnumItems.RegistrationHelper enumItems = new IEnumItems.RegistrationHelper(reg);
+
+        enumItems.registerItemsGenericEnum(ProgressionTier::getRelic, e -> "progression_relic_" + e.getName(), ProgressionTier.class);
+        enumItems.registerItems(CraftingItems.values());
+        enumItems.registerItemsGenericEnum(ScavMultiTool::new, e -> "scav_multi_tool_" + e.getName(), ProgressionTier.class);
 
         addOreDict();
     }

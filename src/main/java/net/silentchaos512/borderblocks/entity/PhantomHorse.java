@@ -48,15 +48,17 @@ public class PhantomHorse extends EntityHorse {
         this.timer = duration;
 
         PlayerData data = PlayerDataHandler.get(owner);
-        int healthBoostLevel = data.getPointsInSkill(SkillList.PHANTOM_MOUNT_HEALTH_UP);
-        int jumpBoostLevel = data.getPointsInSkill(SkillList.PHANTOM_MOUNT_JUMP_UP);
-        int speedBoostLevel = data.getPointsInSkill(SkillList.PHANTOM_MOUNT_SPEED_UP);
-        AttributeModifier modHealth = new AttributeModifier("phantom_health_boost", healthBoostLevel * SkillList.PHANTOM_MOUNT_HEALTH_UP.getModifierAmount(), 1);
-        AttributeModifier modJump = new AttributeModifier("phantom_jump_boost", jumpBoostLevel * SkillList.PHANTOM_MOUNT_JUMP_UP.getModifierAmount(), 1);
-        AttributeModifier modSpeed = new AttributeModifier("phantom_speed_boost", speedBoostLevel * SkillList.PHANTOM_MOUNT_SPEED_UP.getModifierAmount(), 1);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(modHealth);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(modSpeed);
-        this.getEntityAttribute(JUMP_STRENGTH).applyModifier(modJump);
+        if (data != null) {
+            int healthBoostLevel = data.getPointsInSkill(SkillList.PHANTOM_MOUNT_HEALTH_UP);
+            int jumpBoostLevel = data.getPointsInSkill(SkillList.PHANTOM_MOUNT_JUMP_UP);
+            int speedBoostLevel = data.getPointsInSkill(SkillList.PHANTOM_MOUNT_SPEED_UP);
+            AttributeModifier modHealth = new AttributeModifier("phantom_health_boost", healthBoostLevel * SkillList.PHANTOM_MOUNT_HEALTH_UP.getModifierAmount(), 1);
+            AttributeModifier modJump = new AttributeModifier("phantom_jump_boost", jumpBoostLevel * SkillList.PHANTOM_MOUNT_JUMP_UP.getModifierAmount(), 1);
+            AttributeModifier modSpeed = new AttributeModifier("phantom_speed_boost", speedBoostLevel * SkillList.PHANTOM_MOUNT_SPEED_UP.getModifierAmount(), 1);
+            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(modHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(modSpeed);
+            this.getEntityAttribute(JUMP_STRENGTH).applyModifier(modJump);
+        }
     }
 
     @Override

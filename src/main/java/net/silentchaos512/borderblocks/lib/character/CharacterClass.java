@@ -127,7 +127,7 @@ public class CharacterClass {
     }
 
     public String getLocalizedName() {
-        return Borderblocks.localization.getLocalizedString("class." + className + ".name");
+        return Borderblocks.i18n.translate("class." + className + ".name");
     }
 
     public static CharacterClass getByName(String className) {

@@ -45,7 +45,7 @@ public class ActionSkillScavenger extends ActionSkill {
     @Override
     public boolean activate(EntityPlayer player, ProgressionTier tier, BlockPos hitPos, EnumFacing hitSide, boolean altKeyDown) {
         if (StackHelper.isValid(player.getHeldItemMainhand())) {
-            ChatHelper.sendStatusMessage(player, Borderblocks.localization.getLocalizedString("skill." + name + ".needEmptyHand"), true);
+            ChatHelper.sendStatusMessage(player, Borderblocks.i18n.translate("skill", name + ".needEmptyHand"), true);
             return false;
         }
 
@@ -74,15 +74,14 @@ public class ActionSkillScavenger extends ActionSkill {
     public List<String> getTooltip(int investedPoints, PlayerData playerData) {
         ProgressionTier tier = playerData.getProgressionTier();
         List<String> list = new ArrayList<>();
-        LocalizationHelper loc = Borderblocks.localization;
-        list.add(TextFormatting.GOLD + loc.getLocalizedString("skill." + name + ".name"));
+        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill", name + ".name"));
         list.add("");
-        list.add(loc.getLocalizedString("skill." + name + ".desc1"));
+        list.add(Borderblocks.i18n.translate("skill", name + ".desc1"));
         list.add("");
-        list.add(loc.getLocalizedString("skill." + name + ".desc2",
+        list.add(Borderblocks.i18n.translate("skill", name + ".desc2",
                 (int) getSkillDuration(playerData), (int) getCooldownTime(), tier.ordinal()));
         list.add("");
-        list.add(loc.getLocalizedString("skill", "action.progressionTier", tier.getFormattedName()));
+        list.add(Borderblocks.i18n.translate("skill", "action.progressionTier", tier.getFormattedName()));
         list.add(String.format("Points: %d / %d", investedPoints, maxPoints));
         return list;
     }

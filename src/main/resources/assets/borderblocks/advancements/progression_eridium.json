@@ -17,8 +17,7 @@
             "trigger": "borderblocks:use_item",
             "conditions": {
                 "item": {
-                    "item": "borderblocks:progression_relic_eridium",
-                    "data": 4
+                    "item": "borderblocks:progression_relic_eridium"
                 }
             }
         }

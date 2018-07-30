@@ -43,8 +43,7 @@ public enum ProgressionTier implements IStringSerializable {
     }
 
     public String getFormattedName() {
-        String key = "progressionTier." + name().toLowerCase();
-        return textColor + Borderblocks.localization.getMiscText(key);
+        return textColor + Borderblocks.i18n.miscText("progressionTier." + getName());
     }
 
     public static ProgressionTier byOrdinal(int i) {

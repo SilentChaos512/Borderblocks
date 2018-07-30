@@ -38,7 +38,6 @@ import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.gui.TexturedButton;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +53,10 @@ public class GuiSkillTree extends GuiScreen {
         super.initGui();
 
         PlayerData data = PlayerDataHandler.get(mc.player);
+        if (data == null) return;
         CharacterClass characterClass = data.getCharacterClass();
 
-        String buttonText = Borderblocks.localization.getLocalizedString("gui", "respec");
+        String buttonText = Borderblocks.i18n.translate("gui", "respec");
         buttonRespec = new GuiButton(buttonId++, 5, 5, 80, 20, buttonText);
         buttonList.add(buttonRespec);
         buttonChangeClass = new GuiButton(buttonId++, 100, 5, 80, 20, "Change Class");
@@ -71,6 +71,7 @@ public class GuiSkillTree extends GuiScreen {
 
     private void layoutActionSkill(int x, int y) {
         PlayerData data = PlayerDataHandler.get(mc.player);
+        if (data == null) return;
         CharacterClass characterClass = data.getCharacterClass();
         Skill skill = characterClass.getActionSkill();
         int investedPoints = data.getPointsInSkill(skill);
@@ -91,6 +92,7 @@ public class GuiSkillTree extends GuiScreen {
 
             for (Skill skill : skillTier) {
                 PlayerData data = PlayerDataHandler.get(Borderblocks.proxy.getClientPlayer());
+                if (data == null) return;
                 int investedPoints = data.getPointsInSkill(skill);
                 List<String> tooltip = wrapTooltipLines(skill.getTooltip(investedPoints, data));
 
@@ -123,8 +125,8 @@ public class GuiSkillTree extends GuiScreen {
         ItemStack stack = tier.getRelicStack();
         this.itemRender.renderItemAndEffectIntoGUI(stack, 120 + 2 * SKILL_BUTTON_SPACING, 39);
 
-        int skillPointsLeft = data.getAvailableSkillPoints();
-        String line = Borderblocks.localization.getLocalizedString("gui", "skillPointsLeft", skillPointsLeft);
+        int skillPointsLeft = data != null ? data.getAvailableSkillPoints() : 0;
+        String line = Borderblocks.i18n.translate("gui", "skillPointsLeft", skillPointsLeft);
         int lineWidth = fontRenderer.getStringWidth(line);
         fontRenderer.drawStringWithShadow(line, 159 - lineWidth / 2, 232, 0xFFFFFF);
 
@@ -137,9 +139,10 @@ public class GuiSkillTree extends GuiScreen {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(GuiButton button) {
         EntityPlayer player = Borderblocks.proxy.getClientPlayer();
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return;
 
         if (button instanceof SkillButton) {
             Skill skill = ((SkillButton) button).getSkill();
@@ -177,7 +180,7 @@ public class GuiSkillTree extends GuiScreen {
         }
     }
 
-    static final int LINE_WIDTH = 40;
+    private static final int LINE_WIDTH = 40;
 
     private List<String> wrapTooltipLines(List<String> list) {
         List<String> result = new ArrayList<>();

@@ -40,7 +40,6 @@ public class SkillList {
 
     // Action Skills
     public static final ActionSkill ACTION_UNDEFINED = new ActionSkill(Borderblocks.RESOURCE_PREFIX + "action_undefined") {
-
         @Override
         public float getCooldownTime() {
             return 10f;
@@ -85,7 +84,7 @@ public class SkillList {
     public static final DamageReductionSkill FALL_DAMAGE_DOWN = new DamageReductionSkill(Borderblocks.RESOURCE_PREFIX + "fall_damage_down",
             5, 0.16f, DamageSource.FALL).setTextureIndex(0xF);
     public static final DamageReductionSkill FALL_DAMAGE_DOWN_SCAV = new DamageReductionSkill(Borderblocks.RESOURCE_PREFIX + "fall_damage_down_scavenger",
-            5, 5, new DamageSource[0]).setTextureIndex(0xF);
+            5, 5).setTextureIndex(0xF);
     public static final DamageReductionSkill FIRE_DAMAGE_DOWN = new DamageReductionSkill(Borderblocks.RESOURCE_PREFIX + "fire_damage_down",
             5, 0.15f, DamageSource.IN_FIRE, DamageSource.ON_FIRE, DamageSource.LAVA);
 

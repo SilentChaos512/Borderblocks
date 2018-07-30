@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.advancements.ModTriggers;
 import net.silentchaos512.borderblocks.lib.skill.Skill;
 import net.silentchaos512.borderblocks.lib.skill.SkillList;
@@ -36,9 +35,10 @@ public class MessageSkillSetPoints extends MessageSL {
     PlayerData data = PlayerDataHandler.get(player);
     Skill skill = SkillList.getByName(skillName);
 
-    data.setPointsInSkill(skill, amount);
-
-    ModTriggers.SKILL_POINT_ADDED.trigger((EntityPlayerMP) player, skill, amount);
+    if (data != null && skill != null) {
+      data.setPointsInSkill(skill, amount);
+      ModTriggers.SKILL_POINT_ADDED.trigger((EntityPlayerMP) player, skill, amount);
+    }
 
     return null;
   }

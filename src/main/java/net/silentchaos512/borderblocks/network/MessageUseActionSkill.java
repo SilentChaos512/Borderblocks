@@ -1,15 +1,11 @@
 package net.silentchaos512.borderblocks.network;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.network.MessageSL;
@@ -45,7 +41,8 @@ public class MessageUseActionSkill extends MessageSL {
     BlockPos pos = hitPos == BlockPos.ORIGIN ? null : hitPos;
     EnumFacing side = EnumFacing.values()[MathHelper.clamp(hitSide, 0, EnumFacing.values().length)];
 
-    data.activateActionSkill(pos, side, this.altKeyDown);
+    if (data != null)
+      data.activateActionSkill(pos, side, this.altKeyDown);
 
     return null;
   }

@@ -31,13 +31,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.advancements.ModTriggers;
-import net.silentchaos512.borderblocks.client.ClientTickHandler;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
+import net.silentchaos512.lib.event.ClientTicks;
 import net.silentchaos512.lib.item.IColoredItem;
 import net.silentchaos512.lib.util.ChatHelper;
-import net.silentchaos512.lib.util.LocalizationHelper;
 
 import java.awt.*;
 import java.util.List;
@@ -61,17 +60,16 @@ public class ProgressionRelic extends Item implements IColoredItem {
         ItemStack stack = player.getHeldItem(hand);
 
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return new ActionResult<>(EnumActionResult.PASS, stack);
 
         if (player instanceof EntityPlayerMP)
             ModTriggers.USE_ITEM.trigger((EntityPlayerMP) player, stack);
 
         // Tier already achieved?
-        LocalizationHelper loc = Borderblocks.localization;
         if (data.getProgressionTier().ordinal() >= this.tier.ordinal()) {
             if (world.isRemote)
                 return new ActionResult<>(EnumActionResult.PASS, stack);
-            String line = loc.getSubText(this, "cannotUse");
-            ChatHelper.sendStatusMessage(player, line, true);
+            ChatHelper.translate(player, Borderblocks.i18n.getKey("item", "progression_relic", "cannotUse"));
             return new ActionResult<>(EnumActionResult.PASS, stack);
         }
 
@@ -81,9 +79,7 @@ public class ProgressionRelic extends Item implements IColoredItem {
         // Upgrade!
         data.setProgressionTier(this.tier);
         stack.shrink(1);
-        String tierText = loc.getMiscText("progressionTier." + this.tier.name().toLowerCase());
-        String line = loc.getSubText(this, "used", tierText);
-        ChatHelper.sendMessage(player, line);
+        ChatHelper.translate(player, Borderblocks.i18n.getKey("item", "progression_relic", "used"));
 
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
@@ -98,7 +94,7 @@ public class ProgressionRelic extends Item implements IColoredItem {
         return (stack, tintIndex) -> {
             if (tintIndex == 1) {
                 float period = 40f;
-                return Color.HSBtoRGB((ClientTickHandler.ticksInGame % period) / period, 0.6f, 1.0f);
+                return Color.HSBtoRGB((ClientTicks.ticksInGame % period) / period, 0.6f, 1.0f);
             }
             return 0xFFFFFF;
         };

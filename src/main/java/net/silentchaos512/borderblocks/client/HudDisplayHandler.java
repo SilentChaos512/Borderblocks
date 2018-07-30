@@ -70,8 +70,7 @@ public class HudDisplayHandler extends GuiScreen {
         GlStateManager.enableBlend();
 
         PlayerData data = PlayerDataHandler.get(mc.player);
-        if (data.getTotalSkillPoints() <= 0)
-            return;
+        if (data == null || data.getTotalSkillPoints() <= 0) return;
 
         ScaledResolution res = new ScaledResolution(mc);
         FontRenderer fontRender = mc.fontRenderer;

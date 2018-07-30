@@ -24,7 +24,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.silentchaos512.borderblocks.client.ClientTickHandler;
 import net.silentchaos512.borderblocks.client.DebugDisplayHandler;
 import net.silentchaos512.borderblocks.client.HudDisplayHandler;
 import net.silentchaos512.borderblocks.client.TextEffectDisplayHandler;
@@ -38,7 +37,6 @@ public class ClientProxy extends CommonProxy {
         super.preInit(registry, event);
 
         // Client-only event handlers
-        MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
         MinecraftForge.EVENT_BUS.register(KeyTracker.INSTANCE);
         MinecraftForge.EVENT_BUS.register(new HudDisplayHandler());
         MinecraftForge.EVENT_BUS.register(TextEffectDisplayHandler.INSTANCE);

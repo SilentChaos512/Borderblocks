@@ -86,7 +86,7 @@ public class BreakSpeedSkill extends Skill {
 
     @Override
     protected String getDesc2(int investedPoints) {
-        return TextFormatting.AQUA + Borderblocks.localization.getLocalizedString("skill", "break_speed_all.desc2", getDesc2Params(investedPoints));
+        return TextFormatting.AQUA + Borderblocks.i18n.translate("skill", "break_speed_all.desc2", getDesc2Params(investedPoints));
     }
 
     @Override

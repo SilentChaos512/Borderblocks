@@ -220,6 +220,7 @@ public class XPManager {
 
     public static void awardXp(EntityPlayer player, int amount, boolean shareWithTeam, XPSource source) {
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return;
         if (amount > 0 && !data.client) {
             switch (source) {
                 case ADVANCEMENT:

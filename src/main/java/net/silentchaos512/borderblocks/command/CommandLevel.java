@@ -19,6 +19,7 @@
 package net.silentchaos512.borderblocks.command;
 
 import com.google.common.collect.ImmutableList;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,10 +31,12 @@ import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.command.CommandBaseSL;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class CommandLevel extends CommandBaseSL {
-
     @Override
     public String getName() {
         return Borderblocks.MOD_ID + "_level";
@@ -58,8 +61,11 @@ public class CommandLevel extends CommandBaseSL {
             tell(sender, "playerNotFound", true);
             return;
         }
-
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) {
+            tell(sender, "playerNotFound", true);
+            return;
+        }
 
         // Get player level
         if (args.length < 2) {
@@ -88,9 +94,7 @@ public class CommandLevel extends CommandBaseSL {
 
     private void tell(ICommandSender sender, String key, boolean fromLocalizationFile, Object... args) {
         String locKey = "command." + Borderblocks.RESOURCE_PREFIX + key;
-        String value = fromLocalizationFile
-                ? Borderblocks.localization.getLocalizedString(locKey, args)
-                : locKey;
+        String value = fromLocalizationFile ? Borderblocks.i18n.translate(locKey, args) : locKey;
         sender.sendMessage(new TextComponentString(value));
     }
 }

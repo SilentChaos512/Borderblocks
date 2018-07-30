@@ -151,7 +151,7 @@ public class ScavMultiTool extends ItemPickaxe {
             ItemStack scrap = PlayerHelper.getFirstValidStack(playerIn, true, true, false,
                     s -> s.getItem() == CraftingItems.SCRAP.getItem());
             if (StackHelper.isEmpty(scrap)) {
-                String line = Borderblocks.localization.getLocalizedString("skill", "multi_tool_repair.noScrap");
+                String line = Borderblocks.i18n.translate("skill", "multi_tool_repair.noScrap");
                 ChatHelper.sendStatusMessage(playerIn, line, true);
                 return new ActionResult<>(EnumActionResult.FAIL, tool);
             }

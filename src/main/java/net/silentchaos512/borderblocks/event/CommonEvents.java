@@ -36,7 +36,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.advancements.*;
 import net.silentchaos512.borderblocks.item.CraftingItems;
-import net.silentchaos512.borderblocks.lib.Greetings;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.borderblocks.util.StatManager;
@@ -51,6 +50,7 @@ public class CommonEvents {
         if (event.player instanceof EntityPlayerMP) {
             EntityPlayerMP player = (EntityPlayerMP) event.player;
             PlayerData data = PlayerDataHandler.get(player);
+            if (data == null) return;
 
             // Update last time joined (not really used for much, it was copied from Scaling Health)
             Calendar today = Calendar.getInstance();
@@ -63,8 +63,8 @@ public class CommonEvents {
             addListenerHack(player, ModTriggers.SKILL_POINT_ADDED, new SkillPointAddedTrigger.Instance("any", 1), "get_action_skill", "skill_point_added");
             addListenerHack(player, ModTriggers.USE_ACTION_SKILL, new UseActionSkillTrigger.Instance("any"), "use_action_skill", "use_action_skill");
 
-            if (today.compareTo(lastTimePlayed) >= 1000 * 60 * 60 * 24) // Display once per day.
-                Greetings.greetPlayer(player);
+//            if (today.compareTo(lastTimePlayed) >= 1000 * 60 * 60 * 24) // Display once per day.
+//                Greetings.greetPlayer(player);
 
             StatManager.setPlayerStats(player);
         }
@@ -121,6 +121,6 @@ public class CommonEvents {
     private <T extends AbstractCriterionInstance> void addListenerHack(EntityPlayerMP player, ICriterionTrigger<T> trigger, T instance, String name, String criterionName) {
         ResourceLocation resource = new ResourceLocation(Borderblocks.RESOURCE_PREFIX + name);
         Advancement advancement = player.server.getAdvancementManager().getAdvancement(resource);
-        trigger.addListener(player.getAdvancements(), new ICriterionTrigger.Listener<T>(instance, advancement, criterionName));
+        trigger.addListener(player.getAdvancements(), new ICriterionTrigger.Listener<>(instance, advancement, criterionName));
     }
 }

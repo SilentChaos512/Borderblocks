@@ -23,25 +23,22 @@ import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 
 public class CooldownBonusSkill extends Skill {
-
     private float amountPerPoint;
 
     public CooldownBonusSkill(String name, int maxPoints, float amountPerPoint) {
-
         super(name, maxPoints);
         this.amountPerPoint = amountPerPoint;
     }
 
     @Override
     public void applyTo(EntityPlayer player, int pointsInSkill) {
-
         PlayerData data = PlayerDataHandler.get(player);
-        data.addCooldownBonus(amountPerPoint * pointsInSkill);
+        if (data != null)
+            data.addCooldownBonus(amountPerPoint * pointsInSkill);
     }
 
     @Override
     protected Object[] getDesc2Params(int investedPoints) {
-
         return new Object[]{(int) (100 * amountPerPoint * investedPoints)};
     }
 }

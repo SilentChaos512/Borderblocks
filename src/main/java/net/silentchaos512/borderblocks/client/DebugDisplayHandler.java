@@ -31,6 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.silentchaos512.borderblocks.config.Config;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
+import net.silentchaos512.lib.event.ClientTicks;
 import org.lwjgl.opengl.GL11;
 
 public class DebugDisplayHandler {
@@ -92,7 +93,7 @@ public class DebugDisplayHandler {
         int testWidth = fontRender.getStringWidth(test);
 
         GL11.glPushMatrix();
-        float delta = ClientTickHandler.ticksInGame / 20f;
+        float delta = ClientTicks.ticksInGame / 20f;
         float testScale = 1.5f + MathHelper.sin(4 * delta) / 4;
         float testScaleY = 1.5f + 0.75f * MathHelper.sin(3 * delta);
         GlStateManager.translate(width / 2, height / 4, 0);

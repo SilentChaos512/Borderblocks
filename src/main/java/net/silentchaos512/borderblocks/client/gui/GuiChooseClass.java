@@ -29,7 +29,6 @@ import net.silentchaos512.borderblocks.network.MessageSkillRespec;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.gui.TexturedButton;
-import net.silentchaos512.lib.util.LocalizationHelper;
 
 import java.io.IOException;
 
@@ -40,7 +39,6 @@ public class GuiChooseClass extends GuiScreen {
     @Override
     public void initGui() {
         super.initGui();
-        LocalizationHelper loc = Borderblocks.localization;
 
         int y = 30;
         for (CharacterClass charClass : CharacterClass.ALL_CLASSES) {
@@ -50,7 +48,7 @@ public class GuiChooseClass extends GuiScreen {
         }
 
         y += 60;
-        String buttonText = loc.getLocalizedString("gui", "cancel");
+        String buttonText = Borderblocks.i18n.translate("gui", "cancel");
         buttonCancel = new GuiButton(1000, 5, y, 100, 20, buttonText);
         buttonList.add(buttonCancel);
     }
@@ -73,6 +71,7 @@ public class GuiChooseClass extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         EntityPlayer player = Borderblocks.proxy.getClientPlayer();
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return;
 
         if (button instanceof CharacterClassButton) {
             CharacterClass charClass = ((CharacterClassButton) button).getCharacterClass();

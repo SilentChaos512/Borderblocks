@@ -28,7 +28,6 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.silentchaos512.borderblocks.Borderblocks;
-import net.silentchaos512.borderblocks.client.ClientTickHandler;
 import net.silentchaos512.borderblocks.client.gui.GuiChooseClass;
 import net.silentchaos512.borderblocks.client.gui.GuiFactoryBB;
 import net.silentchaos512.borderblocks.client.gui.GuiSkillTree;
@@ -38,6 +37,7 @@ import net.silentchaos512.borderblocks.network.MessageUseActionSkill;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.client.key.KeyTrackerSL;
+import net.silentchaos512.lib.event.ClientTicks;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
@@ -64,6 +64,7 @@ public class KeyTracker extends KeyTrackerSL {
     public void onKeyInput(KeyInputEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
         PlayerData data = PlayerDataHandler.get(mc.player);
+        if (data == null) return;
         // Open Config key (dev only)
         if (safeCheckPressed(keyOpenConfig)) {
             mc.displayGuiScreen(new GuiFactoryBB().createConfigGui(null));
@@ -80,7 +81,7 @@ public class KeyTracker extends KeyTrackerSL {
         else if (keyActionSkill.isPressed()) {
             double distance = data.getCharacterClass().getActionSkill().getSkillReach(data);
             // FIXME rayTrace will never detect entities
-            RayTraceResult rayTrace = mc.player.rayTrace(distance, ClientTickHandler.partialTicks);
+            RayTraceResult rayTrace = mc.player.rayTrace(distance, ClientTicks.partialTicks);
             BlockPos hitPos = null;
             EnumFacing hitSide = EnumFacing.UP;
             if (rayTrace != null && rayTrace.typeOfHit == Type.BLOCK) {

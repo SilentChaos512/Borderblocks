@@ -38,7 +38,6 @@ import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.lib.skill.SkillList;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
-import net.silentchaos512.lib.util.LocalizationHelper;
 import net.silentchaos512.lib.util.TimeHelper;
 
 import java.util.ArrayList;
@@ -234,15 +233,14 @@ public class ActionSkillSiren extends ActionSkill {
     public List<String> getTooltip(int investedPoints, PlayerData playerData) {
         ProgressionTier tier = playerData.getProgressionTier();
         List<String> list = new ArrayList<>();
-        LocalizationHelper loc = Borderblocks.localization;
-        list.add(TextFormatting.GOLD + loc.getLocalizedString("skill." + name + ".name"));
+        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill", name + ".name"));
         list.add("");
-        list.add(loc.getLocalizedString("skill." + name + ".desc1"));
+        list.add(Borderblocks.i18n.translate("skill", name + ".desc1"));
         list.add("");
-        list.add(loc.getLocalizedString("skill." + name + ".desc2",
+        list.add(Borderblocks.i18n.translate("skill", name + ".desc2",
                 getBarrierRadius(playerData), (int) getSkillReach(playerData), (int) getSkillDuration(playerData), (int) getCooldownTime()));
         list.add("");
-        list.add(loc.getLocalizedString("skill", "action.progressionTier", tier.getFormattedName()));
+        list.add(Borderblocks.i18n.translate("skill", "action.progressionTier", tier.getFormattedName()));
         list.add(String.format("Points: %d / %d", investedPoints, maxPoints));
         return list;
     }

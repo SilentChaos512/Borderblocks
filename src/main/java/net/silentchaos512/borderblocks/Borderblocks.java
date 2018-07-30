@@ -13,10 +13,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.silentchaos512.borderblocks.command.CommandLevel;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.network.*;
-import net.silentchaos512.lib.SilentLib;
 import net.silentchaos512.lib.network.NetworkHandlerSL;
 import net.silentchaos512.lib.registry.SRegistry;
-import net.silentchaos512.lib.util.LocalizationHelper;
+import net.silentchaos512.lib.util.I18nHelper;
 import net.silentchaos512.lib.util.LogHelper;
 
 import java.util.Random;
@@ -27,14 +26,14 @@ public class Borderblocks {
     public static final String MOD_ID = "borderblocks";
     public static final String MOD_NAME = "Borderblocks";
     public static final String VERSION = "0.1.5";
-    public static final String VERSION_SILENTLIB = "2.3.8";
+    public static final String VERSION_SILENTLIB = "2.3.13";
     public static final int BUILD_NUM = 0;
     public static final String DEPENDENCIES = "required-after:forge@[14.23.3.2655,);required-after:silentlib@[" + VERSION_SILENTLIB + ",);";
     public static final String RESOURCE_PREFIX = MOD_ID + ":";
 
     public static Random random = new Random();
     public static LogHelper log = new LogHelper(MOD_NAME, BUILD_NUM);
-    public static LocalizationHelper localization;
+    public static I18nHelper i18n = new I18nHelper(MOD_ID, log, true);
 
     public static SRegistry registry = new SRegistry(MOD_ID, log);
     public static NetworkHandlerSL network;
@@ -49,9 +48,6 @@ public class Borderblocks {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        localization = new LocalizationHelper(MOD_ID).setReplaceAmpersand(true);
-        SilentLib.instance.registerLocalizationHelperForMod(MOD_ID, localization);
-
         registry.recipes.setJsonHellMode(0 == getBuildNum());
 
         network = new NetworkHandlerSL(MOD_ID);

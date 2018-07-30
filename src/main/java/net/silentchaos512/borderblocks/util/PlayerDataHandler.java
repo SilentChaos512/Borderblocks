@@ -589,10 +589,11 @@ public class PlayerDataHandler {
 
         public void respecSkills() {
             skills.clear();
+            EntityPlayer player = playerWR.get();
 
-            if (!client && getTotalSkillPoints() > 0) {
-                String line = Borderblocks.localization.getMiscText("message.respec");
-                ChatHelper.sendMessage(playerWR.get(), line);
+            if (!client && getTotalSkillPoints() > 0 && player != null) {
+                String line = Borderblocks.i18n.miscText("message.respec");
+                ChatHelper.sendMessage(player, line);
             }
         }
 

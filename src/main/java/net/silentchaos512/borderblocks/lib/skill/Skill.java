@@ -27,7 +27,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
-import net.silentchaos512.lib.util.LocalizationHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +78,9 @@ public class Skill {
     @SideOnly(Side.CLIENT)
     public List<String> getTooltip(int investedPoints, PlayerData playerData) {
         List<String> list = new ArrayList<>();
-        LocalizationHelper loc = Borderblocks.localization;
-        list.add(TextFormatting.GOLD + loc.getLocalizedString("skill." + name + ".name"));
+        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill", name + ".name"));
         list.add("");
-        list.add(loc.getLocalizedString("skill." + name + ".desc1"));
+        list.add(Borderblocks.i18n.translate("skill", name + ".desc1"));
         list.add("");
 
         if (investedPoints > 0) {
@@ -90,7 +88,7 @@ public class Skill {
             list.add("");
         }
         if (investedPoints < maxPoints) {
-            list.add(loc.getMiscText("nextLevel"));
+            list.add(Borderblocks.i18n.miscText("nextLevel"));
             list.add(getDesc2(investedPoints + 1));
             list.add("");
         }
@@ -137,8 +135,7 @@ public class Skill {
     }
 
     protected String getDesc2(int investedPoints) {
-        String key = "skill." + name + ".desc2";
-        return TextFormatting.AQUA + Borderblocks.localization.getLocalizedString(key, getDesc2Params(investedPoints));
+        return TextFormatting.AQUA + Borderblocks.i18n.translate("skill", name + ".desc2", getDesc2Params(investedPoints));
     }
 
     protected Object[] getDesc2Params(int investedPoints) {

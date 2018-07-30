@@ -80,6 +80,7 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
 
             if (owner != null) {
                 PlayerData data = PlayerDataHandler.get(owner);
+                if (data == null) return;
                 // Regen
                 int regenLevel = data.getPointsInSkill(SkillList.REGEN_SIREN);
                 if (regenLevel > 0) {

@@ -59,6 +59,7 @@ public class SkillEvents {
 
     private void applySkillEffects(EntityPlayer player) {
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return;
         data.resetCooldownBonuses();
 
         // Apply skill modifiers
@@ -78,6 +79,7 @@ public class SkillEvents {
             return;
 
         PlayerData data = PlayerDataHandler.get((EntityPlayer) event.getEntity());
+        if (data == null) return;
 
         for (DamageReductionSkill skill : DamageReductionSkill.LIST_ALL) {
             int pointsInSkill = data.getPointsInSkill(skill);
@@ -96,6 +98,7 @@ public class SkillEvents {
             return;
 
         PlayerData data = PlayerDataHandler.get((EntityPlayer) event.getEntity());
+        if (data == null) return;
         int points = Math.max(data.getPointsInSkill(SkillList.FALL_DAMAGE_DOWN), data.getPointsInSkill(SkillList.FALL_DAMAGE_DOWN_SCAV));
         if (points > 0) {
             int negatedDistance = DamageReductionSkill.FALL_PROTECTION_NEGATE_DISTANCE * points;
@@ -110,6 +113,7 @@ public class SkillEvents {
             return;
 
         PlayerData data = PlayerDataHandler.get((EntityPlayer) event.getEntity());
+        if (data == null) return;
 
         for (BreakSpeedSkill skill : BreakSpeedSkill.LIST_ALL) {
             int pointsInSkill = data.getPointsInSkill(skill);
@@ -122,8 +126,7 @@ public class SkillEvents {
     public void onBlockDrops(HarvestDropsEvent event) {
         EntityPlayer player = event.getHarvester();
         PlayerData data = PlayerDataHandler.get(player);
-        if (data == null)
-            return;
+        if (data == null) return;
 
         Map<BlockDropsSkill, Integer> map = data.getSkillsOfType(BlockDropsSkill.class);
         for (Entry<BlockDropsSkill, Integer> entry : map.entrySet())
@@ -138,6 +141,7 @@ public class SkillEvents {
 
         EntityPlayer player = (EntityPlayer) entityHit;
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return;
         boolean shooterIsPlayer = event.getArrow() != null && event.getArrow().shootingEntity instanceof EntityPlayer;
         float baseChance = SkillList.ARROW_DEFLECTION.getChancePerPoint();
         int pointsInSkill = data.getPointsInSkill(SkillList.ARROW_DEFLECTION);
@@ -163,6 +167,7 @@ public class SkillEvents {
         if (event.getSource().getTrueSource() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
             PlayerData data = PlayerDataHandler.get(player);
+            if (data == null) return;
             for (Skill skill : data.getSkills().keySet())
                 if (skill.isKillSkill())
                     data.activateKillSkill(skill);

@@ -44,7 +44,7 @@ public class TextEffectDisplayHandler {
     }
 
     public void addXpEffect(int amount) {
-        String text = Borderblocks.localization.getMiscText("xpEarned", amount);
+        String text = Borderblocks.i18n.miscText("xpEarned", amount);
         ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
         int startX = res.getScaledWidth() / 2;
         int startY = res.getScaledHeight() - 100;
@@ -56,7 +56,7 @@ public class TextEffectDisplayHandler {
     }
 
     public void addLevelUpEffect() {
-        String text = Borderblocks.localization.getMiscText("levelUp");
+        String text = Borderblocks.i18n.miscText("levelUp");
         ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
         int posX = res.getScaledWidth() / 2;
         int posY = res.getScaledHeight() / 3;

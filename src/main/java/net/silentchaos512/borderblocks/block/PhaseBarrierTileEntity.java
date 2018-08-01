@@ -73,7 +73,7 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
                 if (ignitionLevel > 0 && mob instanceof EntityCreeper) {
                     ((EntityCreeper) mob).ignite();
                     // SkillEvents#mobGriefing will prevent any mob with this tag from damaging terrain.
-                    mob.getEntityData().setBoolean(SkillList.IGNITION.getName(), true);
+                    mob.getEntityData().setBoolean(SkillList.IGNITION.getName().toString(), true);
                 }
 
             }

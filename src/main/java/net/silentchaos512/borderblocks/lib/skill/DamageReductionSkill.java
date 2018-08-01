@@ -19,6 +19,7 @@
 package net.silentchaos512.borderblocks.lib.skill;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class DamageReductionSkill extends Skill {
     private DamageSource[] affectedSources;
     private float reducedAmount;
 
-    public DamageReductionSkill(String name, int maxPoints, float reducedAmount, DamageSource... affectedSources) {
+    public DamageReductionSkill(ResourceLocation name, int maxPoints, float reducedAmount, DamageSource... affectedSources) {
         super(name, maxPoints);
         this.affectedSources = affectedSources;
         this.reducedAmount = reducedAmount;

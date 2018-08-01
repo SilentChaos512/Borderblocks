@@ -19,13 +19,14 @@
 package net.silentchaos512.borderblocks.lib.skill;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 
 public class CooldownBonusSkill extends Skill {
     private float amountPerPoint;
 
-    public CooldownBonusSkill(String name, int maxPoints, float amountPerPoint) {
+    public CooldownBonusSkill(ResourceLocation name, int maxPoints, float amountPerPoint) {
         super(name, maxPoints);
         this.amountPerPoint = amountPerPoint;
     }

@@ -20,6 +20,7 @@ package net.silentchaos512.borderblocks.lib.skill.action;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.silentchaos512.borderblocks.entity.PhantomHorse;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
@@ -31,7 +32,7 @@ import net.silentchaos512.lib.util.TimeHelper;
 
 public class ActionSkillTamer extends ActionSkill {
 
-    public ActionSkillTamer(String name) {
+    public ActionSkillTamer(ResourceLocation name) {
         super(name);
     }
 

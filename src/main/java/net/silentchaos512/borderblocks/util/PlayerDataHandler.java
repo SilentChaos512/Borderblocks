@@ -304,7 +304,7 @@ public class PlayerDataHandler {
             NBTTagList tagSkills = new NBTTagList();
             for (Entry<Skill, Integer> entry : skills.entrySet()) {
                 NBTTagCompound compound = new NBTTagCompound();
-                compound.setString("id", entry.getKey().getName());
+                compound.setString("id", entry.getKey().getName().toString());
                 compound.setShort("level", entry.getValue().shortValue());
                 tagSkills.appendTag(compound);
             }
@@ -314,7 +314,7 @@ public class PlayerDataHandler {
             NBTTagList tagList = new NBTTagList();
             for (Entry<Skill, Float> entry : activeKillSkills.entrySet()) {
                 NBTTagCompound compound = new NBTTagCompound();
-                compound.setString("id", entry.getKey().getName());
+                compound.setString("id", entry.getKey().getName().toString());
                 compound.setFloat("time", entry.getValue());
             }
             tags.setTag(NBT_ACTIVE_KILL_SKILLS, tagList);

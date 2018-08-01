@@ -23,6 +23,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.UUID;
 
@@ -36,16 +37,16 @@ public class ModifierSkill extends Skill {
     private UUID uuid;
     private boolean alwaysApply = true;
 
-    public ModifierSkill(String name, int maxPoints, IAttribute attribute, double amountPerPoint, int operation) {
+    public ModifierSkill(ResourceLocation name, int maxPoints, IAttribute attribute, double amountPerPoint, int operation) {
         this(name, maxPoints, attribute, amountPerPoint, operation, true);
     }
 
-    public ModifierSkill(String name, int maxPoints, IAttribute attribute, double amountPerPoint, int operation, boolean alwaysApply) {
+    public ModifierSkill(ResourceLocation name, int maxPoints, IAttribute attribute, double amountPerPoint, int operation, boolean alwaysApply) {
         super(name, maxPoints);
         this.affectedAttribute = attribute;
         this.amountPerPoint = amountPerPoint;
         this.operation = operation;
-        this.uuid = UUID.nameUUIDFromBytes(name.getBytes());
+        this.uuid = UUID.nameUUIDFromBytes(name.toString().getBytes());
         this.alwaysApply = alwaysApply;
     }
 
@@ -75,7 +76,7 @@ public class ModifierSkill extends Skill {
         if (attr != null) {
             // Get current and new modifier.
             AttributeModifier mod = attr.getModifier(uuid);
-            AttributeModifier newMod = new AttributeModifier(uuid, name, perPoint * pointsInSkill, op);
+            AttributeModifier newMod = new AttributeModifier(uuid, name.toString(), perPoint * pointsInSkill, op);
 
             // Remove the old, apply the new.
             if (mod != null)

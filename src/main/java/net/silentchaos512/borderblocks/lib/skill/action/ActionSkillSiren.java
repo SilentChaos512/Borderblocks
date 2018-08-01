@@ -25,6 +25,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -55,7 +56,7 @@ public class ActionSkillSiren extends ActionSkill {
     private static final int RADIUS_BASE = 3;
     private static final float RADIUS_PER_TIER = (7f - RADIUS_BASE) / 4f;
 
-    public ActionSkillSiren(String name) {
+    public ActionSkillSiren(ResourceLocation name) {
         super(name);
     }
 
@@ -78,7 +79,7 @@ public class ActionSkillSiren extends ActionSkill {
         float duration = getSkillDuration(data);
         int radius = getBarrierRadius(data);
         boolean success = placeBarrier(data, player.world, center, radius, duration);
-        if (success && !altKeyDown && data.getPointsInSkill(SkillList.BARRIER_TELEPORT) > 0) {
+        if (success && !altKeyDown && data != null && data.getPointsInSkill(SkillList.BARRIER_TELEPORT) > 0) {
             tryTeleportIntoBarrier(player, center, radius);
         }
         return success;
@@ -233,11 +234,11 @@ public class ActionSkillSiren extends ActionSkill {
     public List<String> getTooltip(int investedPoints, PlayerData playerData) {
         ProgressionTier tier = playerData.getProgressionTier();
         List<String> list = new ArrayList<>();
-        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill", name + ".name"));
+        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill." + name + ".name"));
         list.add("");
-        list.add(Borderblocks.i18n.translate("skill", name + ".desc1"));
+        list.add(Borderblocks.i18n.translate("skill." + name + ".desc1"));
         list.add("");
-        list.add(Borderblocks.i18n.translate("skill", name + ".desc2",
+        list.add(Borderblocks.i18n.translate("skill." + name + ".desc2",
                 getBarrierRadius(playerData), (int) getSkillReach(playerData), (int) getSkillDuration(playerData), (int) getCooldownTime()));
         list.add("");
         list.add(Borderblocks.i18n.translate("skill", "action.progressionTier", tier.getFormattedName()));

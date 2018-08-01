@@ -20,12 +20,13 @@ package net.silentchaos512.borderblocks.lib.skill;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import net.minecraft.util.ResourceLocation;
 
 public class DurationSkill extends Skill {
     @Getter(value = AccessLevel.PUBLIC)
     float increasePerPoint;
 
-    public DurationSkill(String name, int maxPoints, float increasePerPoint) {
+    public DurationSkill(ResourceLocation name, int maxPoints, float increasePerPoint) {
         super(name, maxPoints);
         this.increasePerPoint = increasePerPoint;
     }

@@ -21,12 +21,13 @@ package net.silentchaos512.borderblocks.lib.skill;
 import lombok.AccessLevel;
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 
 public class RegenSkill extends Skill {
     @Getter(value = AccessLevel.PUBLIC)
     float regenRate;
 
-    public RegenSkill(String name, int maxPoints, float regenRate) throws IllegalArgumentException {
+    public RegenSkill(ResourceLocation name, int maxPoints, float regenRate) throws IllegalArgumentException {
         super(name, maxPoints);
         this.regenRate = regenRate;
     }

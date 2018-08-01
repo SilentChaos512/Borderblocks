@@ -25,6 +25,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
@@ -39,7 +40,7 @@ public class BlockDropsSkill extends Skill {
     private final boolean matchBlockOnly;
     private final float dropChance;
 
-    public BlockDropsSkill(String name, int maxPoints, boolean matchBlockOnly, float dropChance) throws IllegalArgumentException {
+    public BlockDropsSkill(ResourceLocation name, int maxPoints, boolean matchBlockOnly, float dropChance) throws IllegalArgumentException {
         super(name, maxPoints);
         this.matchBlockOnly = matchBlockOnly;
         this.dropChance = dropChance;

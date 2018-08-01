@@ -21,6 +21,7 @@ package net.silentchaos512.borderblocks.lib.skill;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.oredict.OreDictionary;
@@ -36,7 +37,7 @@ public class BreakSpeedSkill extends Skill {
     private float amountPerPoint;
     private boolean addInsteadOfMul;
 
-    public BreakSpeedSkill(String name, int maxPoints, float amountPerPoint, boolean addInsteadOfMul) {
+    public BreakSpeedSkill(ResourceLocation name, int maxPoints, float amountPerPoint, boolean addInsteadOfMul) {
         super(name, maxPoints);
         this.amountPerPoint = amountPerPoint;
         this.addInsteadOfMul = addInsteadOfMul;

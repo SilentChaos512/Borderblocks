@@ -35,7 +35,7 @@ public class Skill {
     private static final ResourceLocation TEXTURE_SKILLS = new ResourceLocation(Borderblocks.MOD_ID, "textures/gui/skills.png");
 
     @Getter(value = AccessLevel.PUBLIC)
-    protected String name;
+    protected ResourceLocation name;
     @Getter(value = AccessLevel.PUBLIC)
     protected int maxPoints;
 
@@ -57,7 +57,7 @@ public class Skill {
      */
     protected boolean displayModifierAsPercentage = false;
 
-    public Skill(String name, int maxPoints) throws IllegalArgumentException {
+    public Skill(ResourceLocation name, int maxPoints) {
         this.name = name;
         this.maxPoints = maxPoints;
 
@@ -78,9 +78,9 @@ public class Skill {
     @SideOnly(Side.CLIENT)
     public List<String> getTooltip(int investedPoints, PlayerData playerData) {
         List<String> list = new ArrayList<>();
-        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill", name + ".name"));
+        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill." + name + ".name"));
         list.add("");
-        list.add(Borderblocks.i18n.translate("skill", name + ".desc1"));
+        list.add(Borderblocks.i18n.translate("skill." + name + ".desc1"));
         list.add("");
 
         if (investedPoints > 0) {
@@ -135,7 +135,7 @@ public class Skill {
     }
 
     protected String getDesc2(int investedPoints) {
-        return TextFormatting.AQUA + Borderblocks.i18n.translate("skill", name + ".desc2", getDesc2Params(investedPoints));
+        return TextFormatting.AQUA + Borderblocks.i18n.translate("skill." + name + ".desc2", getDesc2Params(investedPoints));
     }
 
     protected Object[] getDesc2Params(int investedPoints) {

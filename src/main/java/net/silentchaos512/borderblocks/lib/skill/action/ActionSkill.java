@@ -20,6 +20,7 @@ package net.silentchaos512.borderblocks.lib.skill.action;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.borderblocks.lib.skill.Skill;
@@ -29,7 +30,7 @@ import javax.annotation.Nullable;
 
 public abstract class ActionSkill extends Skill {
 
-    public ActionSkill(String name) {
+    public ActionSkill(ResourceLocation name) {
         super(name, 1);
     }
 

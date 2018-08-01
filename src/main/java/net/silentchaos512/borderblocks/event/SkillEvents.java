@@ -157,7 +157,7 @@ public class SkillEvents {
     @SubscribeEvent
     public void mobGriefing(EntityMobGriefingEvent event) {
         // Creepers detonated by Siren's ignition skill
-        if (event.getEntity().getEntityData().getBoolean(SkillList.IGNITION.getName()))
+        if (event.getEntity() != null && event.getEntity().getEntityData().getBoolean(SkillList.IGNITION.getName().toString()))
             event.setResult(Result.DENY);
     }
 

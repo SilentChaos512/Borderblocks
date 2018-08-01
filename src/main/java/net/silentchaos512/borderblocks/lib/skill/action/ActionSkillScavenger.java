@@ -21,6 +21,7 @@ package net.silentchaos512.borderblocks.lib.skill.action;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,14 +39,14 @@ import java.util.List;
 
 public class ActionSkillScavenger extends ActionSkill {
 
-    public ActionSkillScavenger(String name) {
+    public ActionSkillScavenger(ResourceLocation name) {
         super(name);
     }
 
     @Override
     public boolean activate(EntityPlayer player, ProgressionTier tier, BlockPos hitPos, EnumFacing hitSide, boolean altKeyDown) {
         if (StackHelper.isValid(player.getHeldItemMainhand())) {
-            ChatHelper.sendStatusMessage(player, Borderblocks.i18n.translate("skill", name + ".needEmptyHand"), true);
+            ChatHelper.sendStatusMessage(player, Borderblocks.i18n.translate("skill." + name + ".needEmptyHand"), true);
             return false;
         }
 
@@ -74,11 +75,11 @@ public class ActionSkillScavenger extends ActionSkill {
     public List<String> getTooltip(int investedPoints, PlayerData playerData) {
         ProgressionTier tier = playerData.getProgressionTier();
         List<String> list = new ArrayList<>();
-        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill", name + ".name"));
+        list.add(TextFormatting.GOLD + Borderblocks.i18n.translate("skill." + name + ".name"));
         list.add("");
-        list.add(Borderblocks.i18n.translate("skill", name + ".desc1"));
+        list.add(Borderblocks.i18n.translate("skill." + name + ".desc1"));
         list.add("");
-        list.add(Borderblocks.i18n.translate("skill", name + ".desc2",
+        list.add(Borderblocks.i18n.translate("skill." + name + ".desc2",
                 (int) getSkillDuration(playerData), (int) getCooldownTime(), tier.ordinal()));
         list.add("");
         list.add(Borderblocks.i18n.translate("skill", "action.progressionTier", tier.getFormattedName()));

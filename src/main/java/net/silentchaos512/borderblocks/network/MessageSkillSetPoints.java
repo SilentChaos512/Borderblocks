@@ -24,7 +24,7 @@ public class MessageSkillSetPoints extends MessageSL {
   public MessageSkillSetPoints(EntityPlayer player, Skill skill, int amount) {
 
     this.playerName = player.getName();
-    this.skillName = skill.getName();
+    this.skillName = skill.getName().toString();
     this.amount = amount;
   }
 

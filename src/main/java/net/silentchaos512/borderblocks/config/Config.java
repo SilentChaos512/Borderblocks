@@ -30,6 +30,7 @@ public class Config extends ConfigBase {
      */
 
     private static final String CAT_DEBUG = "debug";
+    private static final String CAT_CLIENT = "client";
     private static final String CAT_NETWORK = "network";
     private static final String CAT_PLAYER = "player";
     private static final String CAT_TEST = "test";
@@ -42,6 +43,14 @@ public class Config extends ConfigBase {
     public static boolean DEBUG_MODE;
     private static final boolean DEBUG_MODE_DEFAULT = false;
     private static final String DEBUG_MODE_COMMENT = "Enables debug mode, which may or may not draw text to the screen or output additional info to log files.";
+
+    /*
+     * Client
+     */
+
+    public static boolean OVERRIDE_XP_BAR = true;
+    private static final boolean OVERRIDE_XP_BAR_DEFAULT = true;
+    private static final String OVERRIDE_XP_BAR_COMMENT = "If false, the vanilla XP bar will not be replaced and your level is displayed to the left of the bar.";
 
     /*
      * Network
@@ -105,6 +114,13 @@ public class Config extends ConfigBase {
 
             config.setCategoryComment(CAT_DEBUG, "Settings used for debugging purposes. Not meant for use in standard play.");
             DEBUG_MODE = loadBoolean("Debug Mode", CAT_DEBUG, DEBUG_MODE_DEFAULT, DEBUG_MODE_COMMENT);
+
+            /*
+             * Client category
+             */
+
+            config.setCategoryComment(CAT_CLIENT, "Client-side settings, such as rendering/HUD options.");
+            OVERRIDE_XP_BAR = loadBoolean("Override XP Bar", CAT_CLIENT, OVERRIDE_XP_BAR_DEFAULT, OVERRIDE_XP_BAR_COMMENT);
 
             /*
              * Network category

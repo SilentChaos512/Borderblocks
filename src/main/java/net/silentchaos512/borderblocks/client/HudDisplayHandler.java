@@ -31,6 +31,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.silentchaos512.borderblocks.Borderblocks;
 import net.silentchaos512.borderblocks.client.key.KeyTracker;
+import net.silentchaos512.borderblocks.config.Config;
 import net.silentchaos512.borderblocks.lib.skill.action.ActionSkill;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
@@ -39,6 +40,8 @@ import net.silentchaos512.lib.util.TimeHelper;
 public class HudDisplayHandler extends GuiScreen {
     private static final ResourceLocation HUD_TEXTURE = new ResourceLocation(Borderblocks.MOD_ID, "textures/gui/hud.png");
     private static final int VANILLA_XP_DISPLAY_TIME = TimeHelper.ticksFromSeconds(10);
+    private static final int BORDERBLOCKS_LEVEL_COLOR = 0x7FFFFF;
+    private static final int VANILLA_XP_LEVEL_COLOR = 8453920;
 
     private int lastVanillaLevel = -1;
     private int timerDisplayVanillaXp = 0;
@@ -58,6 +61,7 @@ public class HudDisplayHandler extends GuiScreen {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             mc.renderEngine.bindTexture(ICONS);
             // dank/null crashes if I do this...
+            // But then certain mods don't get the event they need... Gah!
 //            if (typeXp && event.isCanceled()) {
 //                MinecraftForge.EVENT_BUS.post(new RenderGameOverlayEvent.Post(event, ElementType.EXPERIENCE));
 //            }
@@ -144,16 +148,26 @@ public class HudDisplayHandler extends GuiScreen {
     }
 
     private void renderXp(RenderGameOverlayEvent.Pre event) {
+        PlayerData data = PlayerDataHandler.get(mc.player);
+        if (data == null) return;
+
+        ScaledResolution res = new ScaledResolution(mc);
+        int width = res.getScaledWidth();
+        int height = res.getScaledHeight();
+
         // Display vanilla XP level occasionally...
         int newVanillaLevel = mc.player.experienceLevel;
         if (lastVanillaLevel > -1 && newVanillaLevel > 0 && lastVanillaLevel != newVanillaLevel && newVanillaLevel % 5 == 0) {
             timerDisplayVanillaXp = VANILLA_XP_DISPLAY_TIME;
         }
         lastVanillaLevel = newVanillaLevel;
-        if (timerDisplayVanillaXp > 0)
+        if (timerDisplayVanillaXp > 0 || !Config.OVERRIDE_XP_BAR) {
+            // Displaying vanilla XP bar. Draw player's character level to the left of the bar.
+            drawSideLevel(mc.fontRenderer, width, height, data.getLevel(), BORDERBLOCKS_LEVEL_COLOR);
             return;
+        }
 
-        // TODO: Alternative config needed
+        // Displaying Borderblocks XP bar. Cancel drawing of vanilla XP bar.
         event.setCanceled(true);
 
         mc.renderEngine.bindTexture(HUD_TEXTURE);
@@ -164,14 +178,6 @@ public class HudDisplayHandler extends GuiScreen {
         FontRenderer fontrenderer = mc.fontRenderer;
 
         if (mc.playerController.gameIsSurvivalOrAdventure()) {
-            PlayerData data = PlayerDataHandler.get(mc.player);
-            if (data == null)
-                return;
-
-            ScaledResolution res = new ScaledResolution(mc);
-            int width = res.getScaledWidth();
-            int height = res.getScaledHeight();
-
             int currentLevelXp = data.getXpForLevel(data.getLevel());
             int xpForNext = data.getXpForNextLevel() - currentLevelXp;
             int left = width / 2 - 91;
@@ -203,23 +209,29 @@ public class HudDisplayHandler extends GuiScreen {
             }
 
             // Draw vanilla xp level
-            GlStateManager.pushMatrix();
-            float scale = 0.5f;
-            GlStateManager.scale(scale, scale, 1f);
-            int vanillaLevel = mc.player.experienceLevel;
-            String text2 = "" + vanillaLevel;
-            int textWidth = fontrenderer.getStringWidth(text2);
-            int px = (int) ((width / 2 - 92 - textWidth * scale) / scale);
-            int py = (int) ((height - 29) / scale);
-            fontrenderer.drawString(text2, px, py, 8453920);
-            GlStateManager.popMatrix();
+            drawSideLevel(fontrenderer, width, height, mc.player.experienceLevel, VANILLA_XP_LEVEL_COLOR);
         }
         GlStateManager.enableBlend();
     }
 
+    /**
+     * Draws a number to the left of the XP bar
+     */
+    private void drawSideLevel(FontRenderer fontrenderer, int width, int height, int level, int color) {
+        GlStateManager.pushMatrix();
+        float scale = 0.5f;
+        GlStateManager.scale(scale, scale, 1f);
+        String text2 = "" + level;
+        int textWidth = fontrenderer.getStringWidth(text2);
+        int px = (int) ((width / 2 - 92 - textWidth * scale) / scale);
+        int py = (int) ((height - 29) / scale);
+        fontrenderer.drawString(text2, px, py, color);
+        GlStateManager.popMatrix();
+    }
+
     @SubscribeEvent
     public void onClientTick(ClientTickEvent event) {
-        if (event.phase == Phase.END && timerDisplayVanillaXp > 0)
+        if (event.phase == Phase.END && timerDisplayVanillaXp > 0 && !mc.isGamePaused())
             --timerDisplayVanillaXp;
     }
 }

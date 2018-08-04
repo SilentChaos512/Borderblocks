@@ -22,7 +22,6 @@ import lombok.AccessLevel;
 import lombok.Setter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -61,7 +60,7 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
             return;
 
         if (timeRemaining % 20 == 0 && owner != null) {
-            for (EntityLivingBase mob : world.getEntities(EntityLivingBase.class, e -> e instanceof IMob && e.getDistanceSq(centerPos) < radius * radius)) {
+            for (EntityLivingBase mob : world.getEntities(EntityLivingBase.class, this::isHostileMobInBarrier)) {
                 // Suffocate
                 if (suffocateLevel > 0) {
                     mob.attackEntityFrom(DamageSource.DROWN, 1.2f * suffocateLevel);
@@ -75,7 +74,6 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
                     // SkillEvents#mobGriefing will prevent any mob with this tag from damaging terrain.
                     mob.getEntityData().setBoolean(SkillList.IGNITION.getName().toString(), true);
                 }
-
             }
 
             if (owner != null) {
@@ -94,6 +92,18 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
         owner = data.playerWR.get();
         suffocateLevel = data.getPointsInSkill(SkillList.BARRIER_SUFFOCATE);
         ignitionLevel = data.getPointsInSkill(SkillList.IGNITION);
+    }
+
+    public int getRadiusSq() {
+        // Just radius^2 does not get entities standing inside the barrier blocks.
+        // What I really want to do is to add 0.5 to radius, but this is basically the same.
+        // Actual value is just 0.25 more.
+        return radius * (radius + 1);
+    }
+
+    private boolean isHostileMobInBarrier(EntityLivingBase entity) {
+        return entity instanceof IMob && entity.getDistanceSq(this.centerPos) <= getRadiusSq();
+    }
     }
 
     @Override

@@ -1,5 +1,7 @@
 0.1.6
-Added: Config to disable XP bar override
+Added: Config to disable XP bar override. Your character level will be shown left of the XP bar. (#3)
+Changed: Entities standing inside phase barrier blocks should now be considered "inside" the barrier
+Fixed: Should fix additional NullPointerExceptions related to fake players
 
 0.1.5
 Fixed: Crash with dank/null mod

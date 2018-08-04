@@ -32,6 +32,7 @@ public class RegenSkill extends Skill {
         this.regenRate = regenRate;
     }
 
+    @Override
     public void trigger(EntityPlayer player, int investedPoints) {
         player.heal(regenRate * investedPoints * player.getMaxHealth());
     }

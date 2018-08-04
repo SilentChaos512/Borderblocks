@@ -69,6 +69,9 @@ public class Skill {
         SkillList.ALL_SKILLS.add(this);
     }
 
+    public void trigger(EntityPlayer player, int pointsInSkill) {
+    }
+
     public void applyTo(EntityPlayer player, int pointsInSkill) {
     }
 

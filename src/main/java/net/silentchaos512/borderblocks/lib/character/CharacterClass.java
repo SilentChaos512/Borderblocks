@@ -85,10 +85,10 @@ public class CharacterClass {
             actionSkill = SkillList.ACTION_SCAVENGER;
         } else if (className.equals(NAME_SIREN)) {
             branchMiddle.addSkill(SkillList.COOLDOWN_SIREN, 0);
-            branchMiddle.addSkill(SkillList.FIRE_DAMAGE_DOWN, 0);
-            branchMiddle.addSkill(SkillList.ATTACK_SPEED_BOOST_K, 1);
+            branchMiddle.addSkill(SkillList.BARRIER_SPEED_BOOST, 0);
+            branchMiddle.addSkill(SkillList.FIRE_DAMAGE_DOWN, 1);
             branchMiddle.addSkill(SkillList.BARRIER_SUFFOCATE, 1);
-            branchMiddle.addSkill(SkillList.PLACEHOLDER, 2);
+            branchMiddle.addSkill(SkillList.ATTACK_SPEED_BOOST_K, 2);
             branchMiddle.addSkill(SkillList.IGNITION, 2);
             branchMiddle.addSkill(SkillList.PLACEHOLDER, 2);
 

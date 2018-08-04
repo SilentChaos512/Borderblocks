@@ -20,6 +20,7 @@ package net.silentchaos512.borderblocks.lib.skill;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -112,12 +113,15 @@ public class SkillList {
     public static final RegenSkill REGEN_SIREN = new RegenSkill(nameFor("regen_siren"),
             5, 0.004f).setTextureIndex(0x0);
 
+    public static final PotionSkill BARRIER_SPEED_BOOST = new PotionSkill(nameFor("barrier_speed_boost"),
+            5, false, new PotionSkill.Effect(MobEffects.SPEED, 40f, 20f)).setTextureIndex(0x13);
     public static final Skill BARRIER_SUFFOCATE = new Skill(nameFor("barrier_suffocate"),
             5).setTextureIndex(0x0);
     public static final Skill BARRIER_TELEPORT = new Skill(nameFor("barrier_teleport"),
             1).setTextureIndex(0x0);
     public static final Skill IGNITION = new Skill(nameFor("ignition"),
             1).setTextureIndex(0x0);
+
     // FIXME: fortune and silk touch will conflict!
     public static final Skill MULTI_TOOL_FORTUNE = new Skill(nameFor("multi_tool_fortune"),
             5).setTextureIndex(0x11);
@@ -125,6 +129,7 @@ public class SkillList {
             5).setTextureIndex(0x12);
     public static final Skill MULTI_TOOL_REPAIR = new Skill(nameFor("multi_tool_repair"),
             1).setTextureIndex(0x10).setModifierValue(SkillConst.MULTI_TOOL_REPAIR_AMOUNT);
+
     public static final Skill PET_HEALTH_UP = new Skill(nameFor("pet_health_boost"),
             5).setTextureIndex(0x0).setModifierValue(0.1f, true);
     public static final Skill PHANTOM_MOUNT_HEALTH_UP = new Skill(nameFor("phantom_mount_health_boost"),

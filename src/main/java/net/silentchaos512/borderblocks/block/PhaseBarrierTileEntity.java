@@ -22,6 +22,7 @@ import lombok.AccessLevel;
 import lombok.Setter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -84,6 +85,14 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
                 if (regenLevel > 0) {
                     SkillList.REGEN_SIREN.trigger(owner, regenLevel);
                 }
+
+                // Player-in-barrier skills
+                int speedBooster = data.getPointsInSkill(SkillList.BARRIER_SPEED_BOOST);
+                for (EntityPlayer player : world.getPlayers(EntityPlayer.class, this::isFriendlyPlayerInBarrier)) {
+                    if (speedBooster > 0) {
+                        SkillList.BARRIER_SPEED_BOOST.trigger(player, speedBooster);
+                    }
+                }
             }
         }
     }
@@ -104,6 +113,10 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
     private boolean isHostileMobInBarrier(EntityLivingBase entity) {
         return entity instanceof IMob && entity.getDistanceSq(this.centerPos) <= getRadiusSq();
     }
+
+    private boolean isFriendlyPlayerInBarrier(EntityPlayer player) {
+        // TODO: Consider teams? Just assuming a PvE environment right now...
+        return player.getDistanceSq(this.centerPos) <= getRadiusSq();
     }
 
     @Override

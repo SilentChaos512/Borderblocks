@@ -88,10 +88,12 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
 
                 // Player-in-barrier skills
                 int speedBooster = data.getPointsInSkill(SkillList.BARRIER_SPEED_BOOST);
+                int resistBoost = data.getPointsInSkill(SkillList.BARRIER_RESIST_BOOST);
                 for (EntityPlayer player : world.getPlayers(EntityPlayer.class, this::isFriendlyPlayerInBarrier)) {
-                    if (speedBooster > 0) {
+                    if (speedBooster > 0)
                         SkillList.BARRIER_SPEED_BOOST.trigger(player, speedBooster);
-                    }
+                    if (resistBoost > 0)
+                        SkillList.BARRIER_RESIST_BOOST.trigger(player, resistBoost);
                 }
             }
         }

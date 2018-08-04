@@ -113,6 +113,8 @@ public class SkillList {
     public static final RegenSkill REGEN_SIREN = new RegenSkill(nameFor("regen_siren"),
             5, 0.004f).setTextureIndex(0x0);
 
+    public static final PotionSkill BARRIER_RESIST_BOOST = new PotionSkill(nameFor("barrier_resist_boost"),
+            5, false, new PotionSkill.Effect(MobEffects.RESISTANCE, 20f, 5f, 0, 0.4f)).setTextureIndex(0x0);
     public static final PotionSkill BARRIER_SPEED_BOOST = new PotionSkill(nameFor("barrier_speed_boost"),
             5, false, new PotionSkill.Effect(MobEffects.SPEED, 40f, 20f)).setTextureIndex(0x13);
     public static final Skill BARRIER_SUFFOCATE = new Skill(nameFor("barrier_suffocate"),

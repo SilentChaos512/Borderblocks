@@ -41,7 +41,7 @@ public class PotionSkill extends Skill {
     @Override
     public void trigger(EntityPlayer player, int pointsInSkill) {
         super.trigger(player, pointsInSkill);
-        this.effects.forEach(e -> player.addPotionEffect(e.getEffect(pointsInSkill)));
+        this.effects.forEach(e -> player.addPotionEffect(e.getEffect(pointsInSkill, applyAlways, !applyAlways)));
     }
 
     @Override
@@ -89,6 +89,10 @@ public class PotionSkill extends Skill {
 
         public PotionEffect getEffect(int pointsInSkill) {
             return new PotionEffect(this.potion, this.getDuration(pointsInSkill), this.getAmplifier(pointsInSkill));
+        }
+
+        public PotionEffect getEffect(int pointsInSkill, boolean ambient, boolean showParticles) {
+            return new PotionEffect(this.potion, this.getDuration(pointsInSkill), this.getAmplifier(pointsInSkill), ambient, showParticles);
         }
 
         private int getDuration(int points) {

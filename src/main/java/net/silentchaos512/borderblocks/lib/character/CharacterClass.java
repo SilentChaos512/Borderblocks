@@ -96,9 +96,10 @@ public class CharacterClass {
             branchRight.addSkill(SkillList.HEALTH_BOOST_SIREN, 0);
             branchRight.addSkill(SkillList.BARRIER_RESIST_BOOST, 1);
             branchRight.addSkill(SkillList.REGEN_SIREN, 1);
-            branchRight.addSkill(SkillList.PLACEHOLDER, 2);
+            branchRight.addSkill(SkillList.BARRIER_SLOW_DOWN, 2);
             branchRight.addSkill(SkillList.BARRIER_TELEPORT, 2);
             branchRight.addSkill(SkillList.ARROW_DEFLECTION, 2);
+            branchRight.addSkill(SkillList.BARRIER_OXYGEN_BUBBLE, 3);
 
             actionSkill = SkillList.ACTION_SIREN;
         } else if (className.equals(NAME_TAMER)) {

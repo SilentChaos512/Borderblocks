@@ -20,6 +20,7 @@ package net.silentchaos512.borderblocks.lib.skill;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
@@ -69,7 +70,7 @@ public class Skill {
         SkillList.ALL_SKILLS.add(this);
     }
 
-    public void trigger(EntityPlayer player, int pointsInSkill) {
+    public void trigger(EntityLivingBase entity, int pointsInSkill) {
     }
 
     public void applyTo(EntityPlayer player, int pointsInSkill) {

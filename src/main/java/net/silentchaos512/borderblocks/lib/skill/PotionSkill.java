@@ -18,6 +18,7 @@
 
 package net.silentchaos512.borderblocks.lib.skill;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -39,9 +40,9 @@ public class PotionSkill extends Skill {
     }
 
     @Override
-    public void trigger(EntityPlayer player, int pointsInSkill) {
-        super.trigger(player, pointsInSkill);
-        this.effects.forEach(e -> player.addPotionEffect(e.getEffect(pointsInSkill, applyAlways, !applyAlways)));
+    public void trigger(EntityLivingBase entity, int pointsInSkill) {
+        super.trigger(entity, pointsInSkill);
+        this.effects.forEach(e -> entity.addPotionEffect(e.getEffect(pointsInSkill, applyAlways, !applyAlways)));
     }
 
     @Override

@@ -25,8 +25,8 @@ public class Borderblocks {
 
     public static final String MOD_ID = "borderblocks";
     public static final String MOD_NAME = "Borderblocks";
-    public static final String VERSION = "0.1.5";
-    public static final String VERSION_SILENTLIB = "2.3.13";
+    public static final String VERSION = "0.1.6";
+    public static final String VERSION_SILENTLIB = "2.3.15";
     public static final int BUILD_NUM = 0;
     public static final String DEPENDENCIES = "required-after:forge@[14.23.3.2655,);required-after:silentlib@[" + VERSION_SILENTLIB + ",);";
     public static final String RESOURCE_PREFIX = MOD_ID + ":";
@@ -48,6 +48,7 @@ public class Borderblocks {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        registry.setMod(this);
         registry.recipes.setJsonHellMode(0 == getBuildNum());
 
         network = new NetworkHandlerSL(MOD_ID);

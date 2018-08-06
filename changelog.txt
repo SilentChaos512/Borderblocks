@@ -1,6 +1,8 @@
 0.1.6
+Added: A few siren skills
 Added: Config to disable XP bar override. Your character level will be shown left of the XP bar. (#3)
 Changed: Entities standing inside phase barrier blocks should now be considered "inside" the barrier
+Changed: Phase barrier blocks can now replace water
 Fixed: Should fix additional NullPointerExceptions related to fake players
 
 0.1.5

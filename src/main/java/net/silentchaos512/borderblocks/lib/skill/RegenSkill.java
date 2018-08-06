@@ -20,7 +20,7 @@ package net.silentchaos512.borderblocks.lib.skill;
 
 import lombok.AccessLevel;
 import lombok.Getter;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class RegenSkill extends Skill {
@@ -33,8 +33,8 @@ public class RegenSkill extends Skill {
     }
 
     @Override
-    public void trigger(EntityPlayer player, int investedPoints) {
-        player.heal(regenRate * investedPoints * player.getMaxHealth());
+    public void trigger(EntityLivingBase entity, int investedPoints) {
+        entity.heal(regenRate * investedPoints * entity.getMaxHealth());
     }
 
     @Override

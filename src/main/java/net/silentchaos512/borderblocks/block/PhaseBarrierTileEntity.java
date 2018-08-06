@@ -24,7 +24,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ITickable;
@@ -47,6 +49,7 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
     private EntityPlayer owner = null;
     private int suffocateLevel = 0;
     private int ignitionLevel = 0;
+    private int chillLevel = 0;
 
     @Override
     public void update() {
@@ -69,6 +72,11 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
                         XPManager.INSTANCE.awardXpForKill(mob, owner, true);
                 }
 
+                // Chill
+                if (chillLevel > 0) {
+                    SkillList.BARRIER_SLOW_DOWN.trigger(mob, chillLevel);
+                }
+
                 // Ignition
                 if (ignitionLevel > 0 && mob instanceof EntityCreeper) {
                     ((EntityCreeper) mob).ignite();
@@ -89,20 +97,26 @@ public class PhaseBarrierTileEntity extends TileEntity implements ITickable {
                 // Player-in-barrier skills
                 int speedBooster = data.getPointsInSkill(SkillList.BARRIER_SPEED_BOOST);
                 int resistBoost = data.getPointsInSkill(SkillList.BARRIER_RESIST_BOOST);
+                int oxygen = data.getPointsInSkill(SkillList.BARRIER_OXYGEN_BUBBLE);
                 for (EntityPlayer player : world.getPlayers(EntityPlayer.class, this::isFriendlyPlayerInBarrier)) {
                     if (speedBooster > 0)
                         SkillList.BARRIER_SPEED_BOOST.trigger(player, speedBooster);
                     if (resistBoost > 0)
                         SkillList.BARRIER_RESIST_BOOST.trigger(player, resistBoost);
+                    if (oxygen > 0 && player.getAir() < 300) { // Vanilla max air (see EntityLivingBase#onEntityUpdate
+                        player.setAir(player.getAir() + 5);
+                        player.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 40, 0, true, false));
+                    }
                 }
             }
         }
     }
 
     public void setSkillProperties(PlayerData data) {
-        owner = data.playerWR.get();
-        suffocateLevel = data.getPointsInSkill(SkillList.BARRIER_SUFFOCATE);
-        ignitionLevel = data.getPointsInSkill(SkillList.IGNITION);
+        this.owner = data.playerWR.get();
+        this.suffocateLevel = data.getPointsInSkill(SkillList.BARRIER_SUFFOCATE);
+        this.ignitionLevel = data.getPointsInSkill(SkillList.IGNITION);
+        this.chillLevel = data.getPointsInSkill(SkillList.BARRIER_SLOW_DOWN);
     }
 
     public int getRadiusSq() {

@@ -23,6 +23,9 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -79,8 +82,11 @@ public class ActionSkillSiren extends ActionSkill {
         float duration = getSkillDuration(data);
         int radius = getBarrierRadius(data);
         boolean success = placeBarrier(data, player.world, center, radius, duration);
-        if (success && !altKeyDown && data != null && data.getPointsInSkill(SkillList.BARRIER_TELEPORT) > 0) {
-            tryTeleportIntoBarrier(player, center, radius);
+        if (success && data != null && data.getPointsInSkill(SkillList.BARRIER_TELEPORT) > 0) {
+            if (!altKeyDown)
+                tryTeleportIntoBarrier(player, center, radius);
+            // Brief damage resistance
+            player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 40, 2, true, false));
         }
         return success;
     }
@@ -112,8 +118,7 @@ public class ActionSkillSiren extends ActionSkill {
     private boolean tryPlaceBlock(PlayerData data, World world, BlockPos pos, BlockPos center, int radius, float duration, boolean corePlaced) {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        boolean blockReplaceable = world.isAirBlock(pos) || block instanceof PhaseBarrierBlock || block instanceof BlockTallGrass || block instanceof BlockDoublePlant;
-        if (blockReplaceable && isPointInSphere(pos, center, radius)) {
+        if (blockReplaceable(world, pos, block) && isPointInSphere(pos, center, radius)) {
             if (!corePlaced || Borderblocks.random.nextInt(BARRIER_CORE_CHANCE) == 0) {
                 world.setBlockState(pos, ModBlocks.phaseBarrierCore.getDefaultState());
                 PhaseBarrierTileEntity tile = (PhaseBarrierTileEntity) world.getTileEntity(pos);
@@ -129,6 +134,11 @@ public class ActionSkillSiren extends ActionSkill {
             return true;
         }
         return false;
+    }
+
+    private boolean blockReplaceable(World world, BlockPos pos, Block block) {
+        return world.isAirBlock(pos) || block instanceof PhaseBarrierBlock || block instanceof BlockTallGrass
+                || block instanceof BlockDoublePlant || block == Blocks.WATER || block == Blocks.FLOWING_WATER;
     }
 
     private boolean tryTeleportIntoBarrier(EntityPlayer player, BlockPos center, int radius) {

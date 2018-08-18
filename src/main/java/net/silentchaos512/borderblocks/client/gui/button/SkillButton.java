@@ -49,6 +49,7 @@ public class SkillButton extends TexturedButton {
     @Override
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY, float partialTicks) {
         PlayerData data = PlayerDataHandler.get(minecraft.player);
+        if (data == null) return;
 
         if (this.visible) {
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width
@@ -95,11 +96,11 @@ public class SkillButton extends TexturedButton {
         }
     }
 
-    static int getTexturePosX(Skill skill) {
+    private static int getTexturePosX(Skill skill) {
         return 16 * (skill.getTextureIndex() & 0xF);
     }
 
-    static int getTexturePosY(Skill skill) {
+    private static int getTexturePosY(Skill skill) {
         return 16 * (skill.getTextureIndex() >> 4);
     }
 }

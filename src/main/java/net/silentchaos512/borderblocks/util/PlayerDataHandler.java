@@ -73,13 +73,13 @@ public class PlayerDataHandler {
             data.writeToNBT(tags);
             playerData.remove(key);
             data = get(player);
-            data.readFromNBT(tags);
+            Objects.requireNonNull(data).readFromNBT(tags);
         }
 
         return data;
     }
 
-    public static void cleanup() {
+    private static void cleanup() {
         List<Integer> remove = new ArrayList<>();
 
         for (int i : playerData.keySet()) {
@@ -98,7 +98,7 @@ public class PlayerDataHandler {
         return player.hashCode() << 1 + (player.world.isRemote ? 1 : 0);
     }
 
-    public static NBTTagCompound getDataCompoundForPlayer(EntityPlayer player) {
+    private static NBTTagCompound getDataCompoundForPlayer(EntityPlayer player) {
         NBTTagCompound forgeData = player.getEntityData();
         if (!forgeData.hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
             forgeData.setTag(EntityPlayer.PERSISTED_NBT_TAG, new NBTTagCompound());
@@ -112,6 +112,7 @@ public class PlayerDataHandler {
         return persistentData.getCompoundTag(NBT_ROOT);
     }
 
+    @SuppressWarnings("unused")
     public static class EventHandler {
 
         @SubscribeEvent
@@ -125,7 +126,7 @@ public class PlayerDataHandler {
         public void onPlayerTick(LivingUpdateEvent event) {
             if (event.getEntityLiving() instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-                PlayerDataHandler.get(player).tick();
+                Objects.requireNonNull(PlayerDataHandler.get(player)).tick();
             }
         }
 
@@ -134,7 +135,7 @@ public class PlayerDataHandler {
             if (event.player instanceof EntityPlayerMP) {
                 EntityPlayerMP playerMP = (EntityPlayerMP) event.player;
 
-                MessageDataSync message = new MessageDataSync(get(event.player), event.player);
+                MessageDataSync message = new MessageDataSync(Objects.requireNonNull(get(event.player)), event.player);
                 Borderblocks.network.wrapper.sendTo(message, playerMP);
             }
         }
@@ -275,12 +276,14 @@ public class PlayerDataHandler {
                 EntityPlayer player = playerWR.get();
                 EntityPlayerMP playerMP = (EntityPlayerMP) player;
 
-                MessageDataSync message = new MessageDataSync(get(player), player);
-                Borderblocks.network.wrapper.sendTo(message, playerMP);
+                if (player != null) {
+                    MessageDataSync message = new MessageDataSync(Objects.requireNonNull(get(player)), player);
+                    Borderblocks.network.wrapper.sendTo(message, playerMP);
+                }
             }
         }
 
-        public void save() {
+        void save() {
             if (!client) {
                 EntityPlayer player = playerWR.get();
                 if (player != null) {
@@ -330,7 +333,7 @@ public class PlayerDataHandler {
             tags.setString(NBT_LAST_LOGIN, dateString);
         }
 
-        public void load() {
+        void load() {
             if (!client) {
                 EntityPlayer player = playerWR.get();
                 if (player != null) {

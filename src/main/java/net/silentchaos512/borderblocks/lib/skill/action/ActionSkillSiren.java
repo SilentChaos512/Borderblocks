@@ -182,7 +182,6 @@ public class ActionSkillSiren extends ActionSkill {
             }
 
             BlockPos target = player.getPosition().down();
-            Borderblocks.log.debug(flag1, world.getBlockState(target), world.isBlockFullCube(target));
             if (flag1 && world.isBlockFullCube(target) && !(world.getBlockState(target).getBlock() instanceof PhaseBarrierBlock)) {
                 player.setPositionAndUpdate(player.posX + 0.5, player.posY, player.posZ + 0.5);
 

@@ -61,6 +61,7 @@ public class SkillTreeBranch {
     public int getPointsInvested(EntityPlayer player) {
         int total = 0;
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return 0;
 
         for (Entry<Skill, Integer> entry : data.getSkills().entrySet()) {
             Skill skill = entry.getKey();
@@ -75,6 +76,7 @@ public class SkillTreeBranch {
     public int getHighestAccessibleTier(EntityPlayer player) {
         // Has player unlocked their action skill?
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return 0;
         if (data.getSkills().isEmpty()) {
             // We'll assume that no skills means no action skill.
             return -1;

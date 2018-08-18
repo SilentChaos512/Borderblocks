@@ -18,28 +18,20 @@
 
 package net.silentchaos512.borderblocks.init;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.silentchaos512.borderblocks.block.EridiumBlock;
 import net.silentchaos512.borderblocks.block.EridiumOre;
 import net.silentchaos512.borderblocks.block.PhaseBarrierBlock;
 import net.silentchaos512.borderblocks.block.PhaseBarrierCore;
-import net.silentchaos512.lib.registry.IRegistrationHandler;
 import net.silentchaos512.lib.registry.SRegistry;
 
-public class ModBlocks implements IRegistrationHandler<Block> {
-    public static final ModBlocks INSTANCE = new ModBlocks();
-
+public class ModBlocks {
     public static EridiumOre eridiumOre = new EridiumOre();
     public static EridiumBlock eridiumBlock = new EridiumBlock();
     public static PhaseBarrierBlock phaseBarrier = new PhaseBarrierBlock();
     public static PhaseBarrierCore phaseBarrierCore = new PhaseBarrierCore();
 
-    private ModBlocks() {
-    }
-
-    @Override
-    public void registerAll(SRegistry reg) {
+    public static void registerAll(SRegistry reg) {
         reg.registerBlock(eridiumOre, "eridium_ore", new ItemBlock(eridiumOre));
         reg.registerBlock(eridiumBlock, "eridium_block", new ItemBlock(eridiumBlock));
         reg.registerBlock(phaseBarrier, "phase_barrier", new ItemBlock(phaseBarrier)).setCreativeTab(null);

@@ -33,7 +33,6 @@ public class Config extends ConfigBase {
     private static final String CAT_CLIENT = "client";
     private static final String CAT_NETWORK = "network";
     private static final String CAT_PLAYER = "player";
-    private static final String CAT_TEST = "test";
     private static final String CAT_WORLD = "world";
 
     /*
@@ -79,17 +78,6 @@ public class Config extends ConfigBase {
     public static float PLAYER_DAMAGE_PER_LEVEL;
     private static final float PLAYER_DAMAGE_PER_LEVEL_DEFAULT = 0.3f;
     private static final String PLAYER_DAMAGE_PER_LEVEL_COMMENT = "The amount of extra attack damage a player gains per level.";
-
-    /*
-     * Test
-     */
-
-    private static int TEST_VALUE;
-    private static final int TEST_VALUE_DEFAULT = 42;
-    private static final String TEST_VALUE_COMMENT = "A value that does nothing and everything. Do not stare too closely.";
-    private static int TEST_COLOR;
-    private static final int TEST_COLOR_DEFAULT = 0x9ACDEF;
-    private static final String TEST_COLOR_COMMENT = "Testing ConfigBase#loadColorCode";
 
     /*
      * World
@@ -138,15 +126,6 @@ public class Config extends ConfigBase {
             PLAYER_FIRST_SKILL_POINT_LEVEL = PLAYER_FIRST_SKILL_POINT_LEVEL_DEFAULT;
             PLAYER_HEALTH_PER_LEVEL = loadFloat("Health Per Level", CAT_PLAYER, PLAYER_HEALTH_PER_LEVEL_DEFAULT, PLAYER_HEALTH_PER_LEVEL_COMMENT);
             PLAYER_DAMAGE_PER_LEVEL = loadFloat("Damage Per Level", CAT_PLAYER, PLAYER_DAMAGE_PER_LEVEL_DEFAULT, PLAYER_DAMAGE_PER_LEVEL_COMMENT);
-
-            /*
-             * Test category
-             */
-
-            config.setCategoryComment(CAT_TEST, "The category that should not exist.");
-            TEST_VALUE = loadInt("Test Value", CAT_TEST, TEST_VALUE_DEFAULT, -2, 69, TEST_VALUE_COMMENT);
-            TEST_COLOR = loadColorCode("Test Color", CAT_TEST, TEST_COLOR_DEFAULT, false, TEST_COLOR_COMMENT);
-            Borderblocks.log.debug("Test Color = " + TEST_COLOR);
 
             /*
              * World category

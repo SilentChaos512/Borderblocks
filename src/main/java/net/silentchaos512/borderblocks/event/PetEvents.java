@@ -86,7 +86,7 @@ public class PetEvents {
         if (event.phase == Phase.END) {
             while (!healQueue.isEmpty()) {
                 EntityLivingBase entity = healQueue.poll();
-                entity.setHealth(entity.getMaxHealth());
+                if (entity != null) entity.setHealth(entity.getMaxHealth());
             }
         }
     }

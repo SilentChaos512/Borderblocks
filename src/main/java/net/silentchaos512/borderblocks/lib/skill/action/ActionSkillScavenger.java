@@ -45,7 +45,7 @@ public class ActionSkillScavenger extends ActionSkill {
 
     @Override
     public boolean activate(EntityPlayer player, ProgressionTier tier, BlockPos hitPos, EnumFacing hitSide, boolean altKeyDown) {
-        if (StackHelper.isValid(player.getHeldItemMainhand())) {
+        if (!player.getHeldItemMainhand().isEmpty()) {
             ChatHelper.sendStatusMessage(player, Borderblocks.i18n.translate("skill." + name + ".needEmptyHand"), true);
             return false;
         }

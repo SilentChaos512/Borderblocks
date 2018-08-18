@@ -18,23 +18,15 @@
 
 package net.silentchaos512.borderblocks.init;
 
-import net.minecraft.item.Item;
 import net.minecraftforge.oredict.OreDictionary;
 import net.silentchaos512.borderblocks.item.CraftingItems;
 import net.silentchaos512.borderblocks.item.ScavMultiTool;
 import net.silentchaos512.borderblocks.lib.ProgressionTier;
 import net.silentchaos512.lib.item.IEnumItems;
-import net.silentchaos512.lib.registry.IRegistrationHandler;
 import net.silentchaos512.lib.registry.SRegistry;
 
-public class ModItems implements IRegistrationHandler<Item> {
-    public static final ModItems INSTANCE = new ModItems();
-
-    private ModItems() {
-    }
-
-    @Override
-    public void registerAll(SRegistry reg) {
+public class ModItems {
+    public static void registerAll(SRegistry reg) {
         IEnumItems.RegistrationHelper enumItems = new IEnumItems.RegistrationHelper(reg);
 
         enumItems.registerItemsGenericEnum(ProgressionTier::getRelic, e -> "progression_relic_" + e.getName(), ProgressionTier.class);
@@ -44,7 +36,7 @@ public class ModItems implements IRegistrationHandler<Item> {
         addOreDict();
     }
 
-    public void addOreDict() {
+    private static void addOreDict() {
         OreDictionary.registerOre("ingotEridium", CraftingItems.ERIDIUM_INGOT.getStack());
     }
 }

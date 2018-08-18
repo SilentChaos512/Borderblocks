@@ -50,7 +50,6 @@ import net.silentchaos512.borderblocks.util.PlayerDataHandler;
 import net.silentchaos512.borderblocks.util.PlayerDataHandler.PlayerData;
 import net.silentchaos512.lib.util.ChatHelper;
 import net.silentchaos512.lib.util.PlayerHelper;
-import net.silentchaos512.lib.util.StackHelper;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -92,12 +91,14 @@ public class ScavMultiTool extends ItemPickaxe {
         NBTTagCompound tags = result.getOrCreateSubCompound(NBT_ROOT);
 
         PlayerData data = PlayerDataHandler.get(player);
-        int fortuneLevel = data.getPointsInSkill(SkillList.MULTI_TOOL_FORTUNE);
-        int silkLevel = data.getPointsInSkill(SkillList.MULTI_TOOL_SILKTOUCH);
-        if (fortuneLevel > 0)
-            result.addEnchantment(Enchantments.FORTUNE, fortuneLevel);
-        else if (silkLevel > 0)
-            result.addEnchantment(Enchantments.SILK_TOUCH, silkLevel);
+        if (data != null) {
+            int fortuneLevel = data.getPointsInSkill(SkillList.MULTI_TOOL_FORTUNE);
+            int silkLevel = data.getPointsInSkill(SkillList.MULTI_TOOL_SILKTOUCH);
+            if (fortuneLevel > 0)
+                result.addEnchantment(Enchantments.FORTUNE, fortuneLevel);
+            else if (silkLevel > 0)
+                result.addEnchantment(Enchantments.SILK_TOUCH, silkLevel);
+        }
 
         // Create an ID for the timeout map, because we can't constantly modify the NBT of harvest
         // tools. Break progress resets when NBT is modified. Could use UUID, but I don't think that's
@@ -142,7 +143,7 @@ public class ScavMultiTool extends ItemPickaxe {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         PlayerData data = PlayerDataHandler.get(playerIn);
-        int repairLevel = data.getPointsInSkill(SkillList.MULTI_TOOL_REPAIR);
+        int repairLevel = data != null ? data.getPointsInSkill(SkillList.MULTI_TOOL_REPAIR) : 0;
 
         if (repairLevel > 0) {
             ItemStack tool = playerIn.getHeldItem(handIn);
@@ -150,7 +151,7 @@ public class ScavMultiTool extends ItemPickaxe {
             // Find scrap
             ItemStack scrap = PlayerHelper.getFirstValidStack(playerIn, true, true, false,
                     s -> s.getItem() == CraftingItems.SCRAP.getItem());
-            if (StackHelper.isEmpty(scrap)) {
+            if (scrap.isEmpty()) {
                 String line = Borderblocks.i18n.translate("skill", "multi_tool_repair.noScrap");
                 ChatHelper.sendStatusMessage(playerIn, line, true);
                 return new ActionResult<>(EnumActionResult.FAIL, tool);
@@ -159,7 +160,7 @@ public class ScavMultiTool extends ItemPickaxe {
             // Find something to repair
             ItemStack toRepair = PlayerHelper.getFirstValidStack(playerIn, true, false, false,
                     s -> s.getItem().isRepairable() && s.isItemDamaged());
-            if (StackHelper.isValid(toRepair)) {
+            if (!toRepair.isEmpty()) {
                 if (!worldIn.isRemote) {
                     toRepair.setItemDamage(toRepair.getItemDamage() - SkillConst.MULTI_TOOL_REPAIR_AMOUNT);
                     scrap.shrink(1);

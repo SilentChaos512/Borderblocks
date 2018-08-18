@@ -27,6 +27,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.silentchaos512.borderblocks.advancements.ModTriggers;
 import net.silentchaos512.borderblocks.config.Config;
@@ -48,6 +49,8 @@ import net.silentchaos512.borderblocks.world.WorldGeneratorBB;
 import net.silentchaos512.lib.proxy.IProxy;
 import net.silentchaos512.lib.registry.SRegistry;
 
+import java.util.function.Consumer;
+
 public class CommonProxy implements IProxy {
 
     @Override
@@ -57,11 +60,10 @@ public class CommonProxy implements IProxy {
         Config.instance.init(event.getSuggestedConfigurationFile());
 
         // registry.addRegistrationHandler(new ModPotions(), Potion.class);
-        registry.addRegistrationHandler(ModBlocks.INSTANCE, Block.class);
-        registry.addRegistrationHandler(ModItems.INSTANCE, Item.class);
-        registry.addRegistrationHandler(ModSounds.INSTANCE, SoundEvent.class);
-
-        ModEntities.init(registry);
+        registry.addRegistrationHandler((Consumer<SRegistry>) ModBlocks::registerAll, Block.class);
+        registry.addRegistrationHandler((Consumer<SRegistry>) ModItems::registerAll, Item.class);
+        registry.addRegistrationHandler((Consumer<SRegistry>) ModEntities::registerAll, EntityEntry.class);
+        registry.addRegistrationHandler((Consumer<SRegistry>) ModSounds::registerAll, SoundEvent.class);
 
         CharacterClass.init();
 

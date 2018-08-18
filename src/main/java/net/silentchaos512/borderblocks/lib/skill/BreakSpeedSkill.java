@@ -26,7 +26,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.oredict.OreDictionary;
 import net.silentchaos512.borderblocks.Borderblocks;
-import net.silentchaos512.lib.util.StackHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class BreakSpeedSkill extends Skill {
         int blockMeta = state.getBlock().getMetaFromState(state);
         ItemStack blockStack = new ItemStack(block, 1, blockMeta);
 
-        if (StackHelper.isEmpty(blockStack))
+        if (blockStack.isEmpty())
             return false;
 
         boolean isLog = false;

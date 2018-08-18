@@ -25,8 +25,8 @@ public class Borderblocks {
 
     public static final String MOD_ID = "borderblocks";
     public static final String MOD_NAME = "Borderblocks";
-    public static final String VERSION = "0.1.6";
-    public static final String VERSION_SILENTLIB = "2.3.15";
+    public static final String VERSION = "0.1.7";
+    public static final String VERSION_SILENTLIB = "3.0.0";
     public static final int BUILD_NUM = 0;
     public static final String DEPENDENCIES = "required-after:forge@[14.23.3.2655,);required-after:silentlib@[" + VERSION_SILENTLIB + ",);";
     public static final String RESOURCE_PREFIX = MOD_ID + ":";
@@ -35,7 +35,7 @@ public class Borderblocks {
     public static LogHelper log = new LogHelper(MOD_NAME, BUILD_NUM);
     public static I18nHelper i18n = new I18nHelper(MOD_ID, log, true);
 
-    public static SRegistry registry = new SRegistry(MOD_ID, log);
+    public static SRegistry registry = new SRegistry();
     public static NetworkHandlerSL network;
 
     public static CreativeTabs creativeTab = registry.makeCreativeTab(MOD_ID, ProgressionTier.ERIDIUM::getRelicStack);
@@ -49,7 +49,7 @@ public class Borderblocks {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         registry.setMod(this);
-        registry.recipes.setJsonHellMode(0 == getBuildNum());
+        registry.getRecipeMaker().setJsonHellMode(0 == getBuildNum());
 
         network = new NetworkHandlerSL(MOD_ID);
         network.register(MessageDataSync.class, Side.CLIENT);

@@ -21,19 +21,12 @@ package net.silentchaos512.borderblocks.init;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.silentchaos512.borderblocks.Borderblocks;
-import net.silentchaos512.lib.registry.IRegistrationHandler;
 import net.silentchaos512.lib.registry.SRegistry;
 
-public class ModSounds implements IRegistrationHandler<SoundEvent> {
-    public static final ModSounds INSTANCE = new ModSounds();
-
+public class ModSounds {
     public static final SoundEvent LEVEL_UP = create("level_up");
 
-    private ModSounds() {
-    }
-
-    @Override
-    public void registerAll(SRegistry reg) {
+    public static void registerAll(SRegistry reg) {
         reg.registerSoundEvent(LEVEL_UP, "level_up");
     }
 

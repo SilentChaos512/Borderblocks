@@ -51,6 +51,7 @@ public class StatManager {
 
     public static void setPlayerStats(EntityPlayer player) {
         PlayerData data = PlayerDataHandler.get(player);
+        if (data == null) return;
         int multi = data.getLevel() - 1;
 
         // Health

@@ -24,6 +24,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -44,9 +45,8 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 public class XPManager {
-
     public enum XPSource {
-        GENERIC, COMBAT, MINING, ADVANCEMENT;
+        GENERIC, COMBAT, MINING, ADVANCEMENT
     }
 
     public static XPManager INSTANCE = new XPManager();
@@ -60,7 +60,7 @@ public class XPManager {
     }
 
     private static final int MOB_KILL_XP_BASE = 80;
-    private static final float MOB_KILL_XP_PER_HEALTH = 2.0f;
+    private static final float MOB_KILL_XP_PER_HEALTH = 3.0f;
     private static final float MOB_KILL_XP_PER_ARMOR_SQ = 0.5f;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -83,6 +83,8 @@ public class XPManager {
             amount += MOB_KILL_XP_BASE;
         if (killed instanceof EntitySlime)
             amount /= 2;
+        else if (killed instanceof IMob)
+            amount *= 2;
 
         awardXp(player, amount, teamShare, XPSource.COMBAT);
     }
@@ -178,7 +180,7 @@ public class XPManager {
     private static final int XP_BASE_TASK = 250;
     private static final int XP_BASE_GOAL = 1000;
     private static final int XP_BASE_CHALLENGE = 5000;
-    private static final float XP_MULTI_PER_PARENT = 0.1f;
+    private static final float XP_MULTI_PER_PARENT = 0.5f;
 
     public int getGenericAdvancementXp(@Nonnull Advancement advancement, @Nonnull EntityPlayer player) {
         int amount = -1;
